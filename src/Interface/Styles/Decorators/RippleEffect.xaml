@@ -1,0 +1,53 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:l="clr-namespace:Interface.Styles.Decorators">
+    <Style TargetType="{x:Type l:RippleEffectDecorator}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type l:RippleEffectDecorator}">
+                    <Grid
+                        x:Name="PART_grid"
+                        Background="Transparent"
+                        ClipToBounds="True">
+                        <Ellipse
+                            x:Name="PART_ellipse"
+                            Width="0"
+                            Height="{Binding Path=Width, RelativeSource={RelativeSource Self}}"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Fill="{Binding Path=HighlightBackground, RelativeSource={RelativeSource TemplatedParent}}" />
+
+                        <ContentPresenter x:Name="PART_contentpresenter" />
+
+                        <Grid.Resources>
+                            <Storyboard x:Key="PART_animation" Storyboard.TargetName="PART_ellipse">
+                                <DoubleAnimation
+                                    Storyboard.TargetProperty="Width"
+                                    From="0"
+                                    Duration="0:0:0.75" />
+                                <ThicknessAnimation Storyboard.TargetProperty="Margin" Duration="0:0:0.75" />
+                                <DoubleAnimation
+                                    BeginTime="0:0:0"
+                                    Storyboard.TargetProperty="Opacity"
+                                    From="1"
+                                    To="0"
+                                    Duration="0:0:0.75" />
+                                <DoubleAnimation
+                                    BeginTime="0:0:0.75"
+                                    Storyboard.TargetProperty="Width"
+                                    To="0"
+                                    Duration="0:0:0" />
+                                <DoubleAnimation
+                                    BeginTime="0:0:0.75"
+                                    Storyboard.TargetProperty="Opacity"
+                                    To="1"
+                                    Duration="0:0:0" />
+                            </Storyboard>
+                        </Grid.Resources>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
