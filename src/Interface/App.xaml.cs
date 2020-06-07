@@ -6,9 +6,11 @@ using System.Reactive.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
+using ApplicationState;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using PlexClient;
 using ReactiveUI;
 using Splat;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
@@ -68,6 +70,8 @@ namespace Interface
         {
             Locator.CurrentMutable.Register(() => new CustomPropertyResolver(), typeof(ICreatesObservableForProperty));
             services.AddViewModel<MainWindow, MainViewModel>();
+            services.AddApplicationStateService();
+            services.AddPlexClientService("http://server:32400", "zNk53Ki7BqR4EraZevvP");
         }
     }
 

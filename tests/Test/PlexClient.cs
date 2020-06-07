@@ -11,7 +11,8 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PlexClient;
-using PlexClient.Models;
+using PlexClient.Client;
+using PlexClient.Client.Models;
 using Xunit;
 
 namespace Test

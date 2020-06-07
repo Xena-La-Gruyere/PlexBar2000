@@ -3,16 +3,21 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Microsoft.Extensions.DependencyInjection;
+using PlexClient.Client;
+using PlexClient.Library;
 
 namespace PlexClient
 {
     public static class HttpClientBuilderExtensions
     {
-        public static IHttpClientBuilder AddPlexClientService(this IHttpClientBuilder builder, string baseUrl, string plexToken)
+        public static IServiceCollection AddPlexClientService(this IServiceCollection builder, string baseUrl, string plexToken)
         {
-            builder.Services.Configure<PlexOptions>(o => o.PlexToken = plexToken);
+            builder.Configure<PlexOptions>(o => o.PlexToken = plexToken);
 
-            return builder.ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+            builder.AddSingleton<IPlexLibraryService, PlexLibraryService>();
+
+            builder.AddHttpClient<IPlexService, PlexService>()
+                .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
                 {
                     UseCookies = false,
                     AllowAutoRedirect = true,
@@ -25,8 +30,9 @@ namespace PlexClient
                     client.BaseAddress = new Uri(baseUrl.TrimEnd('/') + "/", UriKind.Absolute);
                     client.DefaultRequestHeaders.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                })
-                .AddTypedClient<IPlexService, PlexService>();
+                });
+
+            return builder;
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PlexClient
+﻿namespace PlexClient.Client
 {
     public class PlexOptions
     {

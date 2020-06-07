@@ -4,7 +4,7 @@ namespace ApplicationState
 {
     public static class BuilderExtensions
     {
-        public static IServiceCollection AddApplicationStateService(this IServiceCollection builder, string baseUrl)
+        public static IServiceCollection AddApplicationStateService(this IServiceCollection builder)
         {
             return builder.AddSingleton<IApplicationStateService, ApplicationStateService>();
         }

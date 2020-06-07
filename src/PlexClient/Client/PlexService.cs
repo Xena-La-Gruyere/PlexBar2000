@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using PlexClient.Models;
+using PlexClient.Client.Models;
 
-namespace PlexClient
+namespace PlexClient.Client
 {
     public class PlexService : IPlexService
     {

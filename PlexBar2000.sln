@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeefWebClient", "src\BeefWe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlexClient", "src\PlexClient\PlexClient.csproj", "{3D6C9B16-DF85-4D6E-B2A6-B9155C9F1287}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redux", "src\Redux\Redux.csproj", "{B1F05F5A-C9DE-4284-8942-1C8BC688FF6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Redux", "src\Redux\Redux.csproj", "{B1F05F5A-C9DE-4284-8942-1C8BC688FF6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationState", "src\ApplicationState\ApplicationState.csproj", "{1FE31AFE-7EC0-4EC0-9A39-25168071D8F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationState", "src\ApplicationState\ApplicationState.csproj", "{1FE31AFE-7EC0-4EC0-9A39-25168071D8F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

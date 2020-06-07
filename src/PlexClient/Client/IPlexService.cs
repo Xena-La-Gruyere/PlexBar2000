@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using PlexClient.Models;
+using PlexClient.Client.Models;
 
-namespace PlexClient
+namespace PlexClient.Client
 {
     public interface IPlexService
     {

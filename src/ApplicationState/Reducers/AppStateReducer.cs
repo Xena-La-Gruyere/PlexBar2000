@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ApplicationState.Actions;
+using ApplicationState.Enumerations;
 using ApplicationState.States;
 using Redux;
 
@@ -19,6 +20,9 @@ namespace ApplicationState.Reducers
             {
                 case ChangeGlobalState change:
                     builder.State = change.State;
+                    break;
+                case ToggleGlobalState _:
+                    builder.State = builder.State == AppStateEnum.Explorer ? AppStateEnum.Player : AppStateEnum.Explorer;
                     break;
             }
 

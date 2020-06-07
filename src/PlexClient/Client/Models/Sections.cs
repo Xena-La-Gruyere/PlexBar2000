@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace PlexClient.Models
+namespace PlexClient.Client.Models
 {
     public partial class Sections
     {

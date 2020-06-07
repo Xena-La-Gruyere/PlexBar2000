@@ -12,17 +12,89 @@
     Height="100"
     x:TypeArguments="mainScreen:MainViewModel"
     Background="{StaticResource BackgroundColor1}"
-    MouseMove="MainWindow_OnMouseMove"
     ResizeMode="NoResize"
     Topmost="True"
     WindowStyle="None"
     mc:Ignorable="d">
-    <Grid>
-        <Button
-            Width="100"
-            Height="50"
-            Cursor="Hand">
-            <materialDesign:PackIcon Kind="SmileyHappy" />
-        </Button>
-    </Grid>
+    <DockPanel>
+        <Border
+            Padding="5"
+            Background="{StaticResource BackgroundColor2}"
+            DockPanel.Dock="Top"
+            MouseMove="MainWindow_OnMouseMove">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon
+                    Margin="0,0,5,0"
+                    Foreground="{StaticResource ForegroundColor1}"
+                    Kind="Music" />
+                <TextBlock Text="Plexbar2000" />
+            </StackPanel>
+        </Border>
+
+        <UniformGrid
+            Background="{StaticResource BackgroundColor2}"
+            DockPanel.Dock="Bottom"
+            Rows="1">
+            <Button>
+                <materialDesign:PackIcon Kind="ChevronLeft" />
+            </Button>
+            <Button>
+                <materialDesign:PackIcon Kind="Home" />
+            </Button>
+            <Button>
+                <materialDesign:PackIcon Kind="Search" />
+            </Button>
+        </UniformGrid>
+
+        <ItemsControl x:Name="LetterList" DockPanel.Dock="Right">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="1" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button
+                        Width="18"
+                        Height="18"
+                        MouseDown="Letter_OnMouseDown">
+                        <TextBlock
+                            Margin="-4,-4,0,0"
+                            Style="{StaticResource Information}"
+                            Text="{Binding .}" />
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <ItemsControl
+            x:Name="ArtistList"
+            ScrollViewer.CanContentScroll="True"
+            VirtualizingStackPanel.IsVirtualizing="True">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Initialized="ArtistInitialized" Text="{Binding Path=Title}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.Template>
+                <ControlTemplate>
+                    <Border
+                        Padding="{TemplateBinding Control.Padding}"
+                        Background="{TemplateBinding Panel.Background}"
+                        BorderBrush="{TemplateBinding Border.BorderBrush}"
+                        BorderThickness="{TemplateBinding Border.BorderThickness}"
+                        SnapsToDevicePixels="True">
+                        <ScrollViewer Padding="{TemplateBinding Control.Padding}" Focusable="False">
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </ItemsControl.Template>
+        </ItemsControl>
+    </DockPanel>
 </reactiveUi:ReactiveWindow>

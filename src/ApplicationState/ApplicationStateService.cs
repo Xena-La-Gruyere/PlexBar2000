@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Linq;
+using ApplicationState.Actions;
 using ApplicationState.Enumerations;
 using ApplicationState.Reducers;
 using ApplicationState.States;
@@ -22,6 +23,10 @@ namespace ApplicationState
             AppState = appStateConn;
 
             appStateConn.Connect();
+        }
+        public void ToggleState()
+        {
+            _store.Dispatch(new ToggleGlobalState());
         }
     }
 }
