@@ -7,8 +7,7 @@
         public string Guid { get; set; }
         public string Title { get; set; }
         public long Index { get; set; }
-        public string Thumb { get; set; }
+        public string ThumbnailUrl { get; set; }
         public char LetterSearch { get; set; }
-
     }
 }

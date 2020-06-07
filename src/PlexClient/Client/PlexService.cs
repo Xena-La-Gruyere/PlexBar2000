@@ -28,6 +28,13 @@ namespace PlexClient.Client
                 throw new ArgumentException(paramName: nameof(options.Value.PlexToken), message: $"{nameof(options.Value.PlexToken)} must be set.");
         }
 
+        public string GetThumbnailUri(string resource)
+        {
+            var uri = new Uri(_client.BaseAddress, resource).AbsoluteUri;
+
+            return QueryHelpers.AddQueryString(uri, "X-Plex-Token", _plexToken);
+        }
+
         public async Task<Sections> GetSections()
         {
             _logger.LogDebug($"{nameof(GetSections)} called");
@@ -48,6 +55,18 @@ namespace PlexClient.Client
             using var response = await _client.GetAsync(requestUri);
             response.EnsureSuccessStatusCode();
             return JsonSerializer.Deserialize<AllArtists>(await response.Content.ReadAsStringAsync());
+        }
+
+        public async Task<byte[]> GetThumbnail(string resource)
+        {
+            _logger.LogDebug($"{nameof(GetThumbnail)} called with {nameof(resource)}={resource}");
+
+            var requestUri = QueryHelpers.AddQueryString(resource, "X-Plex-Token", _plexToken);
+
+            using var response = await _client.GetAsync(requestUri);
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadAsByteArrayAsync();
         }
     }
 }

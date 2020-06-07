@@ -10,7 +10,6 @@ using FluentAssertions;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using PlexClient;
 using PlexClient.Client;
 using PlexClient.Client.Models;
 using Xunit;
@@ -26,7 +25,7 @@ namespace Test
             var logger = A.Fake<ILogger<PlexService>>();
             var handler = A.Fake<Startup.FakeHttpMessageHandler>();
             var client = new HttpClient(handler) {BaseAddress = null};
-            var options = A.Fake<IOptions<PlexOptions>>();
+            var options = new OptionsWrapper<PlexOptions>(new Fixture().Create<PlexOptions>());
 
             // Act
             Func<PlexService> action = () => new PlexService(client, options, logger);
@@ -42,7 +41,7 @@ namespace Test
             var logger = A.Fake<ILogger<PlexService>>();
             var handler = A.Fake<Startup.FakeHttpMessageHandler>();
             var client = new HttpClient(handler) {BaseAddress = new Fixture().Create<Uri>()};
-            var options = A.Fake<IOptions<PlexOptions>>();
+            var options = new OptionsWrapper<PlexOptions>(new Fixture().Create<PlexOptions>());
             options.Value.PlexToken = null;
 
             // Act
@@ -157,7 +156,6 @@ namespace Test
 
         #endregion
 
-
         #region GetAllArtists
 
         [Theory]
@@ -265,6 +263,195 @@ namespace Test
             valueResult.Should().BeEquivalentTo(result);
         }
 
+        #endregion
+
+        #region GetAllArtists
+
+        [Theory]
+        [Startup.InlineAutoFakeDataAttribute]
+        public async Task GetThumbnail_request_should_be_GET_method(
+            byte[] result,
+            string thumbnailResource,
+            [Frozen] Startup.FakeHttpMessageHandler handler,
+            PlexService sut)
+        {
+            // Arrange
+            HttpRequestMessage request = null;
+            A.CallTo(() => handler.Send(A<HttpRequestMessage>._))
+                .Invokes((HttpRequestMessage r) => request = r)
+                .Returns(
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new ByteArrayContent(result),
+                    });
+
+            // Act
+            var valueResult = await sut.GetThumbnail(thumbnailResource);
+
+            // Assert
+            request.Should().NotBeNull();
+            request.Method.Should().Be(HttpMethod.Get);
+        }
+
+        [Theory]
+        [Startup.InlineAutoFakeDataAttribute]
+        public async Task GetThumbnail_request_should_have_PlexToken(
+            byte[] result,
+            string thumbnailResource,
+            [Frozen] IOptions<PlexOptions> options,
+            [Frozen] Startup.FakeHttpMessageHandler handler,
+            PlexService sut)
+        {
+            // Arrange
+            HttpRequestMessage request = null;
+            A.CallTo(() => handler.Send(A<HttpRequestMessage>._))
+                .Invokes((HttpRequestMessage r) => request = r)
+                .Returns(
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new ByteArrayContent(result),
+                    });
+
+            // Act
+            var valueResult = await sut.GetThumbnail(thumbnailResource);
+
+            // Assert
+            QueryHelpers.ParseQuery(request.RequestUri.Query)
+                .Should()
+                .ContainKey("X-Plex-Token")
+                .WhichValue.Should().Equal(options.Value.PlexToken);
+        }
+
+        [Theory]
+        [Startup.InlineAutoFakeDataAttribute]
+        public async Task GetThumbnail_request_resource_should_be_thumbnail_ressource(
+            byte[] result,
+            string thumbnailResource,
+            [Frozen] Startup.FakeHttpMessageHandler handler,
+            PlexService sut)
+        {
+            // Arrange
+            HttpRequestMessage request = null;
+            A.CallTo(() => handler.Send(A<HttpRequestMessage>._))
+                .Invokes((HttpRequestMessage r) => request = r)
+                .Returns(
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new ByteArrayContent(result),
+                    });
+
+            // Act
+            var valueResult = await sut.GetThumbnail(thumbnailResource);
+
+            // Assert
+            request.RequestUri.AbsolutePath.Should().EndWith(thumbnailResource);
+        }
+
+        [Theory]
+        [Startup.InlineAutoFakeDataAttribute]
+        public async Task GetThumbnail_should_be_correctly_parsed(
+            byte[] result,
+            string thumbnailResource,
+            [Frozen] Startup.FakeHttpMessageHandler handler,
+            PlexService sut)
+        {
+            // Arrange
+            HttpRequestMessage request = null;
+            A.CallTo(() => handler.Send(A<HttpRequestMessage>._))
+                .Invokes((HttpRequestMessage r) => request = r)
+                .Returns(
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new ByteArrayContent(result),
+                    });
+
+            // Act
+            var valueResult = await sut.GetThumbnail(thumbnailResource);
+
+            // Assert
+            valueResult.Should().BeEquivalentTo(result);
+        }
+
+        #endregion
+
+        #region GetThumbnailUri
+
+        [Fact]
+        public void GetThumbnailUri_should_return_concat_uri()
+        {
+            // Arrange
+            var logger = A.Fake<ILogger<PlexService>>();
+            var handler = A.Fake<Startup.FakeHttpMessageHandler>();
+            var client = new HttpClient(handler) { BaseAddress = new Uri("http://server/") };
+            var options = new OptionsWrapper<PlexOptions>(new Fixture().Create<PlexOptions>());
+            var sut = new PlexService(client, options, logger);
+            var resource = new Fixture().Create<string>();
+
+            // Act
+            var result = sut.GetThumbnailUri(resource);
+
+            // Assert
+            result.Should().Be($"http://server/{resource}");
+        }
+
+        [Fact]
+        public void GetThumbnailUri_should_return_concat_uri_with_slash()
+        {
+            // Arrange
+            var logger = A.Fake<ILogger<PlexService>>();
+            var handler = A.Fake<Startup.FakeHttpMessageHandler>();
+            var client = new HttpClient(handler) { BaseAddress = new Uri("http://server") };
+            var options = new OptionsWrapper<PlexOptions>(new Fixture().Create<PlexOptions>());
+            var sut = new PlexService(client, options, logger);
+            var resource = new Fixture().Create<string>();
+
+            // Act
+            var result = sut.GetThumbnailUri(resource);
+
+            // Assert
+            result.Should().Be($"http://server/{resource}");
+        }
+
+        [Fact]
+        public void GetThumbnailUri_should_return_valid_uri()
+        {
+            // Arrange
+            var logger = A.Fake<ILogger<PlexService>>();
+            var handler = A.Fake<Startup.FakeHttpMessageHandler>();
+            var client = new HttpClient(handler) { BaseAddress = new Fixture().Create<Uri>() };
+            var options = new OptionsWrapper<PlexOptions>(new Fixture().Create<PlexOptions>());
+            var sut = new PlexService(client, options, logger);
+            var resource = new Fixture().Create<string>();
+
+            // Act
+            var result = sut.GetThumbnailUri(resource);
+
+            // Assert
+            Func<Uri> test = () => new Uri(result);
+
+            test.Should().NotThrow();
+        }
+
+        [Fact]
+        public void GetThumbnailUri_should_have_plex_token()
+        {
+            // Arrange
+            var logger = A.Fake<ILogger<PlexService>>();
+            var handler = A.Fake<Startup.FakeHttpMessageHandler>();
+            var client = new HttpClient(handler) { BaseAddress = new Fixture().Create<Uri>() };
+            var options = new OptionsWrapper<PlexOptions>(new Fixture().Create<PlexOptions>());
+            var sut = new PlexService(client, options, logger);
+            var resource = new Fixture().Create<string>();
+
+            // Act
+            var result = sut.GetThumbnailUri(resource);
+
+            // Assert
+            QueryHelpers.ParseQuery(new Uri(result).Query)
+                .Should()
+                .ContainKey("X-Plex-Token")
+                .WhichValue.Should().Equal(options.Value.PlexToken);
+        }
         #endregion
     }
 }

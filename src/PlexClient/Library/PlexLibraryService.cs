@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 using PlexClient.Client;
 using PlexClient.Client.Models;
 using PlexClient.Library.Models;
@@ -87,7 +88,7 @@ namespace PlexClient.Library
                 Index = artist.Index,
                 LetterSearch = FirstLetter(artist),
                 RatingKey = artist.RatingKey,
-                Thumb = artist.Thumb
+                ThumbnailUrl = _plexService.GetThumbnailUri(artist.Thumb)
             };
 
         public async Task RefreshArtists()

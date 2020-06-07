@@ -58,10 +58,7 @@
                         Width="18"
                         Height="18"
                         MouseDown="Letter_OnMouseDown">
-                        <TextBlock
-                            Margin="-4,-4,0,0"
-                            Style="{StaticResource Information}"
-                            Text="{Binding .}" />
+                        <TextBlock Style="{StaticResource Information}" Text="{Binding .}" />
                     </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
@@ -73,7 +70,25 @@
             VirtualizingStackPanel.IsVirtualizing="True">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Initialized="ArtistInitialized" Text="{Binding Path=Title}" />
+                    <StackPanel Orientation="Horizontal">
+                        <Grid
+                            Width="50"
+                            Height="50"
+                            Margin="5,1,10,1">
+                            <Grid.OpacityMask>
+                                <VisualBrush Visual="{Binding ElementName=BorderMask}" />
+                            </Grid.OpacityMask>
+                            <Border
+                                x:Name="BorderMask"
+                                Background="{StaticResource BackgroundColor3}"
+                                CornerRadius="25" />
+                            <Image RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding ThumbnailUrl}" />
+                        </Grid>
+                        <TextBlock
+                            FontSize="15"
+                            Initialized="ArtistInitialized"
+                            Text="{Binding Path=Title}" />
+                    </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemsPanel>
