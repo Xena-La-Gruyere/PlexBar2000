@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ApplicationState.Actions;
+﻿using ApplicationState.Actions;
 using ApplicationState.Enumerations;
 using ApplicationState.States;
 using Redux;
@@ -23,6 +18,13 @@ namespace ApplicationState.Reducers
                     break;
                 case ToggleGlobalState _:
                     builder.State = builder.State == AppStateEnum.Explorer ? AppStateEnum.Player : AppStateEnum.Explorer;
+                    break;
+                case PreviousMenu _:
+                    builder.MenuIndex = builder.MenuIndex == 0 ? 0 : builder.MenuIndex - 1;
+                    break;
+                case SelectArtist selectArtist:
+                    builder.MenuIndex = 1;
+                    builder.Artist = selectArtist.Artist;
                     break;
             }
 

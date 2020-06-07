@@ -1,0 +1,69 @@
+﻿<reactiveUi:ReactiveUserControl
+    x:Class="Interface.UserControls.ArtistView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interface="clr-namespace:Interface"
+    xmlns:local="clr-namespace:Interface.UserControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:reactiveUi="http://reactiveui.net"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:TypeArguments="interface:MainViewModel"
+    mc:Ignorable="d">
+    <DockPanel>
+        <StackPanel
+            Margin="2,2,2,5"
+            DockPanel.Dock="Top"
+            Orientation="Horizontal">
+            <Grid
+                Width="80"
+                Height="80"
+                Margin="5,1,10,1">
+                <Grid.OpacityMask>
+                    <VisualBrush Visual="{Binding ElementName=BorderMask}" />
+                </Grid.OpacityMask>
+                <Border
+                    x:Name="BorderMask"
+                    Background="{StaticResource BackgroundColor3}"
+                    CornerRadius="40" />
+                <Image x:Name="Thumbnail" RenderOptions.BitmapScalingMode="HighQuality" />
+            </Grid>
+            <TextBlock x:Name="ArtistTitle" FontSize="15" />
+        </StackPanel>
+
+        <ScrollViewer>
+
+            <ItemsControl x:Name="AlbumList" VerticalAlignment="Top">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="4" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel Margin="0,2">
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                DockPanel.Dock="Bottom"
+                                Style="{StaticResource Information}"
+                                Text="{Binding Year}" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                DockPanel.Dock="Bottom"
+                                Text="{Binding Title}" />
+                            <Button
+                                Width="100"
+                                Height="100"
+                                Background="{StaticResource BackgroundColor1}"
+                                Style="{StaticResource LargeButton}">
+                                <Image RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding ThumbnailUrl}" />
+                            </Button>
+                        </DockPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+    </DockPanel>
+</reactiveUi:ReactiveUserControl>

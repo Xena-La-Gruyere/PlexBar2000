@@ -265,7 +265,117 @@ namespace Test
 
         #endregion
 
-        #region GetAllArtists
+        #region GetArtist
+
+        [Theory]
+        [Startup.InlineAutoFakeDataAttribute]
+        public async Task GetArtist_request_should_be_GET_method(
+            ArtistDetail result,
+            string ratingKey,
+            [Frozen] Startup.FakeHttpMessageHandler handler,
+            PlexService sut)
+        {
+            // Arrange
+            HttpRequestMessage request = null;
+            A.CallTo(() => handler.Send(A<HttpRequestMessage>._))
+                .Invokes((HttpRequestMessage r) => request = r)
+                .Returns(
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new ByteArrayContent(JsonSerializer.SerializeToUtf8Bytes(result)),
+                    });
+
+            // Act
+            var valueResult = await sut.GetArtist(ratingKey);
+
+            // Assert
+            request.Should().NotBeNull();
+            request.Method.Should().Be(HttpMethod.Get);
+        }
+
+        [Theory]
+        [Startup.InlineAutoFakeDataAttribute]
+        public async Task GetArtist_request_should_have_PlexToken(
+            ArtistDetail result,
+            string ratingKey,
+            [Frozen] IOptions<PlexOptions> options,
+            [Frozen] Startup.FakeHttpMessageHandler handler,
+            PlexService sut)
+        {
+            // Arrange
+            HttpRequestMessage request = null;
+            A.CallTo(() => handler.Send(A<HttpRequestMessage>._))
+                .Invokes((HttpRequestMessage r) => request = r)
+                .Returns(
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new ByteArrayContent(JsonSerializer.SerializeToUtf8Bytes(result)),
+                    });
+
+            // Act
+            var valueResult = await sut.GetArtist(ratingKey);
+
+            // Assert
+            QueryHelpers.ParseQuery(request.RequestUri.Query)
+                .Should()
+                .ContainKey("X-Plex-Token")
+                .WhichValue.Should().Equal(options.Value.PlexToken);
+        }
+
+        [Theory]
+        [Startup.InlineAutoFakeDataAttribute]
+        public async Task GetArtist_request_resource_should_be_library_metadata_key_children(
+            ArtistDetail result,
+            string ratingKey,
+            [Frozen] Startup.FakeHttpMessageHandler handler,
+            PlexService sut)
+        {
+            // Arrange
+            HttpRequestMessage request = null;
+            A.CallTo(() => handler.Send(A<HttpRequestMessage>._))
+                .Invokes((HttpRequestMessage r) => request = r)
+                .Returns(
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new ByteArrayContent(JsonSerializer.SerializeToUtf8Bytes(result)),
+                    });
+
+            // Act
+            var valueResult = await sut.GetArtist(ratingKey);
+
+            // Assert
+            request.RequestUri.AbsolutePath.Should().EndWith($"/library/metadata/{ratingKey}/children");
+        }
+
+        [Theory]
+        [Startup.InlineAutoFakeDataAttribute]
+        public async Task GetArtist_should_be_correctly_parsed(
+            ArtistDetail result,
+            string ratingKey,
+            [Frozen] Startup.FakeHttpMessageHandler handler,
+            PlexService sut)
+        {
+            // Arrange
+            HttpRequestMessage request = null;
+            A.CallTo(() => handler.Send(A<HttpRequestMessage>._))
+                .Invokes((HttpRequestMessage r) => request = r)
+                .Returns(
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new ByteArrayContent(JsonSerializer.SerializeToUtf8Bytes(result)),
+                    });
+
+            // Act
+            var valueResult = await sut.GetArtist(ratingKey);
+
+            // Assert
+            valueResult.Should().BeEquivalentTo(result);
+        }
+
+        #endregion
+
+
+        #region GetThumbnail
 
         [Theory]
         [Startup.InlineAutoFakeDataAttribute]
@@ -391,7 +501,7 @@ namespace Test
             var result = sut.GetThumbnailUri(resource);
 
             // Assert
-            result.Should().Be($"http://server/{resource}");
+            result.Should().StartWith($"http://server/{resource}");
         }
 
         [Fact]
@@ -409,7 +519,7 @@ namespace Test
             var result = sut.GetThumbnailUri(resource);
 
             // Assert
-            result.Should().Be($"http://server/{resource}");
+            result.Should().StartWith($"http://server/{resource}");
         }
 
         [Fact]

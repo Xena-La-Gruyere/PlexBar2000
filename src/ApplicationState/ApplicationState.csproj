@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PlexClient\PlexClient.csproj" />
     <ProjectReference Include="..\Redux\Redux.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
 using System.Reactive.Subjects;
@@ -17,17 +18,24 @@ namespace PlexClient.Library
 
         public IObservable<ArtistModel[]> Artists { get; }
         private readonly ISubject<ArtistModel[]> _artists;
+
         public IObservable<char[]> SearchLetters { get; }
         private readonly ISubject<char[]> _searchLetters;
+
+        public IObservable<ArtistModel> Artist { get; }
+        private readonly ISubject<ArtistModel> _artist;
+
         private Directory _section;
         public PlexLibraryService(IPlexService plexService)
         {
             _plexService = plexService;
             _artists = new ReplaySubject<ArtistModel[]>(1);
             _searchLetters = new ReplaySubject<char[]>(1);
+            _artist = new ReplaySubject<ArtistModel>(1);
 
             SearchLetters = _searchLetters;
             Artists = _artists;
+            Artist = _artist;
         }
 
         public async Task Initialize()
@@ -80,16 +88,7 @@ namespace PlexClient.Library
         }
 
         private ArtistModel ToArtistModel(Artist artist)
-            => new ArtistModel
-            {
-                Key = artist.Key,
-                Title = artist.Title,
-                Guid = artist.Guid,
-                Index = artist.Index,
-                LetterSearch = FirstLetter(artist),
-                RatingKey = artist.RatingKey,
-                ThumbnailUrl = _plexService.GetThumbnailUri(artist.Thumb)
-            };
+            => new ArtistModel(artist, FirstLetter(artist), _plexService.GetThumbnailUri(artist.Thumb));
 
         public async Task RefreshArtists()
         {
@@ -110,6 +109,25 @@ namespace PlexClient.Library
                     .OrderBy(c => c)
                     .Distinct()
                     .ToArray());
+        }
+
+
+        private AlbumModel ToAlbumModel(Album album)
+            => new AlbumModel(album, _plexService.GetThumbnailUri(album.Thumb));
+
+        public async Task GetArtist(ArtistModel artistModel)
+        {
+            var artist = await _plexService.GetArtist(artistModel.Key);
+
+            var builder = new ArtistModel.Builder(artistModel)
+            {
+                Albums = artist.MediaContainer.Albums
+                    .Select(ToAlbumModel)
+                    .OrderBy(a => a.Year)
+                    .ToImmutableArray()
+            };
+
+            _artist.OnNext(builder.Build());
         }
     }
 }

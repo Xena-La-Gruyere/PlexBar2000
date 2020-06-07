@@ -2,7 +2,6 @@
 using System.Windows.Input;
 using ApplicationState;
 using ApplicationState.Enumerations;
-using PlexClient.Client.Models;
 using PlexClient.Library;
 using PlexClient.Library.Models;
 using ReactiveUI;
@@ -16,7 +15,9 @@ namespace Interface
 
         public readonly IObservable<AppStateEnum> AppState;
         public readonly IObservable<ArtistModel[]> Artists;
+        public readonly IObservable<ArtistModel> Artist;
         public readonly IObservable<char[]> Letters;
+        public readonly IObservable<int> MenuIndex;
 
         public MainViewModel(IApplicationStateService applicationStateService,
             IPlexLibraryService plexLibraryService)
@@ -27,6 +28,8 @@ namespace Interface
 
             Artists = _plexLibraryService.Artists;
             Letters = _plexLibraryService.SearchLetters;
+            MenuIndex = applicationStateService.MenuIndex;
+            Artist = applicationStateService.Artist;
 
             // Initialize library
             _plexLibraryService.Initialize();
@@ -35,6 +38,16 @@ namespace Interface
         public void MiddleMouseClick(MouseButtonEventArgs args)
         {
             _applicationStateService.ToggleState();
+        }
+
+        public void ClickArtist(ArtistModel artist)
+        {
+            _applicationStateService.SelectArtist(artist);
+        }
+
+        public void ClickPrevious(MouseButtonEventArgs args)
+        {
+            _applicationStateService.PreviousMenu();
         }
     }
 }

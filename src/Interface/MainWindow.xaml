@@ -7,6 +7,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:reactiveUi="http://reactiveui.net"
+    xmlns:userControls="clr-namespace:Interface.UserControls"
     Title="MainWindow"
     Width="300"
     Height="100"
@@ -35,7 +36,7 @@
             Background="{StaticResource BackgroundColor2}"
             DockPanel.Dock="Bottom"
             Rows="1">
-            <Button>
+            <Button x:Name="ButtonPrevious">
                 <materialDesign:PackIcon Kind="ChevronLeft" />
             </Button>
             <Button>
@@ -46,70 +47,15 @@
             </Button>
         </UniformGrid>
 
-        <ItemsControl x:Name="LetterList" DockPanel.Dock="Right">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Columns="1" />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Button
-                        Width="18"
-                        Height="18"
-                        MouseDown="Letter_OnMouseDown">
-                        <TextBlock Style="{StaticResource Information}" Text="{Binding .}" />
-                    </Button>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <!--  ARTIST LIST  -->
+        <materialDesign:Transitioner x:Name="TransitionerMenu" SelectedIndex="0">
 
-        <ItemsControl
-            x:Name="ArtistList"
-            ScrollViewer.CanContentScroll="True"
-            VirtualizingStackPanel.IsVirtualizing="True">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <Grid
-                            Width="50"
-                            Height="50"
-                            Margin="5,1,10,1">
-                            <Grid.OpacityMask>
-                                <VisualBrush Visual="{Binding ElementName=BorderMask}" />
-                            </Grid.OpacityMask>
-                            <Border
-                                x:Name="BorderMask"
-                                Background="{StaticResource BackgroundColor3}"
-                                CornerRadius="25" />
-                            <Image RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding ThumbnailUrl}" />
-                        </Grid>
-                        <TextBlock
-                            FontSize="15"
-                            Initialized="ArtistInitialized"
-                            Text="{Binding Path=Title}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.Template>
-                <ControlTemplate>
-                    <Border
-                        Padding="{TemplateBinding Control.Padding}"
-                        Background="{TemplateBinding Panel.Background}"
-                        BorderBrush="{TemplateBinding Border.BorderBrush}"
-                        BorderThickness="{TemplateBinding Border.BorderThickness}"
-                        SnapsToDevicePixels="True">
-                        <ScrollViewer Padding="{TemplateBinding Control.Padding}" Focusable="False">
-                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
-                        </ScrollViewer>
-                    </Border>
-                </ControlTemplate>
-            </ItemsControl.Template>
-        </ItemsControl>
+            <userControls:ArtistListView />
+
+            <userControls:ArtistView />
+
+
+        </materialDesign:Transitioner>
+
     </DockPanel>
 </reactiveUi:ReactiveWindow>

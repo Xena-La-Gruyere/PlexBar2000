@@ -1,43 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ApplicationState.Enumerations;
+﻿using ApplicationState.Enumerations;
+using PlexClient.Library.Models;
 
 namespace ApplicationState.States
 {
     public class AppState
     {
         public AppStateEnum State { get; }
-        public AppState(AppStateEnum state)
+        public int MenuIndex { get; }
+        public ArtistModel Artist { get; }
+
+        public AppState()
+        {
+            State = AppStateEnum.Explorer;
+            MenuIndex = 0;
+            Artist = null;
+        }
+
+        public AppState(AppStateEnum state, int menuIndex, ArtistModel artist)
         {
             State = state;
+            MenuIndex = menuIndex;
+            Artist = artist;
         }
 
         public struct Builder
         {
             private readonly AppState _state;
 
+            public int MenuIndex;
             public AppStateEnum State;
+            public ArtistModel Artist;
 
             public Builder(AppState state)
             {
                 _state = state;
 
                 State = state.State;
+                MenuIndex = state.MenuIndex;
+                Artist = state.Artist;
             }
 
             public bool Equals(AppState other)
             {
-                return State == other.State;
+                return State == other.State &&
+                    MenuIndex == other.MenuIndex &&
+                    ReferenceEquals(Artist, other.Artist);
             }
 
             public AppState Build()
             {
                 if (Equals(_state)) return _state;
 
-                return new AppState(State);
+                return new AppState(State, MenuIndex, Artist);
             }
         }
 
