@@ -1,9 +1,8 @@
 ﻿<Application
-    x:Class="PlexBar2000.App"
+    x:Class="Interface.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:PlexBar2000"
-    StartupUri="MainWindow.xaml">
+    Startup="App_OnStartup">
     <Application.Resources>
         <ResourceDictionary>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
