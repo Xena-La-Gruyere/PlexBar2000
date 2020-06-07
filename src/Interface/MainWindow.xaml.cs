@@ -23,6 +23,15 @@ namespace PlexBar2000
         public MainWindow()
         {
             InitializeComponent();
+
+        }
+
+
+        private void MainWindow_OnMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
+            e.Handled = false;
         }
     }
 }
