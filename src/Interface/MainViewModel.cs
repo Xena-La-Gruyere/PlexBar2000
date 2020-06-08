@@ -16,6 +16,7 @@ namespace Interface
         public readonly IObservable<AppStateEnum> AppState;
         public readonly IObservable<ArtistModel[]> Artists;
         public readonly IObservable<ArtistModel> Artist;
+        public readonly IObservable<AlbumModel> Album;
         public readonly IObservable<char[]> Letters;
         public readonly IObservable<int> MenuIndex;
 
@@ -30,6 +31,7 @@ namespace Interface
             Letters = _plexLibraryService.SearchLetters;
             MenuIndex = applicationStateService.MenuIndex;
             Artist = applicationStateService.Artist;
+            Album = applicationStateService.Album;
 
             // Initialize library
             _plexLibraryService.Initialize();
@@ -43,6 +45,11 @@ namespace Interface
         public void ClickArtist(ArtistModel artist)
         {
             _applicationStateService.SelectArtist(artist);
+        }
+
+        public void ClickAlbum(AlbumModel album)
+        {
+            _applicationStateService.SelectAlbum(album);
         }
 
         public void ClickPrevious(MouseButtonEventArgs args)

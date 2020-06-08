@@ -3,9 +3,11 @@ using System.Reactive.Linq;
 using ReactiveUI;
 using Splat;
 using System;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Interface.UIHelper;
+using PlexClient.Library.Models;
 
 namespace Interface.UserControls
 {
@@ -44,6 +46,13 @@ namespace Interface.UserControls
         private void MainWindow_OnMouseMove(object sender, MouseEventArgs e)
         {
             e.DragMoveWindow(this);
+        }
+
+        private void AlbumClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Button button &&
+                button.DataContext is AlbumModel album)
+                ViewModel.ClickAlbum(album);
         }
     }
 }

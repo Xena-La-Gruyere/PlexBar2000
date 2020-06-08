@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using ApplicationState.Actions;
 using ApplicationState.Enumerations;
 using ApplicationState.Reducers;
@@ -65,7 +66,8 @@ namespace ApplicationState
             _store.Dispatch(new SelectArtist(artist));
 
             _plexService.GetArtist(artist).ContinueWith(task => 
-                _store.Dispatch(new SelectArtist(task.Result)));
+                _store.Dispatch(new SelectArtist(task.Result)), 
+                TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         public void SelectAlbum(AlbumModel album)
@@ -73,7 +75,8 @@ namespace ApplicationState
             _store.Dispatch(new SelectAlbum(album));
 
             _plexService.GetAlbum(album).ContinueWith(task =>
-                _store.Dispatch(new SelectAlbum(task.Result)));
+                _store.Dispatch(new SelectAlbum(task.Result)),
+                TaskScheduler.FromCurrentSynchronizationContext());
         }
     }
 }

@@ -41,6 +41,7 @@
 
             <userControls:ArtistView />
 
+            <userControls:AlbumView />
 
         </materialDesign:Transitioner>
 

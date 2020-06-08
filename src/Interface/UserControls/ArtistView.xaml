@@ -57,6 +57,7 @@
                                 Height="100"
                                 Background="{StaticResource BackgroundColor1}"
                                 DockPanel.Dock="Top"
+                                PreviewMouseDown="AlbumClick"
                                 Style="{StaticResource LargeButton}">
                                 <Image RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding ThumbnailUrl}" />
                                 <Button.Effect>
