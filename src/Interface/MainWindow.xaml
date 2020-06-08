@@ -35,13 +35,38 @@
         </UniformGrid>
 
         <!--  ARTIST LIST  -->
+
         <materialDesign:Transitioner x:Name="TransitionerMenu" SelectedIndex="0">
 
-            <userControls:ArtistListView />
+            <materialDesign:TransitionerSlide>
+                <materialDesign:TransitionerSlide.BackwardWipe>
+                    <materialDesign:SlideWipe Direction="Right" />
+                </materialDesign:TransitionerSlide.BackwardWipe>
+                <materialDesign:TransitionerSlide.ForwardWipe>
+                    <materialDesign:SlideWipe Direction="Left" />
+                </materialDesign:TransitionerSlide.ForwardWipe>
+                <userControls:ArtistListView />
+            </materialDesign:TransitionerSlide>
 
-            <userControls:ArtistView />
+            <materialDesign:TransitionerSlide>
+                <materialDesign:TransitionerSlide.BackwardWipe>
+                    <materialDesign:SlideWipe Direction="Right" />
+                </materialDesign:TransitionerSlide.BackwardWipe>
+                <materialDesign:TransitionerSlide.ForwardWipe>
+                    <materialDesign:SlideWipe Direction="Left" />
+                </materialDesign:TransitionerSlide.ForwardWipe>
+                <userControls:ArtistView />
+            </materialDesign:TransitionerSlide>
 
-            <userControls:AlbumView />
+            <materialDesign:TransitionerSlide>
+                <materialDesign:TransitionerSlide.BackwardWipe>
+                    <materialDesign:SlideWipe Direction="Right" />
+                </materialDesign:TransitionerSlide.BackwardWipe>
+                <materialDesign:TransitionerSlide.ForwardWipe>
+                    <materialDesign:SlideWipe Direction="Left" />
+                </materialDesign:TransitionerSlide.ForwardWipe>
+                <userControls:AlbumView />
+            </materialDesign:TransitionerSlide>
 
         </materialDesign:Transitioner>
 
