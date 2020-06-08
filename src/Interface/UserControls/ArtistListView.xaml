@@ -22,11 +22,12 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <TextBlock
-                        Width="18"
-                        Height="18"
-                        HorizontalAlignment="Center"
+                        Width="14"
+                        Cursor="Hand"
+                        MouseDown="LetterMouseDown"
                         Style="{StaticResource Information}"
-                        Text="{Binding .}" />
+                        Text="{Binding .}"
+                        TextAlignment="Center" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
@@ -74,6 +75,7 @@
                         BorderThickness="{TemplateBinding Border.BorderThickness}"
                         SnapsToDevicePixels="True">
                         <ScrollViewer
+                            x:Name="ScrollViewer"
                             Focusable="False"
                             HorizontalScrollBarVisibility="Hidden"
                             VerticalScrollBarVisibility="Auto">
