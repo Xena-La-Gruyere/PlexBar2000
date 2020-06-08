@@ -5,4 +5,8 @@
     <SolidColorBrush x:Key="BackgroundColor1" Color="#1E1E1E" />
     <SolidColorBrush x:Key="BackgroundColor2" Color="#2D2D30" />
     <SolidColorBrush x:Key="BackgroundColor3" Color="#333333" />
+    <LinearGradientBrush x:Key="BackgroundColorGradient12" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0.9" Color="#1E1E1E" />
+        <GradientStop Color="#2D2D30" />
+    </LinearGradientBrush>
 </ResourceDictionary>

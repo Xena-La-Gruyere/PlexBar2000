@@ -3,7 +3,9 @@ using System.Reactive.Linq;
 using ReactiveUI;
 using Splat;
 using System;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using Interface.UIHelper;
 
 namespace Interface.UserControls
 {
@@ -38,6 +40,10 @@ namespace Interface.UserControls
                     .Subscribe(abums => AlbumList.ItemsSource = abums)
                     .DisposeWith(dispose);
             });
+        }
+        private void MainWindow_OnMouseMove(object sender, MouseEventArgs e)
+        {
+            e.DragMoveWindow(this);
         }
     }
 }

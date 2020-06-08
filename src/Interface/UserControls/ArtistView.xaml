@@ -4,8 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:interface="clr-namespace:Interface"
-    xmlns:local="clr-namespace:Interface.UserControls"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:reactiveUi="http://reactiveui.net"
     d:DesignHeight="450"
@@ -14,13 +12,15 @@
     mc:Ignorable="d">
     <DockPanel>
         <StackPanel
-            Margin="2,2,2,5"
+            Margin="2,2,2,10"
+            Background="{StaticResource BackgroundColorGradient12}"
             DockPanel.Dock="Top"
+            MouseMove="MainWindow_OnMouseMove"
             Orientation="Horizontal">
             <Grid
                 Width="80"
                 Height="80"
-                Margin="5,1,15,1">
+                Margin="5,5,15,1">
                 <Grid.OpacityMask>
                     <VisualBrush Visual="{Binding ElementName=BorderMask}" />
                 </Grid.OpacityMask>

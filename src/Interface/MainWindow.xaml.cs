@@ -58,11 +58,5 @@ namespace Interface
         }
 
 
-        private void MainWindow_OnMouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-                DragMove();
-            e.Handled = false;
-        }
     }
 }
