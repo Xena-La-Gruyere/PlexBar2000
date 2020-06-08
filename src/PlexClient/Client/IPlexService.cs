@@ -13,6 +13,8 @@ namespace PlexClient.Client
 
         Task<ArtistDetail> GetArtist(string ratingKey);
 
-        Task<byte[]> GetThumbnail(string resource);
+        Task<AlbumDetail> GetAlbum(string ratingKey);
+
+        Task<byte[]> GetResource(string resource);
     }
 }

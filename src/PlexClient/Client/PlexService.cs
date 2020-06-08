@@ -57,20 +57,26 @@ namespace PlexClient.Client
             return JsonSerializer.Deserialize<AllArtists>(await response.Content.ReadAsStringAsync());
         }
 
-        public async Task<ArtistDetail> GetArtist(string ratingKey)
+        private async Task<T> GetChildren<T>(string ratingKey)
         {
-            _logger.LogDebug($"{nameof(GetArtist)} called with {nameof(ratingKey)}={ratingKey}");
+            _logger.LogDebug($"{nameof(GetChildren)}<{typeof(T).Name}> called with {nameof(ratingKey)}={ratingKey}");
 
             var requestUri = QueryHelpers.AddQueryString($"library/metadata/{ratingKey}/children", "X-Plex-Token", _plexToken);
 
             using var response = await _client.GetAsync(requestUri);
             response.EnsureSuccessStatusCode();
-            return JsonSerializer.Deserialize<ArtistDetail>(await response.Content.ReadAsStringAsync());
+            return JsonSerializer.Deserialize<T>(await response.Content.ReadAsStringAsync());
         }
 
-        public async Task<byte[]> GetThumbnail(string resource)
+        public async Task<ArtistDetail> GetArtist(string ratingKey)
+            => await GetChildren<ArtistDetail>(ratingKey);
+
+        public async Task<AlbumDetail> GetAlbum(string ratingKey)
+            => await GetChildren<AlbumDetail>(ratingKey);
+
+        public async Task<byte[]> GetResource(string resource)
         {
-            _logger.LogDebug($"{nameof(GetThumbnail)} called with {nameof(resource)}={resource}");
+            _logger.LogDebug($"{nameof(GetResource)} called with {nameof(resource)}={resource}");
 
             var requestUri = QueryHelpers.AddQueryString(resource, "X-Plex-Token", _plexToken);
 

@@ -1,0 +1,79 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Text.Json.Serialization;
+
+namespace PlexClient.Client.Models
+{
+    public partial class Track
+    {
+        [JsonPropertyName("ratingKey")]
+        public string RatingKey { get; set; }
+
+        [JsonPropertyName("key")]
+        public string Key { get; set; }
+
+        [JsonPropertyName("parentRatingKey")]
+        public string ParentRatingKey { get; set; }
+
+        [JsonPropertyName("grandparentRatingKey")]
+        public string GrandparentRatingKey { get; set; }
+
+        [JsonPropertyName("guid")]
+        public string Guid { get; set; }
+
+        [JsonPropertyName("parentGuid")]
+        public string ParentGuid { get; set; }
+
+        [JsonPropertyName("grandparentGuid")]
+        public string GrandparentGuid { get; set; }
+
+        [JsonPropertyName("type")]
+        public string Type { get; set; }
+
+        [JsonPropertyName("title")]
+        public string Title { get; set; }
+
+        [JsonPropertyName("grandparentKey")]
+        public string GrandparentKey { get; set; }
+
+        [JsonPropertyName("parentKey")]
+        public string ParentKey { get; set; }
+
+        [JsonPropertyName("grandparentTitle")]
+        public string GrandparentTitle { get; set; }
+
+        [JsonPropertyName("parentTitle")]
+        public string ParentTitle { get; set; }
+
+        [JsonPropertyName("summary")]
+        public string Summary { get; set; }
+
+        [JsonPropertyName("index")]
+        public long Index { get; set; }
+
+        [JsonPropertyName("parentIndex")]
+        public long ParentIndex { get; set; }
+
+        [JsonPropertyName("thumb")]
+        public string Thumb { get; set; }
+
+        [JsonPropertyName("parentThumb")]
+        public string ParentThumb { get; set; }
+
+        [JsonPropertyName("grandparentThumb")]
+        public string GrandparentThumb { get; set; }
+
+        [JsonPropertyName("duration")]
+        public long Duration { get; set; }
+
+        [JsonPropertyName("addedAt")]
+        public long AddedAt { get; set; }
+
+        [JsonPropertyName("updatedAt")]
+        public long UpdatedAt { get; set; }
+
+        [JsonPropertyName("Media")]
+        public Media[] Media { get; set; }
+    }
+}

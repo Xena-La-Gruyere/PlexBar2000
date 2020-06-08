@@ -374,12 +374,121 @@ namespace Test
 
         #endregion
 
-
-        #region GetThumbnail
+        #region GetArtist
 
         [Theory]
         [Startup.InlineAutoFakeDataAttribute]
-        public async Task GetThumbnail_request_should_be_GET_method(
+        public async Task GetAlbum_request_should_be_GET_method(
+            AlbumDetail result,
+            string ratingKey,
+            [Frozen] Startup.FakeHttpMessageHandler handler,
+            PlexService sut)
+        {
+            // Arrange
+            HttpRequestMessage request = null;
+            A.CallTo(() => handler.Send(A<HttpRequestMessage>._))
+                .Invokes((HttpRequestMessage r) => request = r)
+                .Returns(
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new ByteArrayContent(JsonSerializer.SerializeToUtf8Bytes(result)),
+                    });
+
+            // Act
+            var valueResult = await sut.GetAlbum(ratingKey);
+
+            // Assert
+            request.Should().NotBeNull();
+            request.Method.Should().Be(HttpMethod.Get);
+        }
+
+        [Theory]
+        [Startup.InlineAutoFakeDataAttribute]
+        public async Task GetAlbum_request_should_have_PlexToken(
+            AlbumDetail result,
+            string ratingKey,
+            [Frozen] IOptions<PlexOptions> options,
+            [Frozen] Startup.FakeHttpMessageHandler handler,
+            PlexService sut)
+        {
+            // Arrange
+            HttpRequestMessage request = null;
+            A.CallTo(() => handler.Send(A<HttpRequestMessage>._))
+                .Invokes((HttpRequestMessage r) => request = r)
+                .Returns(
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new ByteArrayContent(JsonSerializer.SerializeToUtf8Bytes(result)),
+                    });
+
+            // Act
+            var valueResult = await sut.GetAlbum(ratingKey);
+
+            // Assert
+            QueryHelpers.ParseQuery(request.RequestUri.Query)
+                .Should()
+                .ContainKey("X-Plex-Token")
+                .WhichValue.Should().Equal(options.Value.PlexToken);
+        }
+
+        [Theory]
+        [Startup.InlineAutoFakeDataAttribute]
+        public async Task GetAlbum_request_resource_should_be_library_metadata_key_children(
+            AlbumDetail result,
+            string ratingKey,
+            [Frozen] Startup.FakeHttpMessageHandler handler,
+            PlexService sut)
+        {
+            // Arrange
+            HttpRequestMessage request = null;
+            A.CallTo(() => handler.Send(A<HttpRequestMessage>._))
+                .Invokes((HttpRequestMessage r) => request = r)
+                .Returns(
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new ByteArrayContent(JsonSerializer.SerializeToUtf8Bytes(result)),
+                    });
+
+            // Act
+            var valueResult = await sut.GetAlbum(ratingKey);
+
+            // Assert
+            request.RequestUri.AbsolutePath.Should().EndWith($"/library/metadata/{ratingKey}/children");
+        }
+
+        [Theory]
+        [Startup.InlineAutoFakeDataAttribute]
+        public async Task GetAlbum_should_be_correctly_parsed(
+            AlbumDetail result,
+            string ratingKey,
+            [Frozen] Startup.FakeHttpMessageHandler handler,
+            PlexService sut)
+        {
+            // Arrange
+            HttpRequestMessage request = null;
+            A.CallTo(() => handler.Send(A<HttpRequestMessage>._))
+                .Invokes((HttpRequestMessage r) => request = r)
+                .Returns(
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new ByteArrayContent(JsonSerializer.SerializeToUtf8Bytes(result)),
+                    });
+
+            // Act
+            var valueResult = await sut.GetAlbum(ratingKey);
+
+            // Assert
+            valueResult.Should().BeEquivalentTo(result);
+        }
+
+        #endregion
+
+
+        #region GetResource
+
+        [Theory]
+        [Startup.InlineAutoFakeDataAttribute]
+        public async Task GetResource_request_should_be_GET_method(
             byte[] result,
             string thumbnailResource,
             [Frozen] Startup.FakeHttpMessageHandler handler,
@@ -396,7 +505,7 @@ namespace Test
                     });
 
             // Act
-            var valueResult = await sut.GetThumbnail(thumbnailResource);
+            var valueResult = await sut.GetResource(thumbnailResource);
 
             // Assert
             request.Should().NotBeNull();
@@ -405,7 +514,7 @@ namespace Test
 
         [Theory]
         [Startup.InlineAutoFakeDataAttribute]
-        public async Task GetThumbnail_request_should_have_PlexToken(
+        public async Task GetResource_request_should_have_PlexToken(
             byte[] result,
             string thumbnailResource,
             [Frozen] IOptions<PlexOptions> options,
@@ -423,7 +532,7 @@ namespace Test
                     });
 
             // Act
-            var valueResult = await sut.GetThumbnail(thumbnailResource);
+            var valueResult = await sut.GetResource(thumbnailResource);
 
             // Assert
             QueryHelpers.ParseQuery(request.RequestUri.Query)
@@ -434,7 +543,7 @@ namespace Test
 
         [Theory]
         [Startup.InlineAutoFakeDataAttribute]
-        public async Task GetThumbnail_request_resource_should_be_thumbnail_ressource(
+        public async Task GetResource_request_resource_should_be_thumbnail_ressource(
             byte[] result,
             string thumbnailResource,
             [Frozen] Startup.FakeHttpMessageHandler handler,
@@ -451,7 +560,7 @@ namespace Test
                     });
 
             // Act
-            var valueResult = await sut.GetThumbnail(thumbnailResource);
+            var valueResult = await sut.GetResource(thumbnailResource);
 
             // Assert
             request.RequestUri.AbsolutePath.Should().EndWith(thumbnailResource);
@@ -459,7 +568,7 @@ namespace Test
 
         [Theory]
         [Startup.InlineAutoFakeDataAttribute]
-        public async Task GetThumbnail_should_be_correctly_parsed(
+        public async Task GetResource_should_be_correctly_parsed(
             byte[] result,
             string thumbnailResource,
             [Frozen] Startup.FakeHttpMessageHandler handler,
@@ -476,7 +585,7 @@ namespace Test
                     });
 
             // Act
-            var valueResult = await sut.GetThumbnail(thumbnailResource);
+            var valueResult = await sut.GetResource(thumbnailResource);
 
             // Assert
             valueResult.Should().BeEquivalentTo(result);

@@ -54,7 +54,7 @@ namespace Test
                 fixture.Register(() => A.Fake<FakeHttpMessageHandler>(x => x.Strict().CallsBaseMethods()));
                 fixture.Register<FakeHttpMessageHandler, Uri, HttpClient>(
                     (handler, baseAdress) => new HttpClient(handler) { BaseAddress = baseAdress });
-                fixture.Register(A.Fake<ILogger<TestBeefWebClient>>);
+
                 fixture.Register(A.Fake<ILogger<PlexService>>);
                 fixture.Register<IOptions<PlexOptions>>(() => new OptionsWrapper<PlexOptions>(new PlexOptions
                 {

@@ -20,6 +20,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
     <PackageReference Include="Moq" Version="4.13.1" />
     <PackageReference Include="System.IO.Abstractions.TestingHelpers" Version="7.0.7" />
+    <PackageReference Include="System.Text.Json" Version="4.7.2" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.analyzers" Version="0.10.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
@@ -29,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\BeefWebClient\BeefWebClient.csproj" />
     <ProjectReference Include="..\..\src\PlexClient\PlexClient.csproj" />
   </ItemGroup>
 
