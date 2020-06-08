@@ -26,6 +26,10 @@ namespace ApplicationState.Reducers
                     builder.MenuIndex = 1;
                     builder.Artist = selectArtist.Artist;
                     break;
+                case SelectAlbum selectAlbum:
+                    builder.MenuIndex = 2;
+                    builder.Album = selectAlbum.Album;
+                    break;
             }
 
             return builder.Build();

@@ -8,10 +8,12 @@ namespace ApplicationState
     {
         IObservable<AppStateEnum> AppState { get; }
         IObservable<ArtistModel> Artist { get; }
+        IObservable<AlbumModel> Album { get; }
         IObservable<int> MenuIndex { get; }
 
         void ToggleState();
         void PreviousMenu();
         void SelectArtist(ArtistModel artist);
+        void SelectAlbum(AlbumModel album);
     }
 }

@@ -22,20 +22,15 @@ namespace PlexClient.Library
         public IObservable<char[]> SearchLetters { get; }
         private readonly ISubject<char[]> _searchLetters;
 
-        public IObservable<ArtistModel> Artist { get; }
-        private readonly ISubject<ArtistModel> _artist;
-
         private Directory _section;
         public PlexLibraryService(IPlexService plexService)
         {
             _plexService = plexService;
             _artists = new ReplaySubject<ArtistModel[]>(1);
             _searchLetters = new ReplaySubject<char[]>(1);
-            _artist = new ReplaySubject<ArtistModel>(1);
 
             SearchLetters = _searchLetters;
             Artists = _artists;
-            Artist = _artist;
         }
 
         public async Task Initialize()
@@ -115,7 +110,7 @@ namespace PlexClient.Library
         private AlbumModel ToAlbumModel(Album album)
             => new AlbumModel(album, _plexService.GetThumbnailUri(album.Thumb));
 
-        public async Task GetArtist(ArtistModel artistModel)
+        public async Task<ArtistModel> GetArtist(ArtistModel artistModel)
         {
             var artist = await _plexService.GetArtist(artistModel.Key);
 
@@ -127,7 +122,22 @@ namespace PlexClient.Library
                     .ToImmutableArray()
             };
 
-            _artist.OnNext(builder.Build());
+            return builder.Build();
+        }
+
+        public async Task<AlbumModel> GetAlbum(AlbumModel albumModel)
+        {
+            var album = await _plexService.GetAlbum(albumModel.Key);
+
+            var builder = new AlbumModel.Builder(albumModel)
+            {
+                Tracks = album.MediaContainer.Tracks
+                    .OrderBy(t => t.Index)
+                    .Select(t => new TrackModel(t))
+                    .ToImmutableArray()
+            };
+
+            return builder.Build();
         }
     }
 }

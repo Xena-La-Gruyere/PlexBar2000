@@ -16,16 +16,13 @@ namespace ApplicationState
         private readonly IStore<AppState> _store;
         public IObservable<AppStateEnum> AppState { get; }
         public IObservable<ArtistModel> Artist { get; }
+        public IObservable<AlbumModel> Album { get; }
         public IObservable<int> MenuIndex { get; }
 
         public ApplicationStateService(IPlexLibraryService plexService)
         {
             _plexService = plexService;
             _store = new Store<AppState>(AppStateReducer.Execute, new AppState());
-
-            _plexService.Artist.DistinctUntilChanged()
-                .Where(a => a != null)
-                .Subscribe(artist => _store.Dispatch(new SelectArtist(artist)));
 
             var appStateConn = _store.Select(s => s.State)
                 .DistinctUntilChanged()
@@ -37,6 +34,11 @@ namespace ApplicationState
                 .Replay(1);
             Artist = artistConn;
 
+            var albumConn = _store.Select(s => s.Album)
+                .DistinctUntilChanged()
+                .Replay(1);
+            Album = albumConn;
+
             var menuIndexConn = _store.Select(s => s.MenuIndex)
                 .DistinctUntilChanged()
                 .Replay(1);
@@ -44,6 +46,7 @@ namespace ApplicationState
 
             appStateConn.Connect();
             artistConn.Connect();
+            albumConn.Connect();
             menuIndexConn.Connect();
         }
 
@@ -61,7 +64,16 @@ namespace ApplicationState
         {
             _store.Dispatch(new SelectArtist(artist));
 
-            _plexService.GetArtist(artist);
+            _plexService.GetArtist(artist).ContinueWith(task => 
+                _store.Dispatch(new SelectArtist(task.Result)));
+        }
+
+        public void SelectAlbum(AlbumModel album)
+        {
+            _store.Dispatch(new SelectAlbum(album));
+
+            _plexService.GetAlbum(album).ContinueWith(task =>
+                _store.Dispatch(new SelectAlbum(task.Result)));
         }
     }
 }
