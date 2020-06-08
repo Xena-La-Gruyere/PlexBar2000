@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:interface="clr-namespace:Interface"
     xmlns:local="clr-namespace:Interface.UserControls"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:reactiveUi="http://reactiveui.net"
     d:DesignHeight="450"
@@ -19,7 +20,7 @@
             <Grid
                 Width="80"
                 Height="80"
-                Margin="5,1,10,1">
+                Margin="5,1,15,1">
                 <Grid.OpacityMask>
                     <VisualBrush Visual="{Binding ElementName=BorderMask}" />
                 </Grid.OpacityMask>
@@ -28,11 +29,19 @@
                     Background="{StaticResource BackgroundColor3}"
                     CornerRadius="40" />
                 <Image x:Name="Thumbnail" RenderOptions.BitmapScalingMode="HighQuality" />
+                <Grid.Effect>
+                    <DropShadowEffect
+                        BlurRadius="10"
+                        Direction="0"
+                        Opacity="0.8"
+                        ShadowDepth="0"
+                        Color="Black" />
+                </Grid.Effect>
             </Grid>
             <TextBlock x:Name="ArtistTitle" FontSize="15" />
         </StackPanel>
 
-        <ScrollViewer>
+        <ScrollViewer Focusable="False">
 
             <ItemsControl x:Name="AlbumList" VerticalAlignment="Top">
                 <ItemsControl.ItemsPanel>
@@ -43,22 +52,28 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <DockPanel Margin="0,2">
+                            <Button
+                                Width="100"
+                                Height="100"
+                                Background="{StaticResource BackgroundColor1}"
+                                DockPanel.Dock="Top"
+                                Style="{StaticResource LargeButton}">
+                                <Image RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding ThumbnailUrl}" />
+                                <Button.Effect>
+                                    <DropShadowEffect
+                                        BlurRadius="10"
+                                        Direction="0"
+                                        Opacity="0.8"
+                                        ShadowDepth="0"
+                                        Color="Black" />
+                                </Button.Effect>
+                            </Button>
                             <TextBlock
                                 HorizontalAlignment="Center"
                                 DockPanel.Dock="Bottom"
                                 Style="{StaticResource Information}"
                                 Text="{Binding Year}" />
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                DockPanel.Dock="Bottom"
-                                Text="{Binding Title}" />
-                            <Button
-                                Width="100"
-                                Height="100"
-                                Background="{StaticResource BackgroundColor1}"
-                                Style="{StaticResource LargeButton}">
-                                <Image RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding ThumbnailUrl}" />
-                            </Button>
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding Title}" />
                         </DockPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

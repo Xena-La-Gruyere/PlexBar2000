@@ -3,7 +3,7 @@
         <ResourceDictionary Source="Colors.xaml" />
         <ResourceDictionary Source="TextBlock.xaml" />
         <ResourceDictionary Source="Button.xaml" />
-        <!--<ResourceDictionary Source="ScrollBar.xaml" />-->
+        <ResourceDictionary Source="ScrollBar.xaml" />
         <ResourceDictionary Source="Tooltip.xaml" />
         <ResourceDictionary Source="Decorators\RippleEffect.xaml" />
     </ResourceDictionary.MergedDictionaries>

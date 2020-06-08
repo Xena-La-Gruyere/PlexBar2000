@@ -38,13 +38,13 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Button
-                        Height="52"
+                        Height="42"
                         Click="ArtistOnClick"
                         Style="{StaticResource LargeButton}">
                         <StackPanel Orientation="Horizontal">
                             <Grid
-                                Width="50"
-                                Height="50"
+                                Width="40"
+                                Height="40"
                                 Margin="5,1,10,1">
                                 <Grid.OpacityMask>
                                     <VisualBrush Visual="{Binding ElementName=BorderMask}" />
@@ -52,7 +52,7 @@
                                 <Border
                                     x:Name="BorderMask"
                                     Background="{StaticResource BackgroundColor3}"
-                                    CornerRadius="25" />
+                                    CornerRadius="20" />
                                 <Image RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding ThumbnailUrl}" />
                             </Grid>
                             <TextBlock FontSize="15" Text="{Binding Path=Title}" />
@@ -73,7 +73,10 @@
                         BorderBrush="{TemplateBinding Border.BorderBrush}"
                         BorderThickness="{TemplateBinding Border.BorderThickness}"
                         SnapsToDevicePixels="True">
-                        <ScrollViewer Padding="{TemplateBinding Control.Padding}" Focusable="False">
+                        <ScrollViewer
+                            Focusable="False"
+                            HorizontalScrollBarVisibility="Hidden"
+                            VerticalScrollBarVisibility="Auto">
                             <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
                         </ScrollViewer>
                     </Border>
