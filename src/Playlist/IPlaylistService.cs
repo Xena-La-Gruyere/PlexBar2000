@@ -6,10 +6,10 @@ namespace Playlist
 {
     public interface IPlaylistService
     {
-        IObservable<ImmutableArray<TrackModel>> Tracks { get; }
+        IObservable<ImmutableArray<AlbumModel>> Albums { get; }
 
-        void AddTracks(params TrackModel[] tracks);
-        void RemoveTracks(params TrackModel[] tracks);
+        void AddAlbum(AlbumModel album);
+        void RemoveAlbum(AlbumModel album);
         void Clear();
     }
 }

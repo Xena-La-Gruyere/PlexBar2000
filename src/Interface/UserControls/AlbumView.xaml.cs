@@ -34,6 +34,11 @@ namespace Interface.UserControls
 
             this.WhenActivated(dispose =>
             {
+                PlayButton.Events().PreviewMouseLeftButtonDown
+                    .WithLatestFrom(ViewModel.Album, (_, a) => a)
+                    .Subscribe(ViewModel.AddPlaylistAlbum)
+                    .DisposeWith(dispose);
+
                 ViewModel.Album
                     .Select(a => a?.Title)
                     .DistinctUntilChanged()

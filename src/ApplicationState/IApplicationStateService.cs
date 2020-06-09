@@ -13,6 +13,8 @@ namespace ApplicationState
 
         void ToggleState();
         void PreviousMenu();
+        void HomeMenu();
+        void PlaylistMenu();
         void SelectArtist(ArtistModel artist);
         void SelectAlbum(AlbumModel album);
     }

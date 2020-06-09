@@ -30,6 +30,12 @@ namespace ApplicationState.Reducers
                     builder.MenuIndex = 2;
                     builder.Album = selectAlbum.Album;
                     break;
+                case HomeMenu _:
+                    builder.MenuIndex = 0;
+                    break;
+                case PlaylistMenu _:
+                    builder.MenuIndex = 3;
+                    break;
             }
 
             return builder.Build();

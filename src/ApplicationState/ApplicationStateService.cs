@@ -61,6 +61,16 @@ namespace ApplicationState
             _store.Dispatch(new PreviousMenu());
         }
 
+        public void HomeMenu()
+        {
+            _store.Dispatch(new HomeMenu());
+        }
+
+        public void PlaylistMenu()
+        {
+            _store.Dispatch(new PlaylistMenu());
+        }
+
         public void SelectArtist(ArtistModel artist)
         {
             _store.Dispatch(new SelectArtist(artist));

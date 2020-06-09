@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:interface="clr-namespace:Interface"
     xmlns:local="clr-namespace:Interface.UserControls"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:reactiveUi="http://reactiveui.net"
     d:DesignHeight="450"
@@ -12,40 +13,43 @@
     x:TypeArguments="interface:MainViewModel"
     mc:Ignorable="d">
     <DockPanel>
-        <StackPanel
+        <DockPanel
             Margin="2,2,2,10"
             Background="{StaticResource BackgroundColorGradient12}"
             DockPanel.Dock="Top"
-            MouseMove="MainWindow_OnMouseMove"
-            Orientation="Horizontal">
-            <Grid
-                Width="80"
-                Height="80"
-                Margin="5,5,15,1">
-                <Grid.OpacityMask>
-                    <VisualBrush Visual="{Binding ElementName=BorderMask}" />
-                </Grid.OpacityMask>
-                <Border
-                    x:Name="BorderMask"
-                    Background="{StaticResource BackgroundColor3}"
-                    CornerRadius="5" />
-                <Image x:Name="Thumbnail" RenderOptions.BitmapScalingMode="HighQuality" />
-                <Grid.Effect>
-                    <DropShadowEffect
-                        BlurRadius="10"
-                        Direction="0"
-                        Opacity="0.8"
-                        ShadowDepth="0"
-                        Color="Black" />
-                </Grid.Effect>
-            </Grid>
-            <UniformGrid Columns="1">
-                <TextBlock x:Name="AlbumTitle" FontSize="15" />
-                <TextBlock x:Name="AlbumYear" />
-                <TextBlock x:Name="CodecBitrate" Style="{StaticResource Information}" />
-            </UniformGrid>
-        </StackPanel>
-
+            MouseMove="MainWindow_OnMouseMove">
+            <Button x:Name="PlayButton" DockPanel.Dock="Right">
+                <materialDesign:PackIcon Kind="Play" />
+            </Button>
+            <StackPanel Orientation="Horizontal">
+                <Grid
+                    Width="80"
+                    Height="80"
+                    Margin="5,5,15,1">
+                    <Grid.OpacityMask>
+                        <VisualBrush Visual="{Binding ElementName=BorderMask}" />
+                    </Grid.OpacityMask>
+                    <Border
+                        x:Name="BorderMask"
+                        Background="{StaticResource BackgroundColor3}"
+                        CornerRadius="5" />
+                    <Image x:Name="Thumbnail" RenderOptions.BitmapScalingMode="HighQuality" />
+                    <Grid.Effect>
+                        <DropShadowEffect
+                            BlurRadius="10"
+                            Direction="0"
+                            Opacity="0.8"
+                            ShadowDepth="0"
+                            Color="Black" />
+                    </Grid.Effect>
+                </Grid>
+                <UniformGrid Columns="1">
+                    <TextBlock x:Name="AlbumTitle" FontSize="15" />
+                    <TextBlock x:Name="AlbumYear" />
+                    <TextBlock x:Name="CodecBitrate" Style="{StaticResource Information}" />
+                </UniformGrid>
+            </StackPanel>
+        </DockPanel>
         <ScrollViewer Focusable="False">
 
             <ItemsControl x:Name="TrackList" VerticalAlignment="Top">

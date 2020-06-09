@@ -26,11 +26,11 @@
             <Button x:Name="ButtonPrevious">
                 <materialDesign:PackIcon Kind="ChevronLeft" />
             </Button>
-            <Button>
+            <Button x:Name="HomeButton">
                 <materialDesign:PackIcon Kind="Home" />
             </Button>
-            <Button>
-                <materialDesign:PackIcon Kind="Search" />
+            <Button x:Name="PlaylistButton">
+                <materialDesign:PackIcon Kind="PlaylistMusic" />
             </Button>
         </UniformGrid>
 
@@ -66,6 +66,16 @@
                     <materialDesign:SlideWipe Direction="Left" />
                 </materialDesign:TransitionerSlide.ForwardWipe>
                 <userControls:AlbumView />
+            </materialDesign:TransitionerSlide>
+
+            <materialDesign:TransitionerSlide>
+                <materialDesign:TransitionerSlide.BackwardWipe>
+                    <materialDesign:SlideWipe Direction="Right" />
+                </materialDesign:TransitionerSlide.BackwardWipe>
+                <materialDesign:TransitionerSlide.ForwardWipe>
+                    <materialDesign:SlideWipe Direction="Left" />
+                </materialDesign:TransitionerSlide.ForwardWipe>
+                <userControls:PlaylistView />
             </materialDesign:TransitionerSlide>
 
         </materialDesign:Transitioner>

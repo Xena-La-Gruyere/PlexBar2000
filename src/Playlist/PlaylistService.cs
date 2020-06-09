@@ -8,28 +8,28 @@ namespace Playlist
 {
     public class PlaylistService : IPlaylistService
     {
-        public IObservable<ImmutableArray<TrackModel>> Tracks { get; set; }
-        private readonly BehaviorSubject<ImmutableArray<TrackModel>> _tracks;
+        public IObservable<ImmutableArray<AlbumModel>> Albums { get; set; }
+        private readonly BehaviorSubject<ImmutableArray<AlbumModel>> _albums;
 
         public PlaylistService()
         {
-            _tracks = new BehaviorSubject<ImmutableArray<TrackModel>>(ImmutableArray<TrackModel>.Empty);
-            Tracks = _tracks.DistinctUntilChanged();
+            _albums = new BehaviorSubject<ImmutableArray<AlbumModel>>(ImmutableArray<AlbumModel>.Empty);
+            Albums = _albums.DistinctUntilChanged();
         }
 
-        public void AddTracks(params TrackModel[] tracks)
+        public void AddAlbum(AlbumModel album)
         {
-            _tracks.OnNext(_tracks.Value.AddRange(tracks));
+            _albums.OnNext(_albums.Value.Add(album));
         }
 
-        public void RemoveTracks(params TrackModel[] tracks)
+        public void RemoveAlbum(AlbumModel album)
         {
-            _tracks.OnNext(_tracks.Value.RemoveRange(tracks));
+            _albums.OnNext(_albums.Value.Add(album));
         }
 
         public void Clear()
         {
-            _tracks.OnNext(_tracks.Value.RemoveRange(ImmutableArray<TrackModel>.Empty));
+            _albums.OnNext(_albums.Value.RemoveRange(ImmutableArray<AlbumModel>.Empty));
         }
     }
 }

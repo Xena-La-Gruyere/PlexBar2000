@@ -33,6 +33,14 @@ namespace Interface
                         .PreviewMouseLeftButtonDown
                         .Subscribe(ViewModel.ClickPrevious)
                         .DisposeWith(dispose);
+                    HomeButton.Events()
+                        .PreviewMouseLeftButtonDown
+                        .Subscribe(ViewModel.HomeButton)
+                        .DisposeWith(dispose);
+                    PlaylistButton.Events()
+                        .PreviewMouseLeftButtonDown
+                        .Subscribe(ViewModel.PlaylistButton)
+                        .DisposeWith(dispose);
 
                     ViewModel.MenuIndex
                         .Subscribe(ind => TransitionerMenu.SelectedIndex = ind)
