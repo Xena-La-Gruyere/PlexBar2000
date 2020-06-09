@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationState", "src\App
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playlist", "src\Playlist\Playlist.csproj", "{F654EEE3-7510-4077-83C1-58364708AFFF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Player", "src\Player\Player.csproj", "{3D4151E5-ADEC-43A8-952F-E3B7262CD686}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,14 @@ Global
 		{F654EEE3-7510-4077-83C1-58364708AFFF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F654EEE3-7510-4077-83C1-58364708AFFF}.Release|x64.ActiveCfg = Release|Any CPU
 		{F654EEE3-7510-4077-83C1-58364708AFFF}.Release|x64.Build.0 = Release|Any CPU
+		{3D4151E5-ADEC-43A8-952F-E3B7262CD686}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D4151E5-ADEC-43A8-952F-E3B7262CD686}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D4151E5-ADEC-43A8-952F-E3B7262CD686}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3D4151E5-ADEC-43A8-952F-E3B7262CD686}.Debug|x64.Build.0 = Debug|Any CPU
+		{3D4151E5-ADEC-43A8-952F-E3B7262CD686}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D4151E5-ADEC-43A8-952F-E3B7262CD686}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D4151E5-ADEC-43A8-952F-E3B7262CD686}.Release|x64.ActiveCfg = Release|Any CPU
+		{3D4151E5-ADEC-43A8-952F-E3B7262CD686}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
