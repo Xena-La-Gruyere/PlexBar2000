@@ -45,4 +45,28 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style
+        x:Key="CenterButton"
+        BasedOn="{StaticResource {x:Type Button}}"
+        TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <decorators:RippleEffectDecorator
+                        x:Name="Border"
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}"
+                        BorderThickness="0"
+                        HighlightBackground="#E6E6E6"
+                        RipppleCenter="True"
+                        TextBlock.Foreground="#E6E6E6">
+                        <Viewbox>
+                            <ContentPresenter />
+                        </Viewbox>
+                    </decorators:RippleEffectDecorator>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

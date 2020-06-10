@@ -31,6 +31,18 @@ namespace Interface.Styles.Decorators
             DependencyProperty.Register("HighlightBackground", typeof(Brush), typeof(RippleEffectDecorator),
                 new PropertyMetadata(Brushes.White));
 
+
+        public bool RipppleCenter
+        {
+            get => (bool)GetValue(RipppleCenterProperty);
+            set => SetValue(RipppleCenterProperty, value);
+        }
+
+        // Using a DependencyProperty as the backing store for HighlightBackground.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty RipppleCenterProperty =
+            DependencyProperty.Register("RipppleCenter", typeof(bool), typeof(RippleEffectDecorator), new PropertyMetadata(false));
+
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -41,17 +53,21 @@ namespace Interface.Styles.Decorators
 
             this.AddHandler(MouseDownEvent, new RoutedEventHandler((sender, e) =>
             {
-                var targetWidth = Math.Max(ActualWidth, ActualHeight) * 2;
-                var mousePosition = (e as MouseButtonEventArgs).GetPosition(this);
-                var startMargin = new Thickness(mousePosition.X, mousePosition.Y, 0, 0);
+                var targetWidth = RipppleCenter ?
+                    Math.Min(ActualWidth, ActualHeight) :
+                    Math.Max(ActualWidth, ActualHeight) * 2;
+                var startPosition = RipppleCenter ? 
+                    new Point(ActualWidth / 2, ActualHeight / 2) :
+                    (e as MouseButtonEventArgs).GetPosition(this);
+                var startMargin = new Thickness(startPosition.X, startPosition.Y, 0, 0);
                 //set initial margin to mouse position
                 ellipse.Margin = startMargin;
                 //set the to value of the animation that animates the width to the target width
                 (animation.Children[0] as DoubleAnimation).To = targetWidth;
                 //set the to and from values of the animation that animates the distance relative to the container (grid)
                 (animation.Children[1] as ThicknessAnimation).From = startMargin;
-                (animation.Children[1] as ThicknessAnimation).To = new Thickness(mousePosition.X - targetWidth / 2,
-                    mousePosition.Y - targetWidth / 2, 0, 0);
+                (animation.Children[1] as ThicknessAnimation).To = new Thickness(startPosition.X - targetWidth / 2,
+                    startPosition.Y - targetWidth / 2, 0, 0);
                 ellipse.BeginStoryboard(animation);
             }), true);
         }
