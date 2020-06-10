@@ -67,6 +67,11 @@ namespace ApplicationState.Reducers
                 case ClearPlaylistAction _:
                     builder.Playlist = ImmutableArray<AlbumModel>.Empty;
                     break;
+
+                // PLAYER
+                case PlayAlbumAction play:
+                    builder.Playlist = ImmutableArray<AlbumModel>.Empty.Add(play.Album);
+                    break;
             }
 
             if (builder.Artists != state.Artists)

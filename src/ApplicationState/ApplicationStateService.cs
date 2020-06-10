@@ -115,8 +115,7 @@ namespace ApplicationState
         {
             _plexService.GetAlbum(album).ContinueWith(task =>
                 {
-                    _store.Dispatch(new AddAlbumPlaylistAction(task.Result));
-                    //TODO play
+                    _store.Dispatch(new PlayAlbumAction(task.Result));
                 },
                 TaskScheduler.FromCurrentSynchronizationContext());
         }
