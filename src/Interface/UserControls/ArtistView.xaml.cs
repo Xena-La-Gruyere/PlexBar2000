@@ -50,8 +50,9 @@ namespace Interface.UserControls
 
         private void AlbumClick(object sender, MouseButtonEventArgs e)
         {
-            if (sender is Button button &&
-                button.DataContext is AlbumModel album)
+            if(e.LeftButton != MouseButtonState.Pressed) return;
+            if (sender is Grid grid &&
+                grid.DataContext is AlbumModel album)
                 ViewModel.ClickAlbum(album);
         }
     }

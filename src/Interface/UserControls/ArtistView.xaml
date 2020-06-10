@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:interface="clr-namespace:Interface"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:reactiveUi="http://reactiveui.net"
     d:DesignHeight="450"
@@ -52,23 +53,37 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <DockPanel Margin="0,2">
-                            <Button
+                            <Grid
                                 Width="100"
                                 Height="100"
                                 Background="{StaticResource BackgroundColor1}"
+                                Cursor="Hand"
                                 DockPanel.Dock="Top"
-                                PreviewMouseDown="AlbumClick"
-                                Style="{StaticResource LargeButton}">
+                                PreviewMouseDown="AlbumClick">
                                 <Image RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding ThumbnailUrl}" />
-                                <Button.Effect>
+                                <Grid.Effect>
                                     <DropShadowEffect
                                         BlurRadius="10"
                                         Direction="0"
                                         Opacity="0.8"
                                         ShadowDepth="0"
                                         Color="Black" />
-                                </Button.Effect>
-                            </Button>
+                                </Grid.Effect>
+                                <Grid.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Cursor="Hand" Header="Play">
+                                            <MenuItem.Icon>
+                                                <materialDesign:PackIcon Kind="Play" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem Cursor="Hand" Header="Add">
+                                            <MenuItem.Icon>
+                                                <materialDesign:PackIcon Kind="PlaylistAdd" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                    </ContextMenu>
+                                </Grid.ContextMenu>
+                            </Grid>
                             <TextBlock
                                 HorizontalAlignment="Center"
                                 DockPanel.Dock="Bottom"
