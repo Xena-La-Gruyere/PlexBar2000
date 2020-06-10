@@ -164,5 +164,10 @@ namespace ApplicationState
         {
             _store.Dispatch(new PauseResumeAction());
         }
+
+        public void ActualAvancement(double avancement)
+        {
+            _store.Dispatch(new RefreshAvancementAction(avancement));
+        }
     }
 }

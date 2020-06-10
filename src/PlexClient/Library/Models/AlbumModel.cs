@@ -10,7 +10,7 @@ namespace PlexClient.Library.Models
 {
     public class AlbumModel
     {
-        public AlbumModel(Album album, string thumbnailUrl, string artist)
+        public AlbumModel(Album album, Uri thumbnailUrl, string artist)
         {
             Key = album.RatingKey;
             Title = album.Title;
@@ -20,7 +20,7 @@ namespace PlexClient.Library.Models
             Tracks = ImmutableArray<TrackModel>.Empty;
         }
 
-        public AlbumModel(string key, string title, string thumbnailUrl, long year, ImmutableArray<TrackModel> tracks, string artist)
+        public AlbumModel(string key, string title, Uri thumbnailUrl, long year, ImmutableArray<TrackModel> tracks, string artist)
         {
             Key = key;
             Title = title;
@@ -33,7 +33,7 @@ namespace PlexClient.Library.Models
         public string Key { get; }
         public string Title { get; }
         public string Artist { get; }
-        public string ThumbnailUrl { get; }
+        public Uri ThumbnailUrl { get; }
         public long Year { get; }
         public ImmutableArray<TrackModel> Tracks { get; }
 
@@ -44,7 +44,7 @@ namespace PlexClient.Library.Models
             public string Key;
             public string Title;
             public string Artist;
-            public string ThumbnailUrl;
+            public Uri ThumbnailUrl;
             public long Year;
             public ImmutableArray<TrackModel> Tracks;
 

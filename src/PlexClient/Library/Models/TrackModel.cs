@@ -1,10 +1,11 @@
-﻿using PlexClient.Client.Models;
+﻿using System;
+using PlexClient.Client.Models;
 
 namespace PlexClient.Library.Models
 {
     public class TrackModel
     {
-        public TrackModel(string title, long index, long duration, string codec, long bitrate, string key, string artist, string album, string thumbnailUrl)
+        public TrackModel(string title, long index, long duration, string codec, long bitrate, string key, string artist, string album, Uri thumbnailUrl, Uri resource)
         {
             Title = title;
             Index = index;
@@ -15,10 +16,12 @@ namespace PlexClient.Library.Models
             Artist = artist;
             Album = album;
             ThumbnailUrl = thumbnailUrl;
+            Resource = resource;
         }
 
-        public TrackModel(Track track, AlbumModel albumModel)
+        public TrackModel(Track track, AlbumModel albumModel, Uri resource)
         {
+            Resource = resource;
             Artist = albumModel.Artist;
             Album = albumModel.Title;
             ThumbnailUrl = albumModel.ThumbnailUrl;
@@ -38,7 +41,8 @@ namespace PlexClient.Library.Models
         public string Codec { get; }
         public long Bitrate { get; }
         public string Key { get; }
-        public string ThumbnailUrl { get; }
+        public Uri ThumbnailUrl { get; }
+        public Uri Resource { get; }
 
         public struct Builder
         {
@@ -52,7 +56,8 @@ namespace PlexClient.Library.Models
             public string Key;
             public string Artist;
             public string Album;
-            public string ThumbnailUrl;
+            public Uri ThumbnailUrl;
+            public Uri Resource;
 
             public Builder(TrackModel track)
             {
@@ -67,6 +72,7 @@ namespace PlexClient.Library.Models
                 Artist = track.Artist;
                 Album = track.Album;
                 ThumbnailUrl = track.ThumbnailUrl;
+                Resource = track.Resource;
             }
 
             bool Equal(TrackModel other)
@@ -79,6 +85,7 @@ namespace PlexClient.Library.Models
                        Artist == other.Artist &&
                        Album == other.Album &&
                        ThumbnailUrl == other.ThumbnailUrl &&
+                       Resource == other.Resource &&
                        Key == other.Key;
             }
 
@@ -86,7 +93,7 @@ namespace PlexClient.Library.Models
             {
                 if (Equal(_track)) return _track;
 
-                return new TrackModel(Title, Index, Duration, Codec, Bitrate, Key, Artist, Album, ThumbnailUrl);
+                return new TrackModel(Title, Index, Duration, Codec, Bitrate, Key, Artist, Album, ThumbnailUrl, Resource);
             }
         }
     }

@@ -29,5 +29,6 @@ namespace ApplicationState
         void ClearPlaylist();
         void LoadArtists();
         void PauseResume();
+        void ActualAvancement(double avancement);
     }
 }

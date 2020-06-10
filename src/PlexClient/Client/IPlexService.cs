@@ -1,11 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using PlexClient.Client.Models;
 
 namespace PlexClient.Client
 {
     public interface IPlexService
     {
-        string GetThumbnailUri(string resource);
+        Uri GetResourceUri(string resource);
 
         Task<Sections> GetSections();
 

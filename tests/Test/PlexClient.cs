@@ -593,10 +593,10 @@ namespace Test
 
         #endregion
 
-        #region GetThumbnailUri
+        #region GetResourceUri
 
         [Fact]
-        public void GetThumbnailUri_should_return_concat_uri()
+        public void GetResourceUri_should_return_concat_uri()
         {
             // Arrange
             var logger = A.Fake<ILogger<PlexService>>();
@@ -607,14 +607,14 @@ namespace Test
             var resource = new Fixture().Create<string>();
 
             // Act
-            var result = sut.GetThumbnailUri(resource);
+            var result = sut.GetResourceUri(resource);
 
             // Assert
-            result.Should().StartWith($"http://server/{resource}");
+            result.AbsolutePath.Should().StartWith($"http://server/{resource}");
         }
 
         [Fact]
-        public void GetThumbnailUri_should_return_concat_uri_with_slash()
+        public void GetResourceUri_should_return_concat_uri_with_slash()
         {
             // Arrange
             var logger = A.Fake<ILogger<PlexService>>();
@@ -625,14 +625,14 @@ namespace Test
             var resource = new Fixture().Create<string>();
 
             // Act
-            var result = sut.GetThumbnailUri(resource);
+            var result = sut.GetResourceUri(resource);
 
             // Assert
-            result.Should().StartWith($"http://server/{resource}");
+            result.AbsolutePath.Should().StartWith($"http://server/{resource}");
         }
 
         [Fact]
-        public void GetThumbnailUri_should_return_valid_uri()
+        public void GetResourceUri_should_be_absolute()
         {
             // Arrange
             var logger = A.Fake<ILogger<PlexService>>();
@@ -643,16 +643,14 @@ namespace Test
             var resource = new Fixture().Create<string>();
 
             // Act
-            var result = sut.GetThumbnailUri(resource);
+            var result = sut.GetResourceUri(resource);
 
             // Assert
-            Func<Uri> test = () => new Uri(result);
-
-            test.Should().NotThrow();
+            result.IsAbsoluteUri.Should().BeTrue();
         }
 
         [Fact]
-        public void GetThumbnailUri_should_have_plex_token()
+        public void GetResourceUri_should_have_plex_token()
         {
             // Arrange
             var logger = A.Fake<ILogger<PlexService>>();
@@ -663,10 +661,10 @@ namespace Test
             var resource = new Fixture().Create<string>();
 
             // Act
-            var result = sut.GetThumbnailUri(resource);
+            var result = sut.GetResourceUri(resource);
 
             // Assert
-            QueryHelpers.ParseQuery(new Uri(result).Query)
+            QueryHelpers.ParseQuery(result.Query)
                 .Should()
                 .ContainKey("X-Plex-Token")
                 .WhichValue.Should().Equal(options.Value.PlexToken);

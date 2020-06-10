@@ -1,11 +1,12 @@
-﻿using System.Collections.Immutable;
+﻿using System;
+using System.Collections.Immutable;
 using PlexClient.Client.Models;
 
 namespace PlexClient.Library.Models
 {
     public class ArtistModel
     {
-        public ArtistModel(Artist artist, char firstLetter, string thumbnailUrl)
+        public ArtistModel(Artist artist, char firstLetter, Uri thumbnailUrl)
         {
             Key = artist.RatingKey;
             Title = artist.Title;
@@ -15,7 +16,7 @@ namespace PlexClient.Library.Models
             Bio = artist.Summary;
         }
 
-        public ArtistModel(string key, string title, string thumbnailUrl, char letterSearch, string bio, ImmutableArray<AlbumModel> albums)
+        public ArtistModel(string key, string title, Uri thumbnailUrl, char letterSearch, string bio, ImmutableArray<AlbumModel> albums)
         {
             Key = key;
             Title = title;
@@ -27,7 +28,7 @@ namespace PlexClient.Library.Models
 
         public string Key { get; }
         public string Title { get; }
-        public string ThumbnailUrl { get; }
+        public Uri ThumbnailUrl { get; }
         public char LetterSearch { get; }
         public string Bio { get; }
         public ImmutableArray<AlbumModel> Albums { get; }
@@ -36,7 +37,7 @@ namespace PlexClient.Library.Models
         {
             public string Key;
             public string Title;
-            public string ThumbnailUrl;
+            public Uri ThumbnailUrl;
             public char LetterSearch;
             public string Bio;
             public ImmutableArray<AlbumModel> Albums;

@@ -57,7 +57,7 @@ namespace Interface.UserControls
                     .Select(a => a?.ThumbnailUrl)
                     .DistinctUntilChanged()
                     .ObserveOnDispatcher()
-                    .Subscribe(url => Thumbnail.Source = url is null ? null : new BitmapImage(new Uri(url)))
+                    .Subscribe(url => Thumbnail.Source = url is null ? null : new BitmapImage(url))
                     .DisposeWith(dispose);
 
                 ViewModel.Album

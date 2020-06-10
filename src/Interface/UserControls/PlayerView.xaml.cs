@@ -30,7 +30,7 @@ namespace Interface.UserControls
                     .Select(p => p.PlayingTrack?.ThumbnailUrl)
                     .DistinctUntilChanged()
                     .ObserveOnDispatcher()
-                    .Subscribe(url => PlayingAlbumThumbnail.Source = url is null ? null : new BitmapImage(new Uri(url)))
+                    .Subscribe(url => PlayingAlbumThumbnail.Source = url is null ? null : new BitmapImage(url))
                     .DisposeWith(dispose);
 
                 ViewModel.Player
@@ -76,6 +76,7 @@ namespace Interface.UserControls
 
                 ViewModel.Player
                     .Select(p => p.PlayingTrack?.Duration)
+                    .DistinctUntilChanged()
                     .Select(e => converterMilliSec.Convert(e, typeof(string), null, CultureInfo.InvariantCulture))
                     .Select(e => $"/{e}")
                     .DistinctUntilChanged()
@@ -85,6 +86,8 @@ namespace Interface.UserControls
 
                 ViewModel.Player
                     .Select(p => p.Avancement)
+                    .WithLatestFrom(ViewModel.Player
+                        .Select(p => p.PlayingTrack?.Duration), (avancement, duration) => duration * avancement)
                     .Select(e => converterMilliSec.Convert(e, typeof(string), null, CultureInfo.InvariantCulture))
                     .Select(e => e?.ToString())
                     .DistinctUntilChanged()

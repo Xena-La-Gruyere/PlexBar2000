@@ -28,11 +28,11 @@ namespace PlexClient.Client
                 throw new ArgumentException(paramName: nameof(options.Value.PlexToken), message: $"{nameof(options.Value.PlexToken)} must be set.");
         }
 
-        public string GetThumbnailUri(string resource)
+        public Uri GetResourceUri(string resource)
         {
             var uri = new Uri(_client.BaseAddress, resource).AbsoluteUri;
 
-            return QueryHelpers.AddQueryString(uri, "X-Plex-Token", _plexToken);
+            return new Uri(QueryHelpers.AddQueryString(uri, "X-Plex-Token", _plexToken));
         }
 
         public async Task<Sections> GetSections()

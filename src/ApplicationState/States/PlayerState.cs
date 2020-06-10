@@ -10,7 +10,7 @@ namespace ApplicationState.States
             PlayingState = PlayingStateEnum.Paused;
             Avancement = 0;
         }
-        public PlayerState(TrackModel playingTrack, PlayingStateEnum playingState, long avancement)
+        public PlayerState(TrackModel playingTrack, PlayingStateEnum playingState, double avancement)
         {
             PlayingTrack = playingTrack;
             PlayingState = playingState;
@@ -19,7 +19,7 @@ namespace ApplicationState.States
 
         public TrackModel PlayingTrack { get; }
         public PlayingStateEnum PlayingState { get; }
-        public long Avancement { get; }
+        public double Avancement { get; }
 
         public struct Builder
         {
@@ -27,7 +27,7 @@ namespace ApplicationState.States
 
             public TrackModel PlayingTrack;
             public PlayingStateEnum PlayingState;
-            public long Avancement;
+            public double Avancement;
 
             public Builder(PlayerState state)
             {
@@ -42,7 +42,7 @@ namespace ApplicationState.States
             {
                 return ReferenceEquals(PlayingTrack, other.PlayingTrack) &&
                        PlayingState == other.PlayingState &&
-                       Avancement == other.Avancement;
+                       Avancement.Equals(other.Avancement);
             }
 
             public PlayerState Build()

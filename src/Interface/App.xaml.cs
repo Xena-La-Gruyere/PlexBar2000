@@ -10,6 +10,7 @@ using ApplicationState;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Player;
 using PlexClient;
 using ReactiveUI;
 using Splat;
@@ -38,6 +39,8 @@ namespace Interface
 
             _window = _host.Services.GetRequiredService<MainWindow>();
             _window.Closing += MainWindowOnClosing;
+
+            _host.RunAsync();
 
             _window.Show();
         }
@@ -69,9 +72,11 @@ namespace Interface
         private void ConfigureServices(IServiceCollection services)
         {
             Locator.CurrentMutable.Register(() => new CustomPropertyResolver(), typeof(ICreatesObservableForProperty));
-            services.AddViewModel<MainWindow, MainViewModel>();
-            services.AddApplicationStateService();
-            services.AddPlexClientService("http://server:32400", "zNk53Ki7BqR4EraZevvP");
+
+            services.AddViewModel<MainWindow, MainViewModel>()
+                .AddApplicationStateService()
+                .AddPlexClientService("http://server:32400", "zNk53Ki7BqR4EraZevvP")
+                .AddCSCorePlayer();
         }
     }
 

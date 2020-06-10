@@ -17,11 +17,13 @@ namespace ApplicationState.Reducers
                 case PlayAlbumAction play:
                     builder.PlayingTrack = play.Album.Tracks.First();
                     builder.PlayingState = PlayingStateEnum.Playing;
-                    builder.Avancement = 0;
                     break;
-                case PauseResumeAction pauseResume:
+                case PauseResumeAction _:
                     builder.PlayingState = builder.PlayingState == PlayingStateEnum.Playing ?
                         PlayingStateEnum.Paused : PlayingStateEnum.Playing;
+                    break;
+                case RefreshAvancementAction pos:
+                    builder.Avancement = pos.Avancement;
                     break;
             }
 

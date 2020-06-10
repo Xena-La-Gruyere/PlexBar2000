@@ -60,7 +60,7 @@ namespace PlexClient.Library
         }
 
         private ArtistModel ToArtistModel(Artist artist)
-            => new ArtistModel(artist, FirstLetter(artist), _plexService.GetThumbnailUri(artist.Thumb));
+            => new ArtistModel(artist, FirstLetter(artist), _plexService.GetResourceUri(artist.Thumb));
 
         public async Task<ArtistModel[]> GetArtists()
         {
@@ -84,7 +84,7 @@ namespace PlexClient.Library
             var builder = new ArtistModel.Builder(artistModel)
             {
                 Albums = artist.MediaContainer.Albums
-                    .Select(album => new AlbumModel(album, _plexService.GetThumbnailUri(album.Thumb), artistModel.Title))
+                    .Select(album => new AlbumModel(album, _plexService.GetResourceUri(album.Thumb), artistModel.Title))
                     .OrderBy(a => a.Year)
                     .ToImmutableArray()
             };
@@ -100,7 +100,7 @@ namespace PlexClient.Library
             {
                 Tracks = album.MediaContainer.Tracks
                     .OrderBy(t => t.Index)
-                    .Select(t => new TrackModel(t, albumModel))
+                    .Select(t => new TrackModel(t, albumModel, _plexService.GetResourceUri(t.Media[0].Part[0].Key)))
                     .ToImmutableArray()
             };
 
