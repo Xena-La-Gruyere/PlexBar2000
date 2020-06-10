@@ -26,37 +26,44 @@ namespace Interface.UserControls
             this.WhenActivated(dispose =>
             {
                 PlayButton.Events().PreviewMouseLeftButtonDown
+                    .Throttle(TimeSpan.FromSeconds(1))
                     .WithLatestFrom(ViewModel.Album, (_, a) => a)
-                    .Subscribe(ViewModel.AddPlaylistAlbum)
+                    .ObserveOnDispatcher()
+                    .Subscribe(ViewModel.PlayAlbum)
                     .DisposeWith(dispose);
 
                 ViewModel.Album
                     .Select(a => a?.Title)
                     .DistinctUntilChanged()
+                    .ObserveOnDispatcher()
                     .Subscribe(title => AlbumTitle.Text = title)
                     .DisposeWith(dispose);
 
                 ViewModel.Album
                     .Select(a => a?.Year)
                     .DistinctUntilChanged()
+                    .ObserveOnDispatcher()
                     .Subscribe(year => AlbumYear.Text = year.ToString())
                     .DisposeWith(dispose);
 
                 ViewModel.Album
                     .Select(a => $"{a?.Tracks.FirstOrDefault()?.Codec.ToUpper()} {a?.Tracks.FirstOrDefault()?.Bitrate} kbps")
                     .DistinctUntilChanged()
+                    .ObserveOnDispatcher()
                     .Subscribe(codeBitrate => CodecBitrate.Text = codeBitrate)
                     .DisposeWith(dispose);
 
                 ViewModel.Album
                     .Select(a => a?.ThumbnailUrl)
                     .DistinctUntilChanged()
+                    .ObserveOnDispatcher()
                     .Subscribe(url => Thumbnail.Source = url is null ? null : new BitmapImage(new Uri(url)))
                     .DisposeWith(dispose);
 
                 ViewModel.Album
                     .Select(a => a?.Tracks)
                     .DistinctUntilChanged()
+                    .ObserveOnDispatcher()
                     .Subscribe(tracks => TrackList.ItemsSource = tracks)
                     .DisposeWith(dispose);
             });

@@ -23,6 +23,7 @@ namespace Interface.UserControls
             {
                 ViewModel.PlaylistAlbum
                     .DistinctUntilChanged()
+                    .ObserveOnDispatcher()
                     .Subscribe(abums => AlbumList.ItemsSource = abums)
                     .DisposeWith(dispose);
             });

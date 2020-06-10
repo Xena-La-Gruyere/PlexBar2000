@@ -28,18 +28,21 @@ namespace Interface.UserControls
                 ViewModel.Artist
                     .Select(a => a?.Title)
                     .DistinctUntilChanged()
+                    .ObserveOnDispatcher()
                     .Subscribe(title => ArtistTitle.Text = title)
                     .DisposeWith(dispose);
 
                 ViewModel.Artist
                     .Select(a => a?.ThumbnailUrl)
                     .DistinctUntilChanged()
+                    .ObserveOnDispatcher()
                     .Subscribe(url => Thumbnail.Source = url is null ? null : new BitmapImage(new Uri(url)))
                     .DisposeWith(dispose);
 
                 ViewModel.Artist
                     .Select(a => a?.Albums)
                     .DistinctUntilChanged()
+                    .ObserveOnDispatcher()
                     .Subscribe(abums => AlbumList.ItemsSource = abums)
                     .DisposeWith(dispose);
             });

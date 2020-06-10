@@ -25,28 +25,37 @@ namespace Interface
                 {
                     this.Events().MouseDown
                         .Where(e => e.MiddleButton == MouseButtonState.Pressed)
+                        .ObserveOnDispatcher()
                         .Subscribe(ViewModel.MiddleMouseClick)
                         .DisposeWith(dispose);
 
                     ButtonPrevious.Events()
                         .PreviewMouseLeftButtonDown
+                        .Throttle(TimeSpan.FromMilliseconds(50))
+                        .ObserveOnDispatcher()
                         .Subscribe(ViewModel.ClickPrevious)
                         .DisposeWith(dispose);
                     HomeButton.Events()
                         .PreviewMouseLeftButtonDown
+                        .Throttle(TimeSpan.FromMilliseconds(50))
+                        .ObserveOnDispatcher()
                         .Subscribe(ViewModel.HomeButton)
                         .DisposeWith(dispose);
                     PlaylistButton.Events()
                         .PreviewMouseLeftButtonDown
+                        .Throttle(TimeSpan.FromMilliseconds(50))
+                        .ObserveOnDispatcher()
                         .Subscribe(ViewModel.PlaylistButton)
                         .DisposeWith(dispose);
 
                     ViewModel.MenuIndex
+                        .ObserveOnDispatcher()
                         .Subscribe(ind => TransitionerMenu.SelectedIndex = ind)
                         .DisposeWith(dispose);
 
                     ViewModel.AppState
                         .Where(s => s == AppStateEnum.Player)
+                        .ObserveOnDispatcher()
                         .Subscribe(x =>
                         {
                             Width = 300;
@@ -55,6 +64,7 @@ namespace Interface
 
                     ViewModel.AppState
                         .Where(s => s == AppStateEnum.Explorer)
+                        .ObserveOnDispatcher()
                         .Subscribe(x =>
                         {
                             Width = 500;
