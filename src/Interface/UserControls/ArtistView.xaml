@@ -70,13 +70,20 @@
                                         Color="Black" />
                                 </Grid.Effect>
                                 <Grid.ContextMenu>
-                                    <ContextMenu>
-                                        <MenuItem Cursor="Hand" Header="Play">
+                                    <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+                                        <MenuItem
+                                            Click="MenuItemPlay"
+                                            Cursor="Hand"
+                                            Header="Play">
                                             <MenuItem.Icon>
                                                 <materialDesign:PackIcon Kind="Play" />
                                             </MenuItem.Icon>
                                         </MenuItem>
-                                        <MenuItem Cursor="Hand" Header="Add">
+                                        <MenuItem
+                                            Click="MenuItemAdd"
+                                            x:Name="AddMenuItem"
+                                            Cursor="Hand"
+                                            Header="Add">
                                             <MenuItem.Icon>
                                                 <materialDesign:PackIcon Kind="PlaylistAdd" />
                                             </MenuItem.Icon>

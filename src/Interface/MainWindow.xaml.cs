@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using ApplicationState.Enumerations;
-using MaterialDesignThemes.Wpf.Transitions;
 using ReactiveUI;
 using Splat;
 

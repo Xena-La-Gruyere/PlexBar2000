@@ -3,6 +3,7 @@ using System.Reactive.Linq;
 using ReactiveUI;
 using Splat;
 using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -54,6 +55,20 @@ namespace Interface.UserControls
             if (sender is Grid grid &&
                 grid.DataContext is AlbumModel album)
                 ViewModel.ClickAlbum(album);
+        }
+
+        private void MenuItemPlay(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement fe &&
+                fe.DataContext is AlbumModel album)
+                ViewModel.PlayAlbum(album);
+        }
+
+        private void MenuItemAdd(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement fe &&
+                fe.DataContext is AlbumModel album)
+                ViewModel.AddPlaylistAlbum(album);
         }
     }
 }

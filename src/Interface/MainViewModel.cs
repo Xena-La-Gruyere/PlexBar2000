@@ -4,8 +4,6 @@ using System.Reactive.Linq;
 using System.Windows.Input;
 using ApplicationState;
 using ApplicationState.Enumerations;
-using Playlist;
-using PlexClient.Library;
 using PlexClient.Library.Models;
 using ReactiveUI;
 
@@ -63,7 +61,10 @@ namespace Interface
         {
             _applicationStateService.AddPlaylistAlbum(albumModel);
         }
-
+        public void PlayAlbum(AlbumModel albumModel)
+        {
+            _applicationStateService.PlayAlbum(albumModel);
+        }
         public void HomeButton(MouseButtonEventArgs args)
         {
             _applicationStateService.HomeMenu();
