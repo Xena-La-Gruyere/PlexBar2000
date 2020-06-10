@@ -74,5 +74,9 @@ namespace Interface
         {
             _applicationStateService.PlaylistMenu();
         }
+        public void RemoveAlbumButton(AlbumModel albumModel)
+        {
+            _applicationStateService.RemovePlaylistAlbum(albumModel);
+        }
     }
 }
