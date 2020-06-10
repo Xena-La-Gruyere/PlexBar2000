@@ -159,5 +159,10 @@ namespace ApplicationState
                 TaskScheduler.FromCurrentSynchronizationContext());
             _store.Dispatch(new ClearPlaylistAction());
         }
+
+        public void PauseResume()
+        {
+            _store.Dispatch(new PauseResumeAction());
+        }
     }
 }

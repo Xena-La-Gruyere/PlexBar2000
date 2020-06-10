@@ -81,5 +81,9 @@ namespace Interface
         {
             _applicationStateService.RemovePlaylistAlbum(albumModel);
         }
+        public void PauseResume(MouseButtonEventArgs args)
+        {
+            _applicationStateService.PauseResume();
+        }
     }
 }

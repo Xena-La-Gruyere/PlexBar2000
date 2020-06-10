@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:interface="clr-namespace:Interface"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:reactiveUi="http://reactiveui.net"
     x:TypeArguments="interface:MainViewModel"
@@ -30,6 +31,29 @@
             Grid.Column="0"
             Height="100"
             RenderOptions.BitmapScalingMode="HighQuality" />
+
+        <Border
+            x:Name="PausedBorder"
+            Grid.Row="0"
+            Grid.RowSpan="4"
+            Grid.Column="0"
+            Padding="20">
+            <Border.Background>
+                <SolidColorBrush Opacity="0.7" Color="Black" />
+            </Border.Background>
+            <Viewbox>
+                <materialDesign:PackIcon Foreground="{StaticResource ForegroundColor1}" Kind="Pause" />
+            </Viewbox>
+        </Border>
+
+        <Button
+            x:Name="ResumePauseButton"
+            Grid.Row="0"
+            Grid.RowSpan="4"
+            Grid.Column="0"
+            Width="100"
+            Height="100"
+            Style="{StaticResource CenterButton}" />
 
         <TextBlock
             x:Name="ArtistName"

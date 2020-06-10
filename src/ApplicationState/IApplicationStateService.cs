@@ -28,5 +28,6 @@ namespace ApplicationState
         void RemovePlaylistAlbum(AlbumModel album);
         void ClearPlaylist();
         void LoadArtists();
+        void PauseResume();
     }
 }
