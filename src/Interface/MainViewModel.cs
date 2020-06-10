@@ -14,36 +14,29 @@ namespace Interface
     public class MainViewModel : ReactiveObject
     {
         private readonly IApplicationStateService _applicationStateService;
-        private readonly IPlexLibraryService _plexLibraryService;
-        private readonly IPlaylistService _playlistService;
 
         public readonly IObservable<AppStateEnum> AppState;
-        public readonly IObservable<ArtistModel[]> Artists;
+        public readonly IObservable<ImmutableArray<ArtistModel>> Artists;
         public readonly IObservable<ArtistModel> Artist;
         public readonly IObservable<AlbumModel> Album;
         public readonly IObservable<ImmutableArray<AlbumModel>> PlaylistAlbum;
-        public readonly IObservable<char[]> Letters;
+        public readonly IObservable<ImmutableArray<char>> Letters;
         public readonly IObservable<int> MenuIndex;
 
-        public MainViewModel(
-            IApplicationStateService applicationStateService,
-            IPlexLibraryService plexLibraryService,
-            IPlaylistService playlistService)
+        public MainViewModel(IApplicationStateService applicationStateService)
         {
             _applicationStateService = applicationStateService;
-            _plexLibraryService = plexLibraryService;
-            _playlistService = playlistService;
             AppState = applicationStateService.AppState;
 
-            Artists = _plexLibraryService.Artists;
-            Letters = _plexLibraryService.SearchLetters;
+            Artists = applicationStateService.Artists;
+            Letters = applicationStateService.SearchLetters;
             MenuIndex = applicationStateService.MenuIndex.Select(e => (int)e);
             Artist = applicationStateService.Artist;
             Album = applicationStateService.Album;
-            PlaylistAlbum = playlistService.Albums;
+            PlaylistAlbum = applicationStateService.Playlist;
 
             // Initialize library
-            _plexLibraryService.Initialize();
+            applicationStateService.LoadArtists();
         }
 
         public void MiddleMouseClick(MouseButtonEventArgs args)
@@ -68,7 +61,7 @@ namespace Interface
 
         public void AddPlaylistAlbum(AlbumModel albumModel)
         {
-            _playlistService.AddAlbum(albumModel);
+            _applicationStateService.AddPlaylistAlbum(albumModel);
         }
 
         public void HomeButton(MouseButtonEventArgs args)

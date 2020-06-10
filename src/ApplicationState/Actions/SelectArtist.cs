@@ -1,5 +1,4 @@
-﻿using PlexClient.Client.Models;
-using PlexClient.Library.Models;
+﻿using PlexClient.Library.Models;
 using Redux;
 
 namespace ApplicationState.Actions

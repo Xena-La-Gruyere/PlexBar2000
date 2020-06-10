@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Immutable;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using ApplicationState.Actions;
@@ -19,6 +20,9 @@ namespace ApplicationState
         public IObservable<ArtistModel> Artist { get; }
         public IObservable<AlbumModel> Album { get; }
         public IObservable<MenuStateEnum> MenuIndex { get; }
+        public IObservable<ImmutableArray<ArtistModel>> Artists { get; }
+        public IObservable<ImmutableArray<AlbumModel>> Playlist { get; }
+        public IObservable<ImmutableArray<char>> SearchLetters { get; }
 
         public ApplicationStateService(IPlexLibraryService plexService)
         {
@@ -45,10 +49,28 @@ namespace ApplicationState
                 .Replay(1);
             MenuIndex = menuIndexConn;
 
+            var artistsConn = _store.Select(s => s.Artists)
+                .DistinctUntilChanged()
+                .Replay(1);
+            Artists = artistsConn;
+
+            var playlistConn = _store.Select(s => s.Playlist)
+                .DistinctUntilChanged()
+                .Replay(1);
+            Playlist = playlistConn;
+
+            var searchLettersConn = _store.Select(s => s.SearchLetters)
+                .DistinctUntilChanged()
+                .Replay(1);
+            SearchLetters = searchLettersConn;
+
             appStateConn.Connect();
             artistConn.Connect();
             albumConn.Connect();
             menuIndexConn.Connect();
+            artistsConn.Connect();
+            playlistConn.Connect();
+            searchLettersConn.Connect();
         }
 
         public void ToggleState()
@@ -87,6 +109,49 @@ namespace ApplicationState
             _plexService.GetAlbum(album).ContinueWith(task =>
                 _store.Dispatch(new SelectAlbum(task.Result)),
                 TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        public void PlayAlbum(AlbumModel album)
+        {
+            _plexService.GetAlbum(album).ContinueWith(task =>
+                {
+                    _store.Dispatch(new AddAlbumPlaylistAction(task.Result));
+                    //TODO play
+                },
+                TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        public void AddPlaylistAlbum(AlbumModel album)
+        {
+            // Get album from plex
+            _plexService.GetAlbum(album).ContinueWith(task =>
+                {
+                    // Add to playlist
+                    _store.Dispatch(new AddAlbumPlaylistAction(task.Result));
+                },
+                TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        public void RemovePlaylistAlbum(AlbumModel album)
+        {
+            _store.Dispatch(new RemoveAlbumPlaylistAction(album));
+        }
+
+        public void ClearPlaylist()
+        {
+            _store.Dispatch(new ClearPlaylistAction());
+        }
+
+        public void LoadArtists()
+        {
+            // Get artists from plex
+            _plexService.GetArtists().ContinueWith(task =>
+                {
+                    // Add to playlist
+                    _store.Dispatch(new ArtistsLoaded(task.Result.ToImmutableArray()));
+                },
+                TaskScheduler.FromCurrentSynchronizationContext());
+            _store.Dispatch(new ClearPlaylistAction());
         }
     }
 }

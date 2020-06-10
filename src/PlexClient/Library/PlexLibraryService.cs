@@ -16,30 +16,10 @@ namespace PlexClient.Library
     {
         private readonly IPlexService _plexService;
 
-        public IObservable<ArtistModel[]> Artists { get; }
-        private readonly ISubject<ArtistModel[]> _artists;
-
-        public IObservable<char[]> SearchLetters { get; }
-        private readonly ISubject<char[]> _searchLetters;
-
         private Directory _section;
         public PlexLibraryService(IPlexService plexService)
         {
             _plexService = plexService;
-            _artists = new ReplaySubject<ArtistModel[]>(1);
-            _searchLetters = new ReplaySubject<char[]>(1);
-
-            SearchLetters = _searchLetters;
-            Artists = _artists;
-        }
-
-        public async Task Initialize()
-        {
-            var sections = await _plexService.GetSections();
-
-            _section = sections.MediaContainer.Directory.FirstOrDefault(d => d.Type == "artist");
-
-            await RefreshArtists();
         }
 
         private static bool IsInRange(char e, int min, int max)
@@ -85,30 +65,23 @@ namespace PlexClient.Library
         private ArtistModel ToArtistModel(Artist artist)
             => new ArtistModel(artist, FirstLetter(artist), _plexService.GetThumbnailUri(artist.Thumb));
 
-        public async Task RefreshArtists()
+        private AlbumModel ToAlbumModel(Album album)
+            => new AlbumModel(album, _plexService.GetThumbnailUri(album.Thumb));
+
+        public async Task<ArtistModel[]> GetArtists()
         {
-            if (_section is null) return;
+            var sections = await _plexService.GetSections();
+
+            _section = sections.MediaContainer.Directory.FirstOrDefault(d => d.Type == "artist");
+
+            if (_section is null) return new ArtistModel[0];
 
             var artists = await _plexService.GetAllArtists(_section.Key);
 
-            var artistsModels = artists.MediaContainer.Metadata.Select(ToArtistModel)
+            return artists.MediaContainer.Metadata.Select(ToArtistModel)
                 .OrderBy(c => c.LetterSearch)
                 .ToArray();
-            _artists.OnNext(artistsModels);
-
-            _searchLetters.OnNext(
-                artistsModels
-                    .Select(a => a.LetterSearch)
-                    .Where(c => !char.IsSymbol(c) || c == '#')
-                    .Where(c => !char.IsPunctuation(c))
-                    .OrderBy(c => c)
-                    .Distinct()
-                    .ToArray());
         }
-
-
-        private AlbumModel ToAlbumModel(Album album)
-            => new AlbumModel(album, _plexService.GetThumbnailUri(album.Thumb));
 
         public async Task<ArtistModel> GetArtist(ArtistModel artistModel)
         {

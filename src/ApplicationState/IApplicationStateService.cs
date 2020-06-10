@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Immutable;
 using ApplicationState.Enumerations;
 using ApplicationState.States;
 using PlexClient.Library.Models;
@@ -11,6 +12,9 @@ namespace ApplicationState
         IObservable<ArtistModel> Artist { get; }
         IObservable<AlbumModel> Album { get; }
         IObservable<MenuStateEnum> MenuIndex { get; }
+        IObservable<ImmutableArray<ArtistModel>> Artists { get; }
+        IObservable<ImmutableArray<AlbumModel>> Playlist { get; }
+        IObservable<ImmutableArray<char>> SearchLetters { get; }
 
         void ToggleState();
         void PreviousMenu();
@@ -18,5 +22,10 @@ namespace ApplicationState
         void PlaylistMenu();
         void SelectArtist(ArtistModel artist);
         void SelectAlbum(AlbumModel album);
+        void PlayAlbum(AlbumModel album);
+        void AddPlaylistAlbum(AlbumModel album);
+        void RemovePlaylistAlbum(AlbumModel album);
+        void ClearPlaylist();
+        void LoadArtists();
     }
 }

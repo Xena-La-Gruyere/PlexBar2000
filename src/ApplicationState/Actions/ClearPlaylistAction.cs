@@ -2,7 +2,7 @@
 
 namespace ApplicationState.Actions
 {
-    public class ToggleGlobalState : IAction
+    public class ClearPlaylistAction : IAction
     {
         
     }
