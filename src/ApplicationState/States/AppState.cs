@@ -6,19 +6,19 @@ namespace ApplicationState.States
     public class AppState
     {
         public AppStateEnum State { get; }
-        public int MenuIndex { get; }
+        public MenuStateEnum MenuIndex { get; }
         public ArtistModel Artist { get; }
         public AlbumModel Album { get; }
 
         public AppState()
         {
             State = AppStateEnum.Explorer;
-            MenuIndex = 0;
+            MenuIndex = MenuStateEnum.Home;
             Artist = null;
             Album = null;
         }
 
-        public AppState(AppStateEnum state, int menuIndex, ArtistModel artist, AlbumModel album)
+        public AppState(AppStateEnum state, MenuStateEnum menuIndex, ArtistModel artist, AlbumModel album)
         {
             State = state;
             MenuIndex = menuIndex;
@@ -30,7 +30,7 @@ namespace ApplicationState.States
         {
             private readonly AppState _state;
 
-            public int MenuIndex;
+            public MenuStateEnum MenuIndex;
             public AppStateEnum State;
             public ArtistModel Artist;
             public AlbumModel Album;

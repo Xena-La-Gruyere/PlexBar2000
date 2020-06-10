@@ -1,5 +1,6 @@
 ﻿using System;
 using ApplicationState.Enumerations;
+using ApplicationState.States;
 using PlexClient.Library.Models;
 
 namespace ApplicationState
@@ -9,7 +10,7 @@ namespace ApplicationState
         IObservable<AppStateEnum> AppState { get; }
         IObservable<ArtistModel> Artist { get; }
         IObservable<AlbumModel> Album { get; }
-        IObservable<int> MenuIndex { get; }
+        IObservable<MenuStateEnum> MenuIndex { get; }
 
         void ToggleState();
         void PreviousMenu();

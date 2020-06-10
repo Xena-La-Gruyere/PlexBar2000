@@ -18,7 +18,7 @@ namespace ApplicationState
         public IObservable<AppStateEnum> AppState { get; }
         public IObservable<ArtistModel> Artist { get; }
         public IObservable<AlbumModel> Album { get; }
-        public IObservable<int> MenuIndex { get; }
+        public IObservable<MenuStateEnum> MenuIndex { get; }
 
         public ApplicationStateService(IPlexLibraryService plexService)
         {

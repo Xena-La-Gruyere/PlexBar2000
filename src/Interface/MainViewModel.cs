@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Immutable;
+using System.Reactive.Linq;
 using System.Windows.Input;
 using ApplicationState;
 using ApplicationState.Enumerations;
@@ -36,7 +37,7 @@ namespace Interface
 
             Artists = _plexLibraryService.Artists;
             Letters = _plexLibraryService.SearchLetters;
-            MenuIndex = applicationStateService.MenuIndex;
+            MenuIndex = applicationStateService.MenuIndex.Select(e => (int)e);
             Artist = applicationStateService.Artist;
             Album = applicationStateService.Album;
             PlaylistAlbum = playlistService.Albums;

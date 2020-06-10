@@ -20,21 +20,27 @@ namespace ApplicationState.Reducers
                     builder.State = builder.State == AppStateEnum.Explorer ? AppStateEnum.Player : AppStateEnum.Explorer;
                     break;
                 case PreviousMenu _:
-                    builder.MenuIndex = builder.MenuIndex == 0 ? 0 : builder.MenuIndex - 1;
+                    builder.MenuIndex = builder.MenuIndex switch
+                    {
+                        MenuStateEnum.Playlist when builder.Album != null => MenuStateEnum.Album,
+                        MenuStateEnum.Playlist when builder.Artist != null => MenuStateEnum.Artist,
+                        MenuStateEnum.Album when builder.Artist != null => MenuStateEnum.Artist,
+                        _ => MenuStateEnum.Home
+                    };
                     break;
                 case SelectArtist selectArtist:
-                    builder.MenuIndex = 1;
+                    builder.MenuIndex = MenuStateEnum.Artist;
                     builder.Artist = selectArtist.Artist;
                     break;
                 case SelectAlbum selectAlbum:
-                    builder.MenuIndex = 2;
+                    builder.MenuIndex = MenuStateEnum.Album;
                     builder.Album = selectAlbum.Album;
                     break;
                 case HomeMenu _:
-                    builder.MenuIndex = 0;
+                    builder.MenuIndex = MenuStateEnum.Home;
                     break;
                 case PlaylistMenu _:
-                    builder.MenuIndex = 3;
+                    builder.MenuIndex = MenuStateEnum.Playlist;
                     break;
             }
 
