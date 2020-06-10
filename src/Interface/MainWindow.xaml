@@ -19,5 +19,6 @@
     mc:Ignorable="d">
     <Grid>
         <userControls:LibraryView x:Name="LibraryView" />
+        <userControls:PlayerView x:Name="PlayerView" />
     </Grid>
 </reactiveUi:ReactiveWindow>

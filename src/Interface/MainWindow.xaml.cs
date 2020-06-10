@@ -37,6 +37,7 @@ namespace Interface
                             Width = 300;
                             Height = 100;
                             LibraryView.Visibility = Visibility.Collapsed;
+                            PlayerView.Visibility = Visibility.Visible;
                         }).DisposeWith(dispose);
 
                     ViewModel.AppState
@@ -47,6 +48,7 @@ namespace Interface
                             Width = 500;
                             Height = 600;
                             LibraryView.Visibility = Visibility.Visible;
+                            PlayerView.Visibility = Visibility.Collapsed;
                         }).DisposeWith(dispose);
                 }
             );
