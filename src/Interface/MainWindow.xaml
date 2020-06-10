@@ -17,68 +17,7 @@
     Topmost="True"
     WindowStyle="None"
     mc:Ignorable="d">
-    <DockPanel>
-
-        <UniformGrid
-            Background="{StaticResource BackgroundColor2}"
-            DockPanel.Dock="Bottom"
-            Rows="1">
-            <Button x:Name="ButtonPrevious">
-                <materialDesign:PackIcon Kind="ChevronLeft" />
-            </Button>
-            <Button x:Name="HomeButton">
-                <materialDesign:PackIcon Kind="Home" />
-            </Button>
-            <Button x:Name="PlaylistButton">
-                <materialDesign:PackIcon Kind="PlaylistMusic" />
-            </Button>
-        </UniformGrid>
-
-        <!--  ARTIST LIST  -->
-
-        <materialDesign:Transitioner x:Name="TransitionerMenu" SelectedIndex="0">
-
-            <materialDesign:TransitionerSlide>
-                <materialDesign:TransitionerSlide.BackwardWipe>
-                    <materialDesign:SlideWipe Direction="Right" />
-                </materialDesign:TransitionerSlide.BackwardWipe>
-                <materialDesign:TransitionerSlide.ForwardWipe>
-                    <materialDesign:SlideWipe Direction="Left" />
-                </materialDesign:TransitionerSlide.ForwardWipe>
-                <userControls:ArtistListView />
-            </materialDesign:TransitionerSlide>
-
-            <materialDesign:TransitionerSlide>
-                <materialDesign:TransitionerSlide.BackwardWipe>
-                    <materialDesign:SlideWipe Direction="Right" />
-                </materialDesign:TransitionerSlide.BackwardWipe>
-                <materialDesign:TransitionerSlide.ForwardWipe>
-                    <materialDesign:SlideWipe Direction="Left" />
-                </materialDesign:TransitionerSlide.ForwardWipe>
-                <userControls:ArtistView />
-            </materialDesign:TransitionerSlide>
-
-            <materialDesign:TransitionerSlide>
-                <materialDesign:TransitionerSlide.BackwardWipe>
-                    <materialDesign:SlideWipe Direction="Right" />
-                </materialDesign:TransitionerSlide.BackwardWipe>
-                <materialDesign:TransitionerSlide.ForwardWipe>
-                    <materialDesign:SlideWipe Direction="Left" />
-                </materialDesign:TransitionerSlide.ForwardWipe>
-                <userControls:AlbumView />
-            </materialDesign:TransitionerSlide>
-
-            <materialDesign:TransitionerSlide>
-                <materialDesign:TransitionerSlide.BackwardWipe>
-                    <materialDesign:SlideWipe Direction="Right" />
-                </materialDesign:TransitionerSlide.BackwardWipe>
-                <materialDesign:TransitionerSlide.ForwardWipe>
-                    <materialDesign:SlideWipe Direction="Left" />
-                </materialDesign:TransitionerSlide.ForwardWipe>
-                <userControls:PlaylistView />
-            </materialDesign:TransitionerSlide>
-
-        </materialDesign:Transitioner>
-
-    </DockPanel>
+    <Grid>
+        <userControls:LibraryView x:Name="LibraryView" />
+    </Grid>
 </reactiveUi:ReactiveWindow>

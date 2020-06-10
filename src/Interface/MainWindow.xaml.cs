@@ -29,30 +29,6 @@ namespace Interface
                         .Subscribe(ViewModel.MiddleMouseClick)
                         .DisposeWith(dispose);
 
-                    ButtonPrevious.Events()
-                        .PreviewMouseLeftButtonDown
-                        .Throttle(TimeSpan.FromMilliseconds(50))
-                        .ObserveOnDispatcher()
-                        .Subscribe(ViewModel.ClickPrevious)
-                        .DisposeWith(dispose);
-                    HomeButton.Events()
-                        .PreviewMouseLeftButtonDown
-                        .Throttle(TimeSpan.FromMilliseconds(50))
-                        .ObserveOnDispatcher()
-                        .Subscribe(ViewModel.HomeButton)
-                        .DisposeWith(dispose);
-                    PlaylistButton.Events()
-                        .PreviewMouseLeftButtonDown
-                        .Throttle(TimeSpan.FromMilliseconds(50))
-                        .ObserveOnDispatcher()
-                        .Subscribe(ViewModel.PlaylistButton)
-                        .DisposeWith(dispose);
-
-                    ViewModel.MenuIndex
-                        .ObserveOnDispatcher()
-                        .Subscribe(ind => TransitionerMenu.SelectedIndex = ind)
-                        .DisposeWith(dispose);
-
                     ViewModel.AppState
                         .Where(s => s == AppStateEnum.Player)
                         .ObserveOnDispatcher()
@@ -60,6 +36,7 @@ namespace Interface
                         {
                             Width = 300;
                             Height = 100;
+                            LibraryView.Visibility = Visibility.Collapsed;
                         }).DisposeWith(dispose);
 
                     ViewModel.AppState
@@ -69,6 +46,7 @@ namespace Interface
                         {
                             Width = 500;
                             Height = 600;
+                            LibraryView.Visibility = Visibility.Visible;
                         }).DisposeWith(dispose);
                 }
             );
