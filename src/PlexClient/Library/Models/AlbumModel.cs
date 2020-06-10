@@ -10,26 +10,29 @@ namespace PlexClient.Library.Models
 {
     public class AlbumModel
     {
-        public AlbumModel(Album album, string thumbnailUrl)
+        public AlbumModel(Album album, string thumbnailUrl, string artist)
         {
             Key = album.RatingKey;
             Title = album.Title;
             ThumbnailUrl = thumbnailUrl;
+            Artist = artist;
             Year = album.Year;
             Tracks = ImmutableArray<TrackModel>.Empty;
         }
 
-        public AlbumModel(string key, string title, string thumbnailUrl, long year, ImmutableArray<TrackModel> tracks)
+        public AlbumModel(string key, string title, string thumbnailUrl, long year, ImmutableArray<TrackModel> tracks, string artist)
         {
             Key = key;
             Title = title;
             ThumbnailUrl = thumbnailUrl;
             Year = year;
             Tracks = tracks;
+            Artist = artist;
         }
 
         public string Key { get; }
         public string Title { get; }
+        public string Artist { get; }
         public string ThumbnailUrl { get; }
         public long Year { get; }
         public ImmutableArray<TrackModel> Tracks { get; }
@@ -40,6 +43,7 @@ namespace PlexClient.Library.Models
 
             public string Key;
             public string Title;
+            public string Artist;
             public string ThumbnailUrl;
             public long Year;
             public ImmutableArray<TrackModel> Tracks;
@@ -53,6 +57,7 @@ namespace PlexClient.Library.Models
                 ThumbnailUrl = state.ThumbnailUrl;
                 Year = state.Year;
                 Tracks = state.Tracks;
+                Artist = state.Artist;
             }
 
             public bool Equal(AlbumModel other)
@@ -61,6 +66,7 @@ namespace PlexClient.Library.Models
                        Title == other.Title &&
                        ThumbnailUrl == other.ThumbnailUrl &&
                        Year == other.Year &&
+                       Artist == other.Artist &&
                        Tracks == other.Tracks;
             }
 
@@ -68,7 +74,7 @@ namespace PlexClient.Library.Models
             {
                 if (Equal(_state)) return _state;
 
-                return new AlbumModel(Key, Title, ThumbnailUrl, Year, Tracks);
+                return new AlbumModel(Key, Title, ThumbnailUrl, Year, Tracks, Artist);
             }
         }
     }

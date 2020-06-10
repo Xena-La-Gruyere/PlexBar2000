@@ -12,7 +12,10 @@ namespace ApplicationState.Reducers
     {
         public static AppState Execute(AppState state, IAction action)
         {
-            var builder = new AppState.Builder(state);
+            var builder = new AppState.Builder(state)
+            {
+                PlayerState = PlayerStateReducer.Execute(state.PlayerState, action)
+            };
 
             switch (action)
             {

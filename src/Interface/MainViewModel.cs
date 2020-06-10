@@ -4,6 +4,7 @@ using System.Reactive.Linq;
 using System.Windows.Input;
 using ApplicationState;
 using ApplicationState.Enumerations;
+using ApplicationState.States;
 using PlexClient.Library.Models;
 using ReactiveUI;
 
@@ -20,6 +21,7 @@ namespace Interface
         public readonly IObservable<ImmutableArray<AlbumModel>> PlaylistAlbum;
         public readonly IObservable<ImmutableArray<char>> Letters;
         public readonly IObservable<int> MenuIndex;
+        public readonly IObservable<PlayerState> Player;
 
         public MainViewModel(IApplicationStateService applicationStateService)
         {
@@ -32,6 +34,7 @@ namespace Interface
             Artist = applicationStateService.Artist;
             Album = applicationStateService.Album;
             PlaylistAlbum = applicationStateService.Playlist;
+            Player = applicationStateService.PlayerState;
 
             // Initialize library
             applicationStateService.LoadArtists();

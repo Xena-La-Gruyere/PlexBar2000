@@ -15,6 +15,7 @@ namespace ApplicationState
         IObservable<ImmutableArray<ArtistModel>> Artists { get; }
         IObservable<ImmutableArray<AlbumModel>> Playlist { get; }
         IObservable<ImmutableArray<char>> SearchLetters { get; }
+        IObservable<PlayerState> PlayerState { get; }
 
         void ToggleState();
         void PreviousMenu();

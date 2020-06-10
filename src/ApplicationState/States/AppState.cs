@@ -13,9 +13,11 @@ namespace ApplicationState.States
         public ImmutableArray<ArtistModel> Artists { get; }
         public ImmutableArray<AlbumModel> Playlist { get; }
         public ImmutableArray<char> SearchLetters { get; }
+        public PlayerState PlayerState { get; }
 
         public AppState()
         {
+            PlayerState = new PlayerState();
             SearchLetters = ImmutableArray<char>.Empty; ;
             Playlist = ImmutableArray<AlbumModel>.Empty;
             Artists = ImmutableArray<ArtistModel>.Empty;
@@ -25,7 +27,7 @@ namespace ApplicationState.States
             Album = null;
         }
 
-        public AppState(AppStateEnum state, MenuStateEnum menuIndex, ArtistModel artist, AlbumModel album, ImmutableArray<ArtistModel> artists, ImmutableArray<AlbumModel> playlist, ImmutableArray<char> searchLetters)
+        public AppState(AppStateEnum state, MenuStateEnum menuIndex, ArtistModel artist, AlbumModel album, ImmutableArray<ArtistModel> artists, ImmutableArray<AlbumModel> playlist, ImmutableArray<char> searchLetters, PlayerState playerState)
         {
             State = state;
             MenuIndex = menuIndex;
@@ -34,12 +36,14 @@ namespace ApplicationState.States
             Artists = artists;
             Playlist = playlist;
             SearchLetters = searchLetters;
+            PlayerState = playerState;
         }
 
         public struct Builder
         {
             private readonly AppState _state;
 
+            public PlayerState PlayerState;
             public MenuStateEnum MenuIndex;
             public AppStateEnum State;
             public ArtistModel Artist;
@@ -59,6 +63,7 @@ namespace ApplicationState.States
                 Artists = state.Artists;
                 Playlist = state.Playlist;
                 SearchLetters = state.SearchLetters;
+                PlayerState = state.PlayerState;
             }
 
             public bool Equals(AppState other)
@@ -67,6 +72,7 @@ namespace ApplicationState.States
                     MenuIndex == other.MenuIndex &&
                     ReferenceEquals(Artist, other.Artist) &&
                     ReferenceEquals(Album, other.Album) &&
+                    ReferenceEquals(PlayerState, other.PlayerState) &&
                     Artists == other.Artists &&
                     SearchLetters == other.SearchLetters &&
                     Playlist == other.Playlist;
@@ -76,7 +82,7 @@ namespace ApplicationState.States
             {
                 if (Equals(_state)) return _state;
 
-                return new AppState(State, MenuIndex, Artist, Album, Artists, Playlist, SearchLetters);
+                return new AppState(State, MenuIndex, Artist, Album, Artists, Playlist, SearchLetters, PlayerState);
             }
         }
 

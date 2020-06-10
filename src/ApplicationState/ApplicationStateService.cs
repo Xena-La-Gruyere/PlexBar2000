@@ -23,6 +23,7 @@ namespace ApplicationState
         public IObservable<ImmutableArray<ArtistModel>> Artists { get; }
         public IObservable<ImmutableArray<AlbumModel>> Playlist { get; }
         public IObservable<ImmutableArray<char>> SearchLetters { get; }
+        public IObservable<PlayerState> PlayerState { get; }
 
         public ApplicationStateService(IPlexLibraryService plexService)
         {
@@ -64,6 +65,11 @@ namespace ApplicationState
                 .Replay(1);
             SearchLetters = searchLettersConn;
 
+            var playerStateConn = _store.Select(s => s.PlayerState)
+                .DistinctUntilChanged()
+                .Replay(1);
+            PlayerState = playerStateConn;
+
             appStateConn.Connect();
             artistConn.Connect();
             albumConn.Connect();
@@ -71,6 +77,7 @@ namespace ApplicationState
             artistsConn.Connect();
             playlistConn.Connect();
             searchLettersConn.Connect();
+            playerStateConn.Connect();
         }
 
         public void ToggleState()

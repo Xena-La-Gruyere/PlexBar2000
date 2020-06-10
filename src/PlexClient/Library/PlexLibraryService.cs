@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
-using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
 using PlexClient.Client;
 using PlexClient.Client.Models;
 using PlexClient.Library.Models;
@@ -65,9 +62,6 @@ namespace PlexClient.Library
         private ArtistModel ToArtistModel(Artist artist)
             => new ArtistModel(artist, FirstLetter(artist), _plexService.GetThumbnailUri(artist.Thumb));
 
-        private AlbumModel ToAlbumModel(Album album)
-            => new AlbumModel(album, _plexService.GetThumbnailUri(album.Thumb));
-
         public async Task<ArtistModel[]> GetArtists()
         {
             var sections = await _plexService.GetSections();
@@ -90,7 +84,7 @@ namespace PlexClient.Library
             var builder = new ArtistModel.Builder(artistModel)
             {
                 Albums = artist.MediaContainer.Albums
-                    .Select(ToAlbumModel)
+                    .Select(album => new AlbumModel(album, _plexService.GetThumbnailUri(album.Thumb), artistModel.Title))
                     .OrderBy(a => a.Year)
                     .ToImmutableArray()
             };
@@ -106,7 +100,7 @@ namespace PlexClient.Library
             {
                 Tracks = album.MediaContainer.Tracks
                     .OrderBy(t => t.Index)
-                    .Select(t => new TrackModel(t))
+                    .Select(t => new TrackModel(t, albumModel))
                     .ToImmutableArray()
             };
 

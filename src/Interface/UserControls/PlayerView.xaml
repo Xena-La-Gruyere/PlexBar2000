@@ -23,6 +23,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+
         <Image
             x:Name="PlayingAlbumThumbnail"
             Grid.RowSpan="4"
@@ -34,35 +35,54 @@
             x:Name="ArtistName"
             Grid.Row="0"
             Grid.Column="2"
-            Grid.ColumnSpan="3" />
+            Grid.ColumnSpan="3"
+            Margin="4" />
 
         <TextBlock
             x:Name="AlbumName"
             Grid.Row="1"
             Grid.Column="2"
-            Grid.ColumnSpan="3" />
+            Grid.ColumnSpan="3"
+            Margin="4,0"
+            VerticalAlignment="Top"
+            Foreground="{StaticResource ForegroundColor2}" />
 
         <TextBlock
             x:Name="TrackName"
             Grid.Row="2"
             Grid.Column="2"
-            Grid.ColumnSpan="3" />
+            Grid.ColumnSpan="3"
+            Margin="4,0" />
 
         <Border
             x:Name="TimeLine"
             Grid.Row="3"
             Grid.Column="2"
-            Height="5"
+            Height="3"
+            Margin="5"
             Background="{StaticResource ForegroundColor2}" />
 
         <TextBlock
             x:Name="TrackAvancement"
             Grid.Row="3"
-            Grid.Column="3" />
+            Grid.Column="3"
+            Margin="0,4"
+            FontSize="10"
+            Foreground="{StaticResource ForegroundColor2}" />
 
         <TextBlock
             x:Name="TrackDuration"
             Grid.Row="3"
-            Grid.Column="4" />
+            Grid.Column="4"
+            Margin="0,4,4,4"
+            FontSize="10" />
+        <!--  DRAG WINDOW  -->
+        <Grid
+            Grid.Row="0"
+            Grid.RowSpan="4"
+            Grid.Column="1"
+            Grid.ColumnSpan="4"
+            Background="Transparent"
+            MouseMove="MainWindow_OnMouseMove" />
     </Grid>
 </reactiveUi:ReactiveUserControl>
