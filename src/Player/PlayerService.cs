@@ -48,8 +48,10 @@ namespace Player
 
         private void ChangeVolume(float volume)
         {
-            if(_soundOut is null) return;
             _volume = volume;
+
+            if (_soundOut is null) return;
+            
             _soundOut.Volume = volume;
         }
 
@@ -75,12 +77,12 @@ namespace Player
 
             _soundOut = new WasapiOut
             {
-                Volume = _volume,
                 Latency = 100,
                 UseChannelMixingMatrices = true,
                 StreamRoutingOptions = StreamRoutingOptions.OnDefaultDeviceChange
             };
             _soundOut.Initialize(waveSource);
+            _soundOut.Volume = _volume;
             _soundOut.Play();
         }
 
