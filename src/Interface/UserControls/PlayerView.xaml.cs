@@ -4,12 +4,14 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using ApplicationState.States;
 using Interface.Styles.Converters;
 using Interface.UIHelper;
 using ReactiveUI;
 using Splat;
+using EventExtensions = System.Windows.Controls.Primitives.EventExtensions;
 
 namespace Interface.UserControls
 {
@@ -63,6 +65,17 @@ namespace Interface.UserControls
                     .DisposeWith(dispose);
 
                 ResumePauseButton.Events()
+                    .MouseWheel
+                    .Where(e => e.Delta > 0)
+                    .Subscribe(ViewModel.WheelUp)
+                    .DisposeWith(dispose);
+                ResumePauseButton.Events()
+                    .MouseWheel
+                    .Where(e => e.Delta < 0)
+                    .Subscribe(ViewModel.WheelDown)
+                    .DisposeWith(dispose);
+
+                ResumePauseButton.Events()
                     .PreviewMouseLeftButtonDown
                     .WithLatestFrom(ViewModel.Player.Select(p => p.PlayingTrack), (args, track) => new { args, track })
                     .Where(e => e.track != null)
@@ -102,6 +115,19 @@ namespace Interface.UserControls
                     .DistinctUntilChanged()
                     .ObserveOnDispatcher()
                     .Subscribe(e => TimeLineElapsed.Width = TimeLine.ActualWidth * e)
+                    .DisposeWith(dispose);
+
+                ViewModel.Player
+                    .Select(p => p.VolumentPercentage)
+                    .DistinctUntilChanged()
+                    .ObserveOnDispatcher()
+                    .Subscribe(e =>
+                    {
+                        Volume.Height = e;
+
+                        var animation = Grid.FindResource("VolumeAnimation") as Storyboard;
+                        Volume.BeginStoryboard(animation);
+                    })
                     .DisposeWith(dispose);
             });
         }

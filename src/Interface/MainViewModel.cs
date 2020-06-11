@@ -85,5 +85,13 @@ namespace Interface
         {
             _applicationStateService.PauseResume();
         }
+        public void WheelUp(MouseWheelEventArgs args)
+        {
+            _applicationStateService.UpVolume();
+        }
+        public void WheelDown(MouseWheelEventArgs args)
+        {
+            _applicationStateService.DownVolume();
+        }
     }
 }

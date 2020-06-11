@@ -17,7 +17,7 @@ namespace ApplicationState.States
 
         public AppState()
         {
-            PlayerState = new PlayerState();
+            PlayerState = new PlayerState(50);
             SearchLetters = ImmutableArray<char>.Empty; ;
             Playlist = ImmutableArray<AlbumModel>.Empty;
             Artists = ImmutableArray<ArtistModel>.Empty;

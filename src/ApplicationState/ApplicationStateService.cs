@@ -169,5 +169,15 @@ namespace ApplicationState
         {
             _store.Dispatch(new RefreshAvancementAction(avancement));
         }
+
+        public void UpVolume()
+        {
+            _store.Dispatch(new UpVolumeAction(5));
+        }
+
+        public void DownVolume()
+        {
+            _store.Dispatch(new DownVolumeAction(5));
+        }
     }
 }

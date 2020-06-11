@@ -30,5 +30,7 @@ namespace ApplicationState
         void LoadArtists();
         void PauseResume();
         void ActualAvancement(double avancement);
+        void UpVolume();
+        void DownVolume();
     }
 }

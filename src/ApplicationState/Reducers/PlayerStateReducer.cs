@@ -25,7 +25,18 @@ namespace ApplicationState.Reducers
                 case RefreshAvancementAction pos:
                     builder.Avancement = pos.Avancement;
                     break;
+                case UpVolumeAction up:
+                    builder.VolumentPercentage += up.Amount;
+                    break;
+                case DownVolumeAction down:
+                    builder.VolumentPercentage -= down.Amount;
+                    break;
             }
+
+            if (builder.VolumentPercentage > 100)
+                builder.VolumentPercentage = 100;
+            if (builder.VolumentPercentage < 0)
+                builder.VolumentPercentage = 0;
 
             return builder.Build();
         }
