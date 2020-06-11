@@ -18,18 +18,23 @@ namespace Player
 {
     public class PlayerService : IHostedService
     {
+        private readonly IApplicationStateService _stateService;
         private MMDevice _device;
         private ISoundOut _soundOut;
         private float _volume;
+        private readonly Timer _timerFinishedTrack;
 
         public PlayerService(IApplicationStateService stateService)
         {
+            _stateService = stateService;
+            _timerFinishedTrack = new Timer(CallbackFinishedTrack);
+
             Observable.Timer(DateTimeOffset.Now, TimeSpan.FromMilliseconds(500))
-                .Where(_ => _soundOut?.WaveSource?.Position != null)
-                .Select(_ => (double)_soundOut.WaveSource.Position / (double)_soundOut.WaveSource.Length)
+                .Where(_ => _soundOut?.WaveSource != null)
+                .Select(_ => _soundOut.WaveSource.GetPosition())
                 .Subscribe(stateService.ActualAvancement);
 
-            stateService.PlayerState.Select(p => p.PlayingTrack)
+            stateService.PlayingTrack
                 .Select(t => t?.Resource)
                 .Where(uri => uri != null)
                 .DistinctUntilChanged()
@@ -44,6 +49,21 @@ namespace Player
                 .DistinctUntilChanged()
                 .Select(v => v / 100f)
                 .Subscribe(ChangeVolume);
+        }
+
+        private void CallbackFinishedTrack(object state)
+        {
+            _timerFinishedTrack.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
+
+            var finishedIn = _soundOut.WaveSource.GetLength() - _soundOut.WaveSource.GetPosition();
+
+            if (finishedIn > TimeSpan.FromMilliseconds(10))
+            {
+                _timerFinishedTrack.Change(finishedIn, Timeout.InfiniteTimeSpan);
+                return;
+            }
+
+            _stateService.TrackFinished();
         }
 
         private void ChangeVolume(float volume)
@@ -75,6 +95,9 @@ namespace Player
                 .ToSampleSource()
                 .ToWaveSource();
 
+            _soundOut?.Stop();
+            _soundOut?.Dispose();
+
             _soundOut = new WasapiOut
             {
                 Latency = 100,
@@ -83,6 +106,8 @@ namespace Player
             };
             _soundOut.Initialize(waveSource);
             _soundOut.Volume = _volume;
+
+            _timerFinishedTrack.Change(_soundOut.WaveSource.GetLength(), Timeout.InfiniteTimeSpan);
             _soundOut.Play();
         }
 
