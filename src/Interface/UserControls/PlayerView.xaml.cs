@@ -28,29 +28,29 @@ namespace Interface.UserControls
 
             this.WhenActivated(dispose =>
             {
-                ViewModel.Player
-                    .Select(p => p.PlayingTrack?.ThumbnailUrl)
+                ViewModel.PlayingTrack
+                    .Select(p => p?.ThumbnailUrl)
                     .DistinctUntilChanged()
                     .ObserveOnDispatcher()
                     .Subscribe(url => PlayingAlbumThumbnail.Source = url is null ? null : new BitmapImage(url))
                     .DisposeWith(dispose);
 
-                ViewModel.Player
-                    .Select(p => p.PlayingTrack?.Artist)
+                ViewModel.PlayingTrack
+                    .Select(p => p?.Artist)
                     .DistinctUntilChanged()
                     .ObserveOnDispatcher()
                     .Subscribe(a => ArtistName.Text = a)
                     .DisposeWith(dispose);
 
-                ViewModel.Player
-                    .Select(p => p.PlayingTrack?.Album)
+                ViewModel.PlayingTrack
+                    .Select(p => p?.Album)
                     .DistinctUntilChanged()
                     .ObserveOnDispatcher()
                     .Subscribe(a => AlbumName.Text = a)
                     .DisposeWith(dispose);
 
-                ViewModel.Player
-                    .Select(p => p.PlayingTrack?.Title)
+                ViewModel.PlayingTrack
+                    .Select(p => p?.Title)
                     .DistinctUntilChanged()
                     .ObserveOnDispatcher()
                     .Subscribe(a => TrackName.Text = a)
@@ -77,7 +77,7 @@ namespace Interface.UserControls
 
                 ResumePauseButton.Events()
                     .PreviewMouseLeftButtonDown
-                    .WithLatestFrom(ViewModel.Player.Select(p => p.PlayingTrack), (args, track) => new { args, track })
+                    .WithLatestFrom(ViewModel.PlayingTrack, (args, track) => new { args, track })
                     .Where(e => e.track != null)
                     .Select(e => e.args)
                     .Throttle(TimeSpan.FromMilliseconds(100))
@@ -87,8 +87,8 @@ namespace Interface.UserControls
 
                 var converterMilliSec = new MilliSecConverter();
 
-                ViewModel.Player
-                    .Select(p => p.PlayingTrack?.Duration)
+                ViewModel.PlayingTrack
+                    .Select(p => p?.Duration)
                     .DistinctUntilChanged()
                     .Select(e => converterMilliSec.Convert(e, typeof(string), null, CultureInfo.InvariantCulture))
                     .Select(e => $"/{e}")
@@ -98,11 +98,7 @@ namespace Interface.UserControls
                     .DisposeWith(dispose);
 
                 ViewModel.Player
-                    .Select(p => p.Avancement)
-                    .WithLatestFrom(ViewModel.Player
-                        .Select(p => p.PlayingTrack?.Duration), (avancement, duration) => duration * avancement)
-                    .Where(e => e.HasValue && e > 0)
-                    .Select(e =>(long) e)
+                    .Select(p => (long)p.Avancement.TotalMilliseconds)
                     .Select(e => converterMilliSec.Convert(e, typeof(string), null, CultureInfo.InvariantCulture))
                     .Select(e => e?.ToString())
                     .DistinctUntilChanged()
@@ -111,10 +107,13 @@ namespace Interface.UserControls
                     .DisposeWith(dispose);
 
                 ViewModel.Player
-                    .Select(p => p.Avancement)
+                    .Select(p => p.Avancement.TotalMilliseconds)
+                    .WithLatestFrom(ViewModel.PlayingTrack.Select(p => p?.Duration),
+                        (pos, lenght) => pos / lenght)
+                    .Where(e => e.HasValue)
                     .DistinctUntilChanged()
                     .ObserveOnDispatcher()
-                    .Subscribe(e => TimeLineElapsed.Width = TimeLine.ActualWidth * e)
+                    .Subscribe(e => TimeLineElapsed.Width = TimeLine.ActualWidth * e.Value)
                     .DisposeWith(dispose);
 
                 ViewModel.Player

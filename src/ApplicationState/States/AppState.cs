@@ -11,15 +11,13 @@ namespace ApplicationState.States
         public ArtistModel Artist { get; }
         public AlbumModel Album { get; }
         public ImmutableArray<ArtistModel> Artists { get; }
-        public ImmutableArray<AlbumModel> Playlist { get; }
         public ImmutableArray<char> SearchLetters { get; }
         public PlayerState PlayerState { get; }
 
         public AppState()
         {
             PlayerState = new PlayerState(50);
-            SearchLetters = ImmutableArray<char>.Empty; ;
-            Playlist = ImmutableArray<AlbumModel>.Empty;
+            SearchLetters = ImmutableArray<char>.Empty;
             Artists = ImmutableArray<ArtistModel>.Empty;
             State = AppStateEnum.Explorer;
             MenuIndex = MenuStateEnum.Home;
@@ -27,14 +25,13 @@ namespace ApplicationState.States
             Album = null;
         }
 
-        public AppState(AppStateEnum state, MenuStateEnum menuIndex, ArtistModel artist, AlbumModel album, ImmutableArray<ArtistModel> artists, ImmutableArray<AlbumModel> playlist, ImmutableArray<char> searchLetters, PlayerState playerState)
+        public AppState(AppStateEnum state, MenuStateEnum menuIndex, ArtistModel artist, AlbumModel album, ImmutableArray<ArtistModel> artists, ImmutableArray<char> searchLetters, PlayerState playerState)
         {
             State = state;
             MenuIndex = menuIndex;
             Artist = artist;
             Album = album;
             Artists = artists;
-            Playlist = playlist;
             SearchLetters = searchLetters;
             PlayerState = playerState;
         }
@@ -49,7 +46,6 @@ namespace ApplicationState.States
             public ArtistModel Artist;
             public AlbumModel Album;
             public ImmutableArray<ArtistModel> Artists;
-            public ImmutableArray<AlbumModel> Playlist;
             public ImmutableArray<char> SearchLetters;
 
             public Builder(AppState state)
@@ -61,7 +57,6 @@ namespace ApplicationState.States
                 Artist = state.Artist;
                 Album = state.Album;
                 Artists = state.Artists;
-                Playlist = state.Playlist;
                 SearchLetters = state.SearchLetters;
                 PlayerState = state.PlayerState;
             }
@@ -74,15 +69,14 @@ namespace ApplicationState.States
                     ReferenceEquals(Album, other.Album) &&
                     ReferenceEquals(PlayerState, other.PlayerState) &&
                     Artists == other.Artists &&
-                    SearchLetters == other.SearchLetters &&
-                    Playlist == other.Playlist;
+                    SearchLetters == other.SearchLetters;
             }
 
             public AppState Build()
             {
                 if (Equals(_state)) return _state;
 
-                return new AppState(State, MenuIndex, Artist, Album, Artists, Playlist, SearchLetters, PlayerState);
+                return new AppState(State, MenuIndex, Artist, Album, Artists, SearchLetters, PlayerState);
             }
         }
 

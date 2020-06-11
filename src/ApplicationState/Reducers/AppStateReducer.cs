@@ -60,21 +60,6 @@ namespace ApplicationState.Reducers
                     builder.Artists = artists.Artist;
                     break;
 
-                // PLAYLIST
-                case AddAlbumPlaylistAction album:
-                    builder.Playlist = builder.Playlist.Add(album.Album);
-                    break;
-                case RemoveAlbumPlaylistAction album:
-                    builder.Playlist = builder.Playlist.Remove(album.Album);
-                    break;
-                case ClearPlaylistAction _:
-                    builder.Playlist = ImmutableArray<AlbumModel>.Empty;
-                    break;
-
-                // PLAYER
-                case PlayAlbumAction play:
-                    builder.Playlist = ImmutableArray<AlbumModel>.Empty.Add(play.Album);
-                    break;
             }
 
             if (builder.Artists != state.Artists)

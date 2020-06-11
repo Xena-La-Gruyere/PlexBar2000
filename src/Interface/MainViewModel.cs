@@ -22,6 +22,7 @@ namespace Interface
         public readonly IObservable<ImmutableArray<char>> Letters;
         public readonly IObservable<int> MenuIndex;
         public readonly IObservable<PlayerState> Player;
+        public readonly IObservable<TrackModel> PlayingTrack;
 
         public MainViewModel(IApplicationStateService applicationStateService)
         {
@@ -35,6 +36,7 @@ namespace Interface
             Album = applicationStateService.Album;
             PlaylistAlbum = applicationStateService.Playlist;
             Player = applicationStateService.PlayerState;
+            PlayingTrack = applicationStateService.PlayingTrack;
 
             // Initialize library
             applicationStateService.LoadArtists();

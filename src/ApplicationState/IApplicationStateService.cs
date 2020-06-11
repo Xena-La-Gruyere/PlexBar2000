@@ -16,6 +16,7 @@ namespace ApplicationState
         IObservable<ImmutableArray<AlbumModel>> Playlist { get; }
         IObservable<ImmutableArray<char>> SearchLetters { get; }
         IObservable<PlayerState> PlayerState { get; }
+        IObservable<TrackModel> PlayingTrack { get; }
 
         void ToggleState();
         void PreviousMenu();
@@ -29,7 +30,8 @@ namespace ApplicationState
         void ClearPlaylist();
         void LoadArtists();
         void PauseResume();
-        void ActualAvancement(double avancement);
+        void ActualAvancement(TimeSpan avancement);
+        void TrackFinished();
         void UpVolume();
         void DownVolume();
     }

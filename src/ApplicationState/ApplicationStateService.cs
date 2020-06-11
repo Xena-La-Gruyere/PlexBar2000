@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Immutable;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using ApplicationState.Actions;
@@ -24,6 +25,7 @@ namespace ApplicationState
         public IObservable<ImmutableArray<AlbumModel>> Playlist { get; }
         public IObservable<ImmutableArray<char>> SearchLetters { get; }
         public IObservable<PlayerState> PlayerState { get; }
+        public IObservable<TrackModel> PlayingTrack { get; }
 
         public ApplicationStateService(IPlexLibraryService plexService)
         {
@@ -55,7 +57,7 @@ namespace ApplicationState
                 .Replay(1);
             Artists = artistsConn;
 
-            var playlistConn = _store.Select(s => s.Playlist)
+            var playlistConn = _store.Select(s => s.PlayerState.Playlist)
                 .DistinctUntilChanged()
                 .Replay(1);
             Playlist = playlistConn;
@@ -70,6 +72,14 @@ namespace ApplicationState
                 .Replay(1);
             PlayerState = playerStateConn;
 
+            var playingTrackConn = _store
+                .Select(s => s.PlayerState.PlayingTrack)
+                .CombineLatest(Playlist.Select(p => p.SelectMany(a => a.Tracks).ToArray()), 
+                    (ind, tracks) => ind < tracks.Length ? tracks[ind] : null)
+                .DistinctUntilChanged()
+                .Replay(1);
+            PlayingTrack = playingTrackConn;
+
             appStateConn.Connect();
             artistConn.Connect();
             albumConn.Connect();
@@ -78,6 +88,7 @@ namespace ApplicationState
             playlistConn.Connect();
             searchLettersConn.Connect();
             playerStateConn.Connect();
+            playingTrackConn.Connect();
         }
 
         public void ToggleState()
@@ -165,9 +176,14 @@ namespace ApplicationState
             _store.Dispatch(new PauseResumeAction());
         }
 
-        public void ActualAvancement(double avancement)
+        public void ActualAvancement(TimeSpan avancement)
         {
             _store.Dispatch(new RefreshAvancementAction(avancement));
+        }
+
+        public void TrackFinished()
+        {
+            _store.Dispatch(new PlayNextAction());
         }
 
         public void UpVolume()
