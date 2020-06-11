@@ -20,6 +20,7 @@ namespace Player
     {
         private MMDevice _device;
         private ISoundOut _soundOut;
+        private float _volume;
 
         public PlayerService(IApplicationStateService stateService)
         {
@@ -37,6 +38,19 @@ namespace Player
             stateService.PlayerState.Select(p => p.PlayingState)
                 .DistinctUntilChanged()
                 .Subscribe(PauseResume);
+
+
+            stateService.PlayerState.Select(p => p.VolumentPercentage)
+                .DistinctUntilChanged()
+                .Select(v => v / 100f)
+                .Subscribe(ChangeVolume);
+        }
+
+        private void ChangeVolume(float volume)
+        {
+            if(_soundOut is null) return;
+            _volume = volume;
+            _soundOut.Volume = volume;
         }
 
         private IEnumerable<MMDevice> GetDevices()
@@ -61,6 +75,7 @@ namespace Player
 
             _soundOut = new WasapiOut
             {
+                Volume = _volume,
                 Latency = 100,
                 UseChannelMixingMatrices = true,
                 StreamRoutingOptions = StreamRoutingOptions.OnDefaultDeviceChange
