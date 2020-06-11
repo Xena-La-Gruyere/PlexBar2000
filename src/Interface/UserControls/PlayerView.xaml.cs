@@ -88,6 +88,8 @@ namespace Interface.UserControls
                     .Select(p => p.Avancement)
                     .WithLatestFrom(ViewModel.Player
                         .Select(p => p.PlayingTrack?.Duration), (avancement, duration) => duration * avancement)
+                    .Where(e => e.HasValue && e > 0)
+                    .Select(e =>(long) e)
                     .Select(e => converterMilliSec.Convert(e, typeof(string), null, CultureInfo.InvariantCulture))
                     .Select(e => e?.ToString())
                     .DistinctUntilChanged()
@@ -95,6 +97,12 @@ namespace Interface.UserControls
                     .Subscribe(e => TrackAvancement.Text = e)
                     .DisposeWith(dispose);
 
+                ViewModel.Player
+                    .Select(p => p.Avancement)
+                    .DistinctUntilChanged()
+                    .ObserveOnDispatcher()
+                    .Subscribe(e => TimeLineElapsed.Width = TimeLine.ActualWidth * e)
+                    .DisposeWith(dispose);
             });
         }
 

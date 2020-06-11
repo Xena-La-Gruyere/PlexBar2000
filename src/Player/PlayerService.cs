@@ -25,7 +25,7 @@ namespace Player
         {
             Observable.Timer(DateTimeOffset.Now, TimeSpan.FromMilliseconds(500))
                 .Where(_ => _soundOut?.WaveSource?.Position != null)
-                .Select(_ => (double)_soundOut.WaveSource.Length / (double)_soundOut.WaveSource.Position)
+                .Select(_ => (double)_soundOut.WaveSource.Position / (double)_soundOut.WaveSource.Length)
                 .Subscribe(stateService.ActualAvancement);
 
             stateService.PlayerState.Select(p => p.PlayingTrack)

@@ -82,9 +82,18 @@
             x:Name="TimeLine"
             Grid.Row="3"
             Grid.Column="2"
-            Height="3"
-            Margin="5"
-            Background="{StaticResource ForegroundColor2}" />
+            Height="1"
+            Margin="6"
+            Background="{StaticResource BackgroundColor2}" />
+        <Border
+            x:Name="TimeLineElapsed"
+            Grid.Row="3"
+            Grid.Column="2"
+            Width="0"
+            Height="1"
+            Margin="6"
+            HorizontalAlignment="Left"
+            Background="{StaticResource ForegroundColor1}" />
 
         <TextBlock
             x:Name="TrackAvancement"
@@ -100,6 +109,7 @@
             Grid.Column="4"
             Margin="0,4,4,4"
             FontSize="10" />
+
         <!--  DRAG WINDOW  -->
         <Grid
             Grid.Row="0"
