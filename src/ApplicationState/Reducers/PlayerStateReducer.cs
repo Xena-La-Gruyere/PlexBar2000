@@ -21,6 +21,24 @@ namespace ApplicationState.Reducers
                     builder.Playlist = builder.Playlist.Add(album.Album);
                     break;
                 case RemoveAlbumPlaylistAction album:
+                    var indAlbum = builder.Playlist.IndexOf(album.Album);
+                    var traksLenghtBefore = builder.Playlist.Take(indAlbum).SelectMany(a => a.Tracks).Count();
+                    var indBeginAlbum = traksLenghtBefore - 1;
+                    var indEndAlbum = indBeginAlbum + album.Album.Tracks.Length;
+
+                    if (builder.PlayingTrack >= indBeginAlbum &&
+                        builder.PlayingTrack <= indEndAlbum)
+                    {
+                        // Playing track of album removing
+                        builder.PlayingTrack = 0;
+                        builder.PlayingState = PlayingStateEnum.Paused;
+                    }
+                    else if(builder.PlayingTrack > indEndAlbum)
+                    {
+                        // Playing track ind shift
+                        builder.PlayingTrack = builder.PlayingTrack - album.Album.Tracks.Length;
+                    }
+
                     builder.Playlist = builder.Playlist.Remove(album.Album);
                     break;
                 case ClearPlaylistAction _:

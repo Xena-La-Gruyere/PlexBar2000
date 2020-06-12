@@ -36,7 +36,6 @@ namespace Player
 
             stateService.PlayingTrack
                 .Select(t => t?.Resource)
-                .Where(uri => uri != null)
                 .DistinctUntilChanged()
                 .Subscribe(Play);
 
@@ -90,6 +89,15 @@ namespace Player
 
         private void Play(Uri file)
         {
+            if (file is null)
+            {
+                // Nothing playing
+                _stateService.ActualAvancement(TimeSpan.Zero);
+                _soundOut?.Stop();
+                _soundOut?.Dispose();
+                return;
+            }
+
             var waveSource = CodecFactory.Instance
                 .GetCodec(file)
                 .ToSampleSource()
