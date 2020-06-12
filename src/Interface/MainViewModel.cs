@@ -95,5 +95,13 @@ namespace Interface
         {
             _applicationStateService.DownVolume();
         }
+        public void PlayTrackInPlaylist(TrackModel track)
+        {
+            _applicationStateService.PlayTrackInPlaylist(track);
+        }
+        public void PlayTrackAndAlbum(AlbumModel album, TrackModel track)
+        {
+            _applicationStateService.PlayTrackAndAlbum(album, track);
+        }
     }
 }

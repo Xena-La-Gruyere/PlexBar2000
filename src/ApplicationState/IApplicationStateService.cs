@@ -25,6 +25,8 @@ namespace ApplicationState
         void SelectArtist(ArtistModel artist);
         void SelectAlbum(AlbumModel album);
         void PlayAlbum(AlbumModel album);
+        void PlayTrackInPlaylist(TrackModel track);
+        void PlayTrackAndAlbum(AlbumModel album, TrackModel track);
         void AddPlaylistAlbum(AlbumModel album);
         void RemovePlaylistAlbum(AlbumModel album);
         void ClearPlaylist();

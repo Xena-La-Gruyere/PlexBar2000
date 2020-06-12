@@ -47,6 +47,15 @@ namespace ApplicationState.Reducers
                     break;
 
                 // PLAYER
+                case PlayTrackAndAlbumAction play:
+                    builder.Playlist = ImmutableArray<AlbumModel>.Empty.Add(play.Album);
+                    builder.PlayingTrackInd = builder.Playlist.SelectMany(a => a.Tracks).ToList().IndexOf(play.Track);
+                    builder.PlayingState = PlayingStateEnum.Playing;
+                    break;
+                case PlayTrackInPlaylistAction play:
+                    builder.PlayingTrackInd = builder.Playlist.SelectMany(a => a.Tracks).ToList().IndexOf(play.Track);
+                    builder.PlayingState = PlayingStateEnum.Playing;
+                    break;
                 case PlayAlbumAction play:
                     builder.Playlist = ImmutableArray<AlbumModel>.Empty.Add(play.Album);
                     builder.PlayingTrackInd = 0;
@@ -113,6 +122,11 @@ namespace ApplicationState.Reducers
             }
 
             return builder.Build();
+        }
+
+        private static AlbumModel GetAlbum(TrackModel track, ImmutableArray<AlbumModel> playlist)
+        {
+            return playlist.FirstOrDefault(a => a.Tracks.Any(t => ReferenceEquals(t, track)));
         }
 
         private static TrackModel GetPlayingTrackAndAlbum(int index, ImmutableArray<AlbumModel> playlist)

@@ -53,6 +53,7 @@
                         <Button
                             Margin="20,1,0,1"
                             DockPanel.Dock="Top"
+                            PreviewMouseDown="ClickTrack"
                             Style="{StaticResource LargeButton}">
                             <Grid>
                                 <Grid.ColumnDefinitions>

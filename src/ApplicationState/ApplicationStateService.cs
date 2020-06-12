@@ -136,6 +136,16 @@ namespace ApplicationState
                 TaskScheduler.FromCurrentSynchronizationContext());
         }
 
+        public void PlayTrackInPlaylist(TrackModel track)
+        {
+            _store.Dispatch(new PlayTrackInPlaylistAction(track));
+        }
+
+        public void PlayTrackAndAlbum(AlbumModel album, TrackModel track)
+        {
+            _store.Dispatch(new PlayTrackAndAlbumAction(album, track));
+        }
+
         public void AddPlaylistAlbum(AlbumModel album)
         {
             // Get album from plex

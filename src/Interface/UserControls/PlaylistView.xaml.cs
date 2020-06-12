@@ -43,5 +43,13 @@ namespace Interface.UserControls
                 fe.DataContext is AlbumModel album)
                 ViewModel.RemoveAlbumButton(album);
         }
+
+        private void ClickTrack(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed &&
+                sender is FrameworkElement fe &&
+                fe.DataContext is TrackModel track)
+                ViewModel.PlayTrackInPlaylist(track);
+        }
     }
 }
