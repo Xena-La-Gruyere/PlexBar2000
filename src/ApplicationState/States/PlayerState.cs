@@ -9,23 +9,26 @@ namespace ApplicationState.States
         public PlayerState(int volumentPercentage)
         {
             VolumentPercentage = volumentPercentage;
+            PlayingTrack = null;
             Playlist = ImmutableArray<AlbumModel>.Empty;
-            PlayingTrack = 0;
+            PlayingTrackInd = 0;
             PlayingState = PlayingStateEnum.Paused;
             Avancement = TimeSpan.Zero;
         }
 
-        public PlayerState(int playingTrack, PlayingStateEnum playingState, TimeSpan avancement, int volumentPercentage, ImmutableArray<AlbumModel> playlist)
+        public PlayerState(int playingTrackInd, PlayingStateEnum playingState, TimeSpan avancement, int volumentPercentage, ImmutableArray<AlbumModel> playlist, TrackModel playingTrack)
         {
-            PlayingTrack = playingTrack;
+            PlayingTrackInd = playingTrackInd;
             PlayingState = playingState;
             Avancement = avancement;
             VolumentPercentage = volumentPercentage;
             Playlist = playlist;
+            PlayingTrack = playingTrack;
         }
 
         public ImmutableArray<AlbumModel> Playlist { get; }
-        public int PlayingTrack { get; }
+        public int PlayingTrackInd { get; }
+        public TrackModel PlayingTrack { get; }
         public PlayingStateEnum PlayingState { get; }
         public TimeSpan Avancement { get; }
         public int VolumentPercentage { get; }
@@ -34,29 +37,32 @@ namespace ApplicationState.States
         {
             private readonly PlayerState _state;
 
-            public int PlayingTrack;
+            public int PlayingTrackInd;
             public PlayingStateEnum PlayingState;
             public TimeSpan Avancement;
             public int VolumentPercentage;
             public ImmutableArray<AlbumModel> Playlist;
+            public TrackModel PlayingTrack;
 
             public Builder(PlayerState state)
             {
                 _state = state;
 
-                PlayingTrack = state.PlayingTrack;
+                PlayingTrackInd = state.PlayingTrackInd;
                 PlayingState = state.PlayingState;
                 Avancement = state.Avancement;
                 VolumentPercentage = state.VolumentPercentage;
                 Playlist = state.Playlist;
+                PlayingTrack = state.PlayingTrack;
             }
 
             public bool Equal(PlayerState other)
             {
-                return PlayingTrack == other.PlayingTrack &&
+                return PlayingTrackInd == other.PlayingTrackInd &&
                        PlayingState == other.PlayingState &&
                        VolumentPercentage == other.VolumentPercentage &&
                        Playlist == other.Playlist &&
+                       ReferenceEquals(PlayingTrack, other.PlayingTrack) &&
                        Avancement.Equals(other.Avancement);
             }
 
@@ -64,7 +70,7 @@ namespace ApplicationState.States
             {
                 if (Equal(_state)) return _state;
 
-                return new PlayerState(PlayingTrack, PlayingState, Avancement, VolumentPercentage, Playlist);
+                return new PlayerState(PlayingTrackInd, PlayingState, Avancement, VolumentPercentage, Playlist, PlayingTrack);
             }
         }
     }

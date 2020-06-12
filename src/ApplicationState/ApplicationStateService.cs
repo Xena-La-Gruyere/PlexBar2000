@@ -73,10 +73,7 @@ namespace ApplicationState
             PlayerState = playerStateConn;
 
             var playingTrackConn = _store
-                .Where(s => s.PlayerState.PlayingState == PlayingStateEnum.Playing)
                 .Select(s => s.PlayerState.PlayingTrack)
-                .CombineLatest(Playlist.Select(p => p.SelectMany(a => a.Tracks).ToArray()), 
-                    (ind, tracks) => ind < tracks.Length ? tracks[ind] : null)
                 .DistinctUntilChanged()
                 .Replay(1);
             PlayingTrack = playingTrackConn;

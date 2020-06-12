@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using ApplicationState.Actions;
 using ApplicationState.States;
@@ -26,17 +27,17 @@ namespace ApplicationState.Reducers
                     var indBeginAlbum = traksLenghtBefore - 1;
                     var indEndAlbum = indBeginAlbum + album.Album.Tracks.Length;
 
-                    if (builder.PlayingTrack >= indBeginAlbum &&
-                        builder.PlayingTrack <= indEndAlbum)
+                    if (builder.PlayingTrackInd >= indBeginAlbum &&
+                        builder.PlayingTrackInd <= indEndAlbum)
                     {
                         // Playing track of album removing
-                        builder.PlayingTrack = 0;
+                        builder.PlayingTrackInd = 0;
                         builder.PlayingState = PlayingStateEnum.Paused;
                     }
-                    else if(builder.PlayingTrack > indEndAlbum)
+                    else if (builder.PlayingTrackInd > indEndAlbum)
                     {
                         // Playing track ind shift
-                        builder.PlayingTrack = builder.PlayingTrack - album.Album.Tracks.Length;
+                        builder.PlayingTrackInd = builder.PlayingTrackInd - album.Album.Tracks.Length;
                     }
 
                     builder.Playlist = builder.Playlist.Remove(album.Album);
@@ -48,21 +49,21 @@ namespace ApplicationState.Reducers
                 // PLAYER
                 case PlayAlbumAction play:
                     builder.Playlist = ImmutableArray<AlbumModel>.Empty.Add(play.Album);
-                    builder.PlayingTrack = 0;
+                    builder.PlayingTrackInd = 0;
                     builder.PlayingState = PlayingStateEnum.Playing;
                     break;
                 case PlayNextAction next:
                     var tracksLenght = builder.Playlist.SelectMany(a => a.Tracks).Count();
-                    var nextTrackInd = builder.PlayingTrack + 1;
+                    var nextTrackInd = builder.PlayingTrackInd + 1;
                     if (nextTrackInd == tracksLenght)
                     {
                         // No more playlist
                         builder.PlayingState = PlayingStateEnum.Paused;
-                        builder.PlayingTrack = 0;
+                        builder.PlayingTrackInd = 0;
                         break;
                     }
 
-                    builder.PlayingTrack = nextTrackInd;
+                    builder.PlayingTrackInd = nextTrackInd;
                     break;
 
                 case PauseResumeAction _:
@@ -85,7 +86,63 @@ namespace ApplicationState.Reducers
             if (builder.VolumentPercentage < 0)
                 builder.VolumentPercentage = 0;
 
+            // Playing track state changed
+            if (builder.PlayingTrackInd != state.PlayingTrackInd ||
+                builder.Playlist != state.Playlist ||
+                builder.PlayingState != state.PlayingState)
+            {
+
+                // New state of new playing track
+                var newPlayingTrack = GetPlayingTrackAndAlbum(builder.PlayingTrackInd, builder.Playlist);
+                if (newPlayingTrack != null)
+                    builder.Playlist = UpdateTrack(builder.Playlist, newPlayingTrack,
+                        builder.PlayingState switch
+                        {
+                            PlayingStateEnum.Playing => TrackState.Playing,
+                            PlayingStateEnum.Paused => TrackState.Paused,
+                            _ => TrackState.Nothing
+                        });
+
+                // Update actual Playing track
+                builder.PlayingTrack = newPlayingTrack;
+
+                // Old playing track state set to Nothing
+                var oldPlayingTrack = GetPlayingTrackAndAlbum(state.PlayingTrackInd, state.Playlist);
+                if (oldPlayingTrack != null && !ReferenceEquals(newPlayingTrack, oldPlayingTrack))
+                    builder.Playlist = UpdateTrack(builder.Playlist, oldPlayingTrack, TrackState.Nothing);
+            }
+
             return builder.Build();
+        }
+
+        private static TrackModel GetPlayingTrackAndAlbum(int index, ImmutableArray<AlbumModel> playlist)
+        {
+            var tracks = playlist.SelectMany(a => a.Tracks).ToArray();
+
+            // No playing track
+            if (index >= tracks.Length) return null;
+
+            return tracks[index];
+        }
+
+        private static ImmutableArray<AlbumModel> UpdateTrack(ImmutableArray<AlbumModel> playlist, TrackModel track, TrackState trackState)
+        {
+            var album = playlist.FirstOrDefault(a => a.Tracks.Any(t => ReferenceEquals(t, track)));
+
+            // Playlist no longer contains track anyway
+            if (album is null) return playlist;
+
+            // Update track
+            var tracks = album.Tracks.Replace(track, new TrackModel.Builder(track)
+            {
+                TrackState = trackState
+            }.Build());
+
+            // Update playlist
+            return playlist.Replace(album, new AlbumModel.Builder(album)
+            {
+                Tracks = tracks
+            }.Build());
         }
     }
 }
