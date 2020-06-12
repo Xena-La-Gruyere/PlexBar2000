@@ -7,21 +7,22 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:reactiveUi="http://reactiveui.net"
+    xmlns:userControls="clr-namespace:Interface.UserControls"
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:TypeArguments="interface:MainViewModel"
     mc:Ignorable="d">
     <DockPanel>
         <StackPanel
-            Margin="2,2,2,10"
-            Background="{StaticResource BackgroundColorGradient12}"
+            Background="Transparent"
+            Cursor="SizeAll"
             DockPanel.Dock="Top"
             MouseMove="MainWindow_OnMouseMove"
             Orientation="Horizontal">
             <Grid
                 Width="80"
                 Height="80"
-                Margin="5,5,15,1">
+                Margin="15">
                 <Grid.OpacityMask>
                     <VisualBrush Visual="{Binding ElementName=BorderMask}" />
                 </Grid.OpacityMask>
@@ -54,21 +55,13 @@
                     <DataTemplate>
                         <DockPanel Margin="0,2">
                             <Grid
-                                Width="100"
-                                Height="100"
-                                Background="{StaticResource BackgroundColor1}"
+                                Width="120"
+                                Height="120"
+                                Background="Transparent"
                                 Cursor="Hand"
                                 DockPanel.Dock="Top"
                                 PreviewMouseDown="AlbumClick">
-                                <Image RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding ThumbnailUrl}" />
-                                <Grid.Effect>
-                                    <DropShadowEffect
-                                        BlurRadius="10"
-                                        Direction="0"
-                                        Opacity="0.8"
-                                        ShadowDepth="0"
-                                        Color="Black" />
-                                </Grid.Effect>
+                                <userControls:AlbumThumbnailView Source="{Binding ThumbnailUrl}" />
                                 <Grid.ContextMenu>
                                     <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
                                         <MenuItem
@@ -80,8 +73,8 @@
                                             </MenuItem.Icon>
                                         </MenuItem>
                                         <MenuItem
-                                            Click="MenuItemAdd"
                                             x:Name="AddMenuItem"
+                                            Click="MenuItemAdd"
                                             Cursor="Hand"
                                             Header="Add">
                                             <MenuItem.Icon>
@@ -91,12 +84,7 @@
                                     </ContextMenu>
                                 </Grid.ContextMenu>
                             </Grid>
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                DockPanel.Dock="Bottom"
-                                Style="{StaticResource Information}"
-                                Text="{Binding Year}" />
-                            <TextBlock HorizontalAlignment="Center" Text="{Binding Title}" />
+                            <TextBlock Text="{Binding Title}" TextAlignment="Center" />
                         </DockPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

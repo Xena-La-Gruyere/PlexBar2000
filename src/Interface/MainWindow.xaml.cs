@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using ApplicationState.Enumerations;
+using Interface.UIHelper;
 using ReactiveUI;
 using Splat;
 
@@ -18,6 +19,8 @@ namespace Interface
         public MainWindow()
         {
             InitializeComponent();
+
+            this.Loaded += OnLoaded;
 
             ViewModel = Locator.Current.GetService<MainViewModel>();
 
@@ -54,6 +57,10 @@ namespace Interface
             );
         }
 
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            this.EnableBlurBehind();
 
+        }
     }
 }

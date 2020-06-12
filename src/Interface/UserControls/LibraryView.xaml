@@ -15,7 +15,7 @@
     <DockPanel>
 
         <UniformGrid
-            Background="{StaticResource BackgroundColor2}"
+            Background="{StaticResource BackgroundColorTp2}"
             DockPanel.Dock="Bottom"
             Rows="1">
             <Button x:Name="ButtonPrevious">

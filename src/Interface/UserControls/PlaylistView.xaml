@@ -16,7 +16,8 @@
         <Border
             Height="10"
             Margin="2"
-            Background="{StaticResource BackgroundColorGradient12}"
+            Background="Transparent"
+            Cursor="SizeAll"
             DockPanel.Dock="Top"
             MouseMove="MainWindow_OnMouseMove" />
 
@@ -58,29 +59,12 @@
                                 </Grid>
                             </Border>
 
-                            <Grid
-                                Width="80"
-                                Height="80"
-                                Margin="5"
+                            <local:AlbumThumbnailView
+                                Width="100"
+                                Height="100"
                                 VerticalAlignment="Top"
-                                DockPanel.Dock="Left">
-                                <Grid.OpacityMask>
-                                    <VisualBrush Visual="{Binding ElementName=BorderMask}" />
-                                </Grid.OpacityMask>
-                                <Border
-                                    x:Name="BorderMask"
-                                    Background="{StaticResource BackgroundColor3}"
-                                    CornerRadius="5" />
-                                <Image RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding ThumbnailUrl}" />
-                                <Grid.Effect>
-                                    <DropShadowEffect
-                                        BlurRadius="10"
-                                        Direction="0"
-                                        Opacity="0.8"
-                                        ShadowDepth="0"
-                                        Color="Black" />
-                                </Grid.Effect>
-                            </Grid>
+                                DockPanel.Dock="Left"
+                                Source="{Binding ThumbnailUrl}" />
 
                             <!--  TRACKS  -->
                             <ItemsControl VerticalAlignment="Top" ItemsSource="{Binding Tracks}">

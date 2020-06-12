@@ -15,9 +15,9 @@
     <DockPanel>
 
         <Border
-            Margin="2"
-            Padding="5"
-            Background="{StaticResource BackgroundColorGradient12}"
+            Padding="7"
+            Background="Transparent"
+            Cursor="SizeAll"
             DockPanel.Dock="Top"
             MouseMove="MainWindow_OnMouseMove">
             <StackPanel Orientation="Horizontal">
