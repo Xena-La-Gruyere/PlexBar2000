@@ -82,6 +82,7 @@
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="15" />
+                                                    <ColumnDefinition Width="12" />
                                                     <ColumnDefinition Width="10" />
                                                     <ColumnDefinition />
                                                 </Grid.ColumnDefinitions>
@@ -90,17 +91,42 @@
                                                     <RowDefinition />
                                                     <RowDefinition />
                                                 </Grid.RowDefinitions>
+
+                                                <materialDesign:PackIcon
+                                                    Grid.RowSpan="2"
+                                                    Grid.Column="0"
+                                                    VerticalAlignment="Center">
+                                                    <materialDesign:PackIcon.Style>
+                                                        <Style TargetType="{x:Type materialDesign:PackIcon}">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding TrackState}" Value="Playing">
+                                                                    <Setter Property="Kind" Value="Play" />
+                                                                    <Setter Property="Visibility" Value="Visible" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding TrackState}" Value="Paused">
+                                                                    <Setter Property="Kind" Value="Pause" />
+                                                                    <Setter Property="Visibility" Value="Visible" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </materialDesign:PackIcon.Style>
+                                                </materialDesign:PackIcon>
+
                                                 <TextBlock
+                                                    Grid.Row="0"
+                                                    Grid.RowSpan="2"
+                                                    Grid.Column="1"
                                                     HorizontalAlignment="Right"
                                                     Style="{StaticResource Information}"
                                                     Text="{Binding Index}" />
                                                 <TextBlock
                                                     Grid.Row="0"
-                                                    Grid.Column="2"
+                                                    Grid.Column="3"
                                                     Text="{Binding Title}" />
                                                 <TextBlock
                                                     Grid.Row="1"
-                                                    Grid.Column="2"
+                                                    Grid.Column="3"
                                                     Style="{StaticResource Information}"
                                                     Text="{Binding Duration, Converter={StaticResource MilliSecConverter}}" />
                                             </Grid>
