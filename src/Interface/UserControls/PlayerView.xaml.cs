@@ -82,7 +82,7 @@ namespace Interface.UserControls
                     .Select(e => e.args)
                     .Throttle(TimeSpan.FromMilliseconds(100))
                     .ObserveOnDispatcher()
-                    .Subscribe(ViewModel.PauseResume)
+                    .Subscribe(_ => ViewModel.PauseResume())
                     .DisposeWith(dispose);
 
                 var converterMilliSec = new MilliSecConverter();

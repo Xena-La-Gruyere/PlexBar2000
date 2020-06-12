@@ -83,7 +83,7 @@ namespace Interface
         {
             _applicationStateService.RemovePlaylistAlbum(albumModel);
         }
-        public void PauseResume(MouseButtonEventArgs args)
+        public void PauseResume()
         {
             _applicationStateService.PauseResume();
         }
@@ -102,6 +102,18 @@ namespace Interface
         public void PlayTrackAndAlbum(AlbumModel album, TrackModel track)
         {
             _applicationStateService.PlayTrackAndAlbum(album, track);
+        }
+        public void PlayNext()
+        {
+            _applicationStateService.Next();
+        }
+        public void PlayPrevious()
+        {
+            _applicationStateService.Previous();
+        }
+        public void ClearPlaylist()
+        {
+            _applicationStateService.ClearPlaylist();
         }
     }
 }

@@ -189,9 +189,14 @@ namespace ApplicationState
             _store.Dispatch(new RefreshAvancementAction(avancement));
         }
 
-        public void TrackFinished()
+        public void Next()
         {
             _store.Dispatch(new PlayNextAction());
+        }
+
+        public void Previous()
+        {
+            _store.Dispatch(new PlayPreviousAction());
         }
 
         public void UpVolume()

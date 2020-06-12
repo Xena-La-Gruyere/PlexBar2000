@@ -62,7 +62,7 @@ namespace Player
                 return;
             }
 
-            _stateService.TrackFinished();
+            _stateService.Next();
         }
 
         private void ChangeVolume(float volume)

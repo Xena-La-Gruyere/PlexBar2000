@@ -44,6 +44,8 @@ namespace ApplicationState.Reducers
                     break;
                 case ClearPlaylistAction _:
                     builder.Playlist = ImmutableArray<AlbumModel>.Empty;
+                    builder.PlayingTrackInd = 0;
+                    builder.PlayingState = PlayingStateEnum.Paused;
                     break;
 
                 // PLAYER
@@ -72,7 +74,21 @@ namespace ApplicationState.Reducers
                         break;
                     }
 
+                    builder.PlayingState = PlayingStateEnum.Playing;
                     builder.PlayingTrackInd = nextTrackInd;
+                    break;
+                case PlayPreviousAction prev:
+                    var prevTrackInd = builder.PlayingTrackInd - 1;
+                    if (prevTrackInd < 0)
+                    {
+                        // No more playlist
+                        builder.PlayingState = PlayingStateEnum.Paused;
+                        builder.PlayingTrackInd = 0;
+                        break;
+                    }
+
+                    builder.PlayingState = PlayingStateEnum.Playing;
+                    builder.PlayingTrackInd = prevTrackInd;
                     break;
 
                 case PauseResumeAction _:
