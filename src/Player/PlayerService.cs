@@ -37,7 +37,7 @@ namespace Player
             stateService.PlayingTrack
                 .Select(t => t?.Resource)
                 .DistinctUntilChanged()
-                .Subscribe(Play);
+                .Subscribe(async uri => await Play(uri));
 
             stateService.PlayerState.Select(p => p.PlayingState)
                 .DistinctUntilChanged()
@@ -87,7 +87,7 @@ namespace Player
             _device = device;
         }
 
-        private void Play(Uri file)
+        private async Task Play(Uri file)
         {
             if (file is null)
             {
@@ -98,10 +98,10 @@ namespace Player
                 return;
             }
 
-            var waveSource = CodecFactory.Instance
+            var waveSource = await Task.Run(() => CodecFactory.Instance
                 .GetCodec(file)
                 .ToSampleSource()
-                .ToWaveSource();
+                .ToWaveSource());
 
             _soundOut?.Stop();
             _soundOut?.Dispose();
