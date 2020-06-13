@@ -12,7 +12,7 @@ namespace ApplicationState.States
             PlayingTrack = null;
             Playlist = ImmutableArray<AlbumModel>.Empty;
             PlayingTrackInd = 0;
-            PlayingState = PlayingStateEnum.Paused;
+            PlayingState = PlayingStateEnum.Stopped;
             Avancement = TimeSpan.Zero;
         }
 

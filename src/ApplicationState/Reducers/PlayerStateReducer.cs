@@ -32,7 +32,7 @@ namespace ApplicationState.Reducers
                     {
                         // Playing track of album removing
                         builder.PlayingTrackInd = 0;
-                        builder.PlayingState = PlayingStateEnum.Paused;
+                        builder.PlayingState = PlayingStateEnum.Stopped;
                     }
                     else if (builder.PlayingTrackInd > indEndAlbum)
                     {
@@ -45,7 +45,7 @@ namespace ApplicationState.Reducers
                 case ClearPlaylistAction _:
                     builder.Playlist = ImmutableArray<AlbumModel>.Empty;
                     builder.PlayingTrackInd = 0;
-                    builder.PlayingState = PlayingStateEnum.Paused;
+                    builder.PlayingState = PlayingStateEnum.Stopped;
                     break;
 
                 // PLAYER
@@ -69,7 +69,7 @@ namespace ApplicationState.Reducers
                     if (nextTrackInd == tracksLenght)
                     {
                         // No more playlist
-                        builder.PlayingState = PlayingStateEnum.Paused;
+                        builder.PlayingState = PlayingStateEnum.Stopped;
                         builder.PlayingTrackInd = 0;
                         break;
                     }
@@ -82,7 +82,7 @@ namespace ApplicationState.Reducers
                     if (prevTrackInd < 0)
                     {
                         // No more playlist
-                        builder.PlayingState = PlayingStateEnum.Paused;
+                        builder.PlayingState = PlayingStateEnum.Stopped;
                         builder.PlayingTrackInd = 0;
                         break;
                     }
@@ -118,7 +118,10 @@ namespace ApplicationState.Reducers
             {
 
                 // New state of new playing track
-                var newPlayingTrack = GetPlayingTrackAndAlbum(builder.PlayingTrackInd, builder.Playlist);
+                var newPlayingTrack = 
+                    builder.PlayingState == PlayingStateEnum.Stopped ? 
+                        null :
+                        GetPlayingTrackAndAlbum(builder.PlayingTrackInd, builder.Playlist);
                 if (newPlayingTrack != null)
                     builder.Playlist = UpdateTrack(builder.Playlist, newPlayingTrack,
                         builder.PlayingState switch
