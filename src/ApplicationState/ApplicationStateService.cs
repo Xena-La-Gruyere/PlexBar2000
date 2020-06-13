@@ -208,5 +208,10 @@ namespace ApplicationState
         {
             _store.Dispatch(new DownVolumeAction(5));
         }
+
+        public void Stop()
+        {
+            _store.Dispatch(new StopAction());
+        }
     }
 }

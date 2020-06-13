@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Redux", "src\Redux\Redux.cs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationState", "src\ApplicationState\ApplicationState.csproj", "{1FE31AFE-7EC0-4EC0-9A39-25168071D8F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cscore", "src\Player\Player.csproj", "{0DE7C252-4E25-41AA-BA67-2968371E032B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Player", "src\Player\Player.csproj", "{0DE7C252-4E25-41AA-BA67-2968371E032B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaSession", "src\MediaSession\MediaSession.csproj", "{653D9C2F-7E0D-4352-ABE7-A35783903C67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +79,14 @@ Global
 		{0DE7C252-4E25-41AA-BA67-2968371E032B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0DE7C252-4E25-41AA-BA67-2968371E032B}.Release|x64.ActiveCfg = Release|Any CPU
 		{0DE7C252-4E25-41AA-BA67-2968371E032B}.Release|x64.Build.0 = Release|Any CPU
+		{653D9C2F-7E0D-4352-ABE7-A35783903C67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{653D9C2F-7E0D-4352-ABE7-A35783903C67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{653D9C2F-7E0D-4352-ABE7-A35783903C67}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{653D9C2F-7E0D-4352-ABE7-A35783903C67}.Debug|x64.Build.0 = Debug|Any CPU
+		{653D9C2F-7E0D-4352-ABE7-A35783903C67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{653D9C2F-7E0D-4352-ABE7-A35783903C67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{653D9C2F-7E0D-4352-ABE7-A35783903C67}.Release|x64.ActiveCfg = Release|Any CPU
+		{653D9C2F-7E0D-4352-ABE7-A35783903C67}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

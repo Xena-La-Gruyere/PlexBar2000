@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using ApplicationState;
+using MediaSession;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -76,7 +77,8 @@ namespace Interface
             services.AddViewModel<MainWindow, MainViewModel>()
                 .AddApplicationStateService()
                 .AddPlexClientService("http://server:32400", "zNk53Ki7BqR4EraZevvP")
-                .AddCSCorePlayer();
+                .AddCSCorePlayer()
+                .AddMediaSession();
         }
     }
 

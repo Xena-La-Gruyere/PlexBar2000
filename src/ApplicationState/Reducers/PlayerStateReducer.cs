@@ -49,6 +49,11 @@ namespace ApplicationState.Reducers
                     break;
 
                 // PLAYER
+                case StopAction stop:
+                    builder.PlayingTrackInd = 0;
+                    builder.PlayingState = PlayingStateEnum.Stopped;
+                    break;
+
                 case PlayTrackAndAlbumAction play:
                     builder.Playlist = ImmutableArray<AlbumModel>.Empty.Add(play.Album);
                     builder.PlayingTrackInd = builder.Playlist.SelectMany(a => a.Tracks).ToList().IndexOf(play.Track);

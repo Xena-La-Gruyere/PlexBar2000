@@ -5,6 +5,8 @@
     <TargetFramework>net472</TargetFramework>
     <UseWPF>true</UseWPF>
     <Platforms>x64</Platforms>
+    <AssemblyName>PlexBar2000</AssemblyName>
+    <ApplicationIcon>foobar.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ApplicationState\ApplicationState.csproj" />
+    <ProjectReference Include="..\MediaSession\MediaSession.csproj" />
     <ProjectReference Include="..\Player\Player.csproj" />
     <ProjectReference Include="..\PlexClient\PlexClient.csproj" />
   </ItemGroup>
