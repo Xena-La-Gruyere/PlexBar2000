@@ -22,4 +22,10 @@
     <ProjectReference Include="..\Player\Player.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="WPFSoundVisualizationLib">
+      <HintPath>..\Resources\WPFSoundVisualizationLib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

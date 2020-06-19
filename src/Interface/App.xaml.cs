@@ -74,6 +74,7 @@ namespace Interface
         private void ConfigureServices(IServiceCollection services)
         {
             Locator.CurrentMutable.Register(() => new CustomPropertyResolver(), typeof(ICreatesObservableForProperty));
+            Locator.CurrentMutable.Register(() => ReactiveInjectionExtensions.Provider.GetRequiredService<SpectrumProvider>(), typeof(SpectrumProvider));
 
             services.AddViewModel<MainWindow, MainViewModel>()
                 .AddApplicationStateService()

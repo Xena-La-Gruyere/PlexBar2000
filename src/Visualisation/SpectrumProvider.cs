@@ -46,6 +46,7 @@ namespace Visualisation
         private void IsPlayingChanged(bool isPlaying)
         {
             _isPlaying = isPlaying;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsPlaying"));
         }
         private void SampleRateChanged(int sampleRate)
         {

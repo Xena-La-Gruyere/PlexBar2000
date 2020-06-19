@@ -4,13 +4,17 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using ApplicationState.States;
 using Interface.Styles.Converters;
 using Interface.UIHelper;
 using ReactiveUI;
 using Splat;
+using Visualisation;
+using WPFSoundVisualizationLib;
 
 namespace Interface.UserControls
 {
@@ -24,6 +28,21 @@ namespace Interface.UserControls
             InitializeComponent(); 
 
             ViewModel = Locator.Current.GetService<MainViewModel>();
+            var provider = Locator.Current.GetService<SpectrumProvider>();
+            var style = new Style(typeof(SpectrumAnalyzer));
+
+            var barStyle = new Style(typeof(Rectangle));
+            barStyle.Setters.Add(new Setter(Shape.FillProperty, new SolidColorBrush(Colors.WhiteSmoke) { Opacity = 0.1f}));
+            style.Setters.Add(new Setter(SpectrumAnalyzer.BarStyleProperty, barStyle));
+
+            var peakStyle = new Style(typeof(Rectangle));
+            peakStyle.Setters.Add(new Setter(Shape.FillProperty, new SolidColorBrush(Colors.WhiteSmoke) { Opacity = 0.1f }));
+            style.Setters.Add(new Setter(SpectrumAnalyzer.PeakStyleProperty, peakStyle));
+
+            var analyzer = new SpectrumAnalyzer { BarCount = 16, Style = style, RefreshInterval = 20, BarSpacing = 2};
+            analyzer.RegisterSoundPlayer(provider);
+
+            VisualiserControl.Content = analyzer;
 
             this.WhenActivated(dispose =>
             {
