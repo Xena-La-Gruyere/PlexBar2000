@@ -7,7 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using DynamicData;
 using Interface.UIHelper;
-using PlexClient.Library.Models;
+using Library.Abstractions.Models;
 using ReactiveUI;
 using Splat;
 

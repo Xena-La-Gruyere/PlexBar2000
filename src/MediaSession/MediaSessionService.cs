@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reactive.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Media;
@@ -10,8 +7,8 @@ using Windows.Media.Playback;
 using Windows.Storage.Streams;
 using ApplicationState;
 using ApplicationState.States;
+using Library.Abstractions.Models;
 using Microsoft.Extensions.Hosting;
-using PlexClient.Library.Models;
 
 namespace MediaSession
 {

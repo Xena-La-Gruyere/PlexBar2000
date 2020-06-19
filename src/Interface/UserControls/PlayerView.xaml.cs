@@ -11,7 +11,6 @@ using Interface.Styles.Converters;
 using Interface.UIHelper;
 using ReactiveUI;
 using Splat;
-using EventExtensions = System.Windows.Controls.Primitives.EventExtensions;
 
 namespace Interface.UserControls
 {

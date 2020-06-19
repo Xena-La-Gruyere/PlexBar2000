@@ -2,6 +2,7 @@
 using System.Linq;
 using ApplicationState.Actions;
 using ApplicationState.States;
+using Library.Abstractions.Models;
 using Redux;
 
 namespace ApplicationState.Reducers

@@ -4,7 +4,7 @@ using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Input;
 using Interface.UIHelper;
-using PlexClient.Library.Models;
+using Library.Abstractions.Models;
 using ReactiveUI;
 using Splat;
 

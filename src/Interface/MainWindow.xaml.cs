@@ -2,11 +2,9 @@
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using ApplicationState.Enumerations;
 using Interface.UIHelper;
-using MediaSession;
 using ReactiveUI;
 using Splat;
 

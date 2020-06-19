@@ -5,7 +5,7 @@ using System.Windows.Input;
 using ApplicationState;
 using ApplicationState.Enumerations;
 using ApplicationState.States;
-using PlexClient.Library.Models;
+using Library.Abstractions.Models;
 using ReactiveUI;
 
 namespace Interface

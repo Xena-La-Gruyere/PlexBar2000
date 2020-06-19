@@ -17,9 +17,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ApplicationState\ApplicationState.csproj" />
+    <ProjectReference Include="..\Library.Plex\Library.Plex.csproj" />
     <ProjectReference Include="..\MediaSession\MediaSession.csproj" />
     <ProjectReference Include="..\Player\Player.csproj" />
-    <ProjectReference Include="..\PlexClient\PlexClient.csproj" />
   </ItemGroup>
 
 </Project>

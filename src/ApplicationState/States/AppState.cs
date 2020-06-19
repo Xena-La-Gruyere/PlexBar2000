@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using ApplicationState.Enumerations;
+using Library.Abstractions.Models;
 
 namespace ApplicationState.States
 {

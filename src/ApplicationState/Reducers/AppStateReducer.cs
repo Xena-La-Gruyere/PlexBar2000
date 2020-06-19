@@ -4,6 +4,7 @@ using ApplicationState.Enumerations;
 using ApplicationState.States;
 using Redux;
 using System.Linq;
+using Library.Abstractions.Models;
 
 namespace ApplicationState.Reducers
 {
