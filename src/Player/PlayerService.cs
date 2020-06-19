@@ -35,7 +35,7 @@ namespace Player
             stateService.PlayingTrack
                 .Select(t => t?.Resource)
                 .DistinctUntilChanged()
-                .Subscribe(async uri => await Play(uri));
+                .Subscribe(uri => Play(uri));
 
             stateService.PlayerState.Select(p => p.PlayingState)
                 .Where(_ => _soundOut != null)
