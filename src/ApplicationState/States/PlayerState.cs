@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Immutable;
-using PlexClient.Library.Models;
 
 namespace ApplicationState.States
 {

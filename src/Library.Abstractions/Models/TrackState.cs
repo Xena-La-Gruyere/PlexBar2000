@@ -1,4 +1,4 @@
-﻿namespace PlexClient.Library.Models
+﻿namespace Library.Abstractions.Models
 {
     public enum TrackState
     {

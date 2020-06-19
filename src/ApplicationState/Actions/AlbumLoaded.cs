@@ -1,4 +1,4 @@
-﻿using PlexClient.Library.Models;
+﻿using Library.Abstractions.Models;
 using Redux;
 
 namespace ApplicationState.Actions

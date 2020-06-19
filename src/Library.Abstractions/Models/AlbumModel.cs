@@ -1,25 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PlexClient.Client.Models;
 
-namespace PlexClient.Library.Models
+namespace Library.Abstractions.Models
 {
     public class AlbumModel
     {
-        public AlbumModel(Album album, Uri thumbnailUrl, string artist)
-        {
-            Key = album.RatingKey;
-            Title = album.Title;
-            ThumbnailUrl = thumbnailUrl;
-            Artist = artist;
-            Year = album.Year;
-            Tracks = ImmutableArray<TrackModel>.Empty;
-        }
-
         public AlbumModel(string key, string title, Uri thumbnailUrl, long year, ImmutableArray<TrackModel> tracks, string artist)
         {
             Key = key;

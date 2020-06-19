@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using PlexClient.Library.Models;
+using Library.Abstractions.Models;
 
-namespace PlexClient.Library
+namespace Library.Abstractions
 {
-    public interface IPlexLibraryService
+    public interface ILibraryService
     {
         Task<ArtistModel[]> GetArtists();
         Task<ArtistModel> GetArtist(ArtistModel artistModel);

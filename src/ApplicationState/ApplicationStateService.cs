@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Immutable;
-using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using ApplicationState.Actions;
 using ApplicationState.Enumerations;
 using ApplicationState.Reducers;
 using ApplicationState.States;
-using PlexClient.Library;
-using PlexClient.Library.Models;
+using Library.Abstractions;
+using Library.Abstractions.Models;
 using Redux;
 
 namespace ApplicationState
 {
     public class ApplicationStateService : IApplicationStateService
     {
-        private readonly IPlexLibraryService _plexService;
+        private readonly ILibraryService _service;
         private readonly IStore<AppState> _store;
         public IObservable<AppStateEnum> AppState { get; }
         public IObservable<ArtistModel> Artist { get; }
@@ -27,9 +26,9 @@ namespace ApplicationState
         public IObservable<PlayerState> PlayerState { get; }
         public IObservable<TrackModel> PlayingTrack { get; }
 
-        public ApplicationStateService(IPlexLibraryService plexService)
+        public ApplicationStateService(ILibraryService service)
         {
-            _plexService = plexService;
+            _service = service;
             _store = new Store<AppState>(AppStateReducer.Execute, new AppState());
 
             var appStateConn = _store.Select(s => s.State)
@@ -113,7 +112,7 @@ namespace ApplicationState
         {
             _store.Dispatch(new SelectArtist(artist));
 
-            _plexService.GetArtist(artist).ContinueWith(task => 
+            _service.GetArtist(artist).ContinueWith(task => 
                 _store.Dispatch(new SelectArtist(task.Result)), 
                 TaskScheduler.FromCurrentSynchronizationContext());
         }
@@ -122,14 +121,14 @@ namespace ApplicationState
         {
             _store.Dispatch(new SelectAlbum(album));
 
-            _plexService.GetAlbum(album).ContinueWith(task =>
+            _service.GetAlbum(album).ContinueWith(task =>
                 _store.Dispatch(new SelectAlbum(task.Result)),
                 TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         public void PlayAlbum(AlbumModel album)
         {
-            _plexService.GetAlbum(album).ContinueWith(task =>
+            _service.GetAlbum(album).ContinueWith(task =>
                 {
                     _store.Dispatch(new PlayAlbumAction(task.Result));
                 },
@@ -149,7 +148,7 @@ namespace ApplicationState
         public void AddPlaylistAlbum(AlbumModel album)
         {
             // Get album from plex
-            _plexService.GetAlbum(album).ContinueWith(task =>
+            _service.GetAlbum(album).ContinueWith(task =>
                 {
                     // Add to playlist
                     _store.Dispatch(new AddAlbumPlaylistAction(task.Result));
@@ -170,7 +169,7 @@ namespace ApplicationState
         public void LoadArtists()
         {
             // Get artists from plex
-            _plexService.GetArtists().ContinueWith(task =>
+            _service.GetArtists().ContinueWith(task =>
                 {
                     // Add to playlist
                     _store.Dispatch(new ArtistsLoaded(task.Result.ToImmutableArray()));
