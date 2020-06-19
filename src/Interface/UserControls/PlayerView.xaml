@@ -9,7 +9,7 @@
     xmlns:reactiveUi="http://reactiveui.net"
     x:TypeArguments="interface:MainViewModel"
     mc:Ignorable="d">
-    <Grid x:Name="Grid">
+    <Grid x:Name="Grid" SnapsToDevicePixels="True">
         <Grid.Resources>
             <Storyboard x:Key="VolumeAnimation" Storyboard.TargetName="Volume">
                 <DoubleAnimation
@@ -30,8 +30,8 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition />
             <RowDefinition Height="Auto" />
+            <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
@@ -45,10 +45,10 @@
         <ContentControl
             x:Name="VisualiserControl"
             Grid.Row="0"
-            Grid.RowSpan="4"
+            Grid.RowSpan="3"
             Grid.Column="1"
             Grid.ColumnSpan="4"
-            Height="100"/>
+            Height="100" />
 
         <Border
             x:Name="PausedBorder"
@@ -98,7 +98,6 @@
             Grid.Column="2"
             Grid.ColumnSpan="3"
             Margin="4,0"
-            VerticalAlignment="Top"
             Foreground="{StaticResource ForegroundColor2}" />
 
         <TextBlock
@@ -106,38 +105,42 @@
             Grid.Row="2"
             Grid.Column="2"
             Grid.ColumnSpan="3"
-            Margin="4,0" />
+            Margin="4,0"
+            VerticalAlignment="Center" />
 
-        <Border
+        <Rectangle
             x:Name="TimeLine"
             Grid.Row="3"
-            Grid.Column="2"
-            Height="1"
-            Margin="6"
-            Background="{StaticResource BackgroundColor2}" />
-        <Border
+            Grid.Column="1"
+            Grid.ColumnSpan="4"
+            Height="8"
+            Fill="Black"
+            Opacity="0.5" />
+        <Rectangle
             x:Name="TimeLineElapsed"
             Grid.Row="3"
-            Grid.Column="2"
+            Grid.Column="1"
+            Grid.ColumnSpan="4"
             Width="0"
-            Height="1"
-            Margin="6"
+            Height="8"
             HorizontalAlignment="Left"
-            Background="{StaticResource ForegroundColor1}" />
+            Fill="{StaticResource ForegroundColor1}" />
 
         <TextBlock
             x:Name="TrackAvancement"
-            Grid.Row="3"
+            Grid.Row="2"
             Grid.Column="3"
             Margin="0,4"
+            VerticalAlignment="Bottom"
             FontSize="10"
             Foreground="{StaticResource ForegroundColor2}" />
 
         <TextBlock
             x:Name="TrackDuration"
-            Grid.Row="3"
+            Grid.Row="2"
             Grid.Column="4"
             Margin="0,4,4,4"
+            VerticalAlignment="Bottom"
             FontSize="10" />
 
         <!--  DRAG WINDOW  -->

@@ -36,10 +36,10 @@ namespace Interface.UserControls
             style.Setters.Add(new Setter(SpectrumAnalyzer.BarStyleProperty, barStyle));
 
             var peakStyle = new Style(typeof(Rectangle));
-            peakStyle.Setters.Add(new Setter(Shape.FillProperty, new SolidColorBrush(Colors.WhiteSmoke) { Opacity = 0.1f }));
+            peakStyle.Setters.Add(new Setter(Shape.FillProperty, new SolidColorBrush(Colors.Transparent)));
             style.Setters.Add(new Setter(SpectrumAnalyzer.PeakStyleProperty, peakStyle));
 
-            var analyzer = new SpectrumAnalyzer { BarCount = 16, Style = style, RefreshInterval = 20, BarSpacing = 2};
+            var analyzer = new SpectrumAnalyzer { BarCount = 16, Style = style, RefreshInterval = 20, BarSpacing = 2, AveragePeaks = false};
             analyzer.RegisterSoundPlayer(provider);
 
             VisualiserControl.Content = analyzer;
@@ -109,7 +109,7 @@ namespace Interface.UserControls
                     .Select(p => p?.Duration)
                     .DistinctUntilChanged()
                     .Select(e => converterMilliSec.Convert(e, typeof(string), null, CultureInfo.InvariantCulture))
-                    .Select(e => $"/{e}")
+                    .Select(e => $" / {e}")
                     .DistinctUntilChanged()
                     .ObserveOnDispatcher()
                     .Subscribe(e => TrackDuration.Text = e)
