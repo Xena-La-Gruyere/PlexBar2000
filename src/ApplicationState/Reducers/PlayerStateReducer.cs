@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.Linq;
 using ApplicationState.Actions;
 using ApplicationState.States;
-using PlexClient.Library.Models;
 using Redux;
 
 namespace ApplicationState.Reducers

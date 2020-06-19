@@ -76,7 +76,7 @@ namespace Interface
 
             services.AddViewModel<MainWindow, MainViewModel>()
                 .AddApplicationStateService()
-                .AddPlexClientService("http://server:32400", "zNk53Ki7BqR4EraZevvP")
+                .AddPlexLibrary("http://server:32400", "zNk53Ki7BqR4EraZevvP")
                 .AddCSCorePlayer()
                 .AddMediaSession();
         }

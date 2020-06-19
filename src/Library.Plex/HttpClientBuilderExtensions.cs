@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using Library.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using PlexClient.Client;
 using PlexClient.Library;
@@ -10,11 +11,11 @@ namespace PlexClient
 {
     public static class HttpClientBuilderExtensions
     {
-        public static IServiceCollection AddPlexClientService(this IServiceCollection builder, string baseUrl, string plexToken)
+        public static IServiceCollection AddPlexLibrary(this IServiceCollection builder, string baseUrl, string plexToken)
         {
             builder.Configure<PlexOptions>(o => o.PlexToken = plexToken);
 
-            builder.AddSingleton<IPlexLibraryService, PlexLibraryService>();
+            builder.AddSingleton<ILibraryService, LibraryService>();
 
             builder.AddHttpClient<IPlexService, PlexService>()
                 .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler

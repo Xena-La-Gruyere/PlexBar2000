@@ -2,7 +2,7 @@
 using System.Collections.Immutable;
 using ApplicationState.Enumerations;
 using ApplicationState.States;
-using PlexClient.Library.Models;
+using Library.Abstractions.Models;
 
 namespace ApplicationState
 {

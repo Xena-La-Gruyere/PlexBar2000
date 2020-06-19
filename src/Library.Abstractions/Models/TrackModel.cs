@@ -1,7 +1,6 @@
 ﻿using System;
-using PlexClient.Client.Models;
 
-namespace PlexClient.Library.Models
+namespace Library.Abstractions.Models
 {
     public class TrackModel
     {
@@ -18,21 +17,6 @@ namespace PlexClient.Library.Models
             ThumbnailUrl = thumbnailUrl;
             Resource = resource;
             TrackState = trackState;
-        }
-
-        public TrackModel(Track track, AlbumModel albumModel, Uri resource)
-        {
-            Resource = resource;
-            TrackState = TrackState.Nothing;
-            Artist = albumModel.Artist;
-            Album = albumModel.Title;
-            ThumbnailUrl = albumModel.ThumbnailUrl;
-            Title = track.Title;
-            Index = track.Index;
-            Duration = track.Duration;
-            Codec = track.Media[0].AudioCodec;
-            Bitrate = track.Media[0].Bitrate;
-            Key = track.Media[0].Part[0].Key;
         }
 
         public string Title { get; }

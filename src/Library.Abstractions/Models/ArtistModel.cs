@@ -1,21 +1,10 @@
 ﻿using System;
 using System.Collections.Immutable;
-using PlexClient.Client.Models;
 
-namespace PlexClient.Library.Models
+namespace Library.Abstractions.Models
 {
     public class ArtistModel
     {
-        public ArtistModel(Artist artist, char firstLetter, Uri thumbnailUrl)
-        {
-            Key = artist.RatingKey;
-            Title = artist.Title;
-            LetterSearch = firstLetter;
-            ThumbnailUrl = thumbnailUrl;
-            Albums = ImmutableArray<AlbumModel>.Empty;
-            Bio = artist.Summary;
-        }
-
         public ArtistModel(string key, string title, Uri thumbnailUrl, char letterSearch, string bio, ImmutableArray<AlbumModel> albums)
         {
             Key = key;

@@ -2,7 +2,6 @@
 using ApplicationState.Actions;
 using ApplicationState.Enumerations;
 using ApplicationState.States;
-using PlexClient.Library.Models;
 using Redux;
 using System.Linq;
 

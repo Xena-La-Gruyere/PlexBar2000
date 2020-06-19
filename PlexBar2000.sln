@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.cspr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "tests\Test\Test.csproj", "{86BCBC0A-73F3-4AAD-BC48-D5F8DD97E5B8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlexClient", "src\PlexClient\PlexClient.csproj", "{3D6C9B16-DF85-4D6E-B2A6-B9155C9F1287}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlexClient", "src\Library.Plex\Library.Plex.csproj", "{3D6C9B16-DF85-4D6E-B2A6-B9155C9F1287}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Redux", "src\Redux\Redux.csproj", "{B1F05F5A-C9DE-4284-8942-1C8BC688FF6F}"
 EndProject
@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationState", "src\App
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Player", "src\Player\Player.csproj", "{0DE7C252-4E25-41AA-BA67-2968371E032B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaSession", "src\MediaSession\MediaSession.csproj", "{653D9C2F-7E0D-4352-ABE7-A35783903C67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediaSession", "src\MediaSession\MediaSession.csproj", "{653D9C2F-7E0D-4352-ABE7-A35783903C67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Abstractions", "src\Library.Abstractions\Library.Abstractions.csproj", "{3D322B73-AE3C-4487-8A51-710102E489F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,14 @@ Global
 		{653D9C2F-7E0D-4352-ABE7-A35783903C67}.Release|Any CPU.Build.0 = Release|Any CPU
 		{653D9C2F-7E0D-4352-ABE7-A35783903C67}.Release|x64.ActiveCfg = Release|Any CPU
 		{653D9C2F-7E0D-4352-ABE7-A35783903C67}.Release|x64.Build.0 = Release|Any CPU
+		{3D322B73-AE3C-4487-8A51-710102E489F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D322B73-AE3C-4487-8A51-710102E489F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D322B73-AE3C-4487-8A51-710102E489F4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3D322B73-AE3C-4487-8A51-710102E489F4}.Debug|x64.Build.0 = Debug|Any CPU
+		{3D322B73-AE3C-4487-8A51-710102E489F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D322B73-AE3C-4487-8A51-710102E489F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D322B73-AE3C-4487-8A51-710102E489F4}.Release|x64.ActiveCfg = Release|Any CPU
+		{3D322B73-AE3C-4487-8A51-710102E489F4}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
