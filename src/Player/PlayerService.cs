@@ -12,20 +12,27 @@ using CSCore;
 using CSCore.Codecs;
 using CSCore.CoreAudioAPI;
 using CSCore.SoundOut;
+using CSCore.Streams;
 using Microsoft.Extensions.Hosting;
+using Visualisation;
 
 namespace Player
 {
     public class PlayerService : IHostedService
     {
+        private SingleBlockNotificationStream _singleBlockNotificationStream;
         private readonly IApplicationStateService _stateService;
+        private readonly SpectrumProvider _spectrumProvider;
         private MMDevice _device;
         private ISoundOut _soundOut;
         private float _volume;
 
-        public PlayerService(IApplicationStateService stateService)
+        public PlayerService(
+            IApplicationStateService stateService,
+            SpectrumProvider spectrumProvider)
         {
             _stateService = stateService;
+            _spectrumProvider = spectrumProvider;
 
             Observable.Timer(DateTimeOffset.Now, TimeSpan.FromMilliseconds(500))
                 .Where(_ => _soundOut?.WaveSource != null)
@@ -92,10 +99,19 @@ namespace Player
                 return;
             }
 
+            if(_singleBlockNotificationStream != null)
+                _singleBlockNotificationStream.SingleBlockRead -= notificationSource_SingleBlockRead;
+
             var waveSource = await Task.Run(() => CodecFactory.Instance
                 .GetCodec(file)
                 .ToSampleSource()
+                .AppendSource(x => new SingleBlockNotificationStream(x), out _singleBlockNotificationStream)
                 .ToWaveSource());
+
+
+            _singleBlockNotificationStream.SingleBlockRead += notificationSource_SingleBlockRead;
+
+            _stateService.ActualFormat(waveSource.WaveFormat.Channels, waveSource.WaveFormat.SampleRate);
 
             Stop();
 
@@ -110,6 +126,11 @@ namespace Player
             _soundOut.Volume = _volume;
 
             _soundOut.Play();
+        }
+
+        private void notificationSource_SingleBlockRead(object sender, SingleBlockReadEventArgs e)
+        {
+            _spectrumProvider.SourceSingleBlockRead(e);
         }
 
         private void SoundOutOnStopped(object sender, PlaybackStoppedEventArgs e)

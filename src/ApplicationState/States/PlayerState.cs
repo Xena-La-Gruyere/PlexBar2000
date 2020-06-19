@@ -9,6 +9,8 @@ namespace ApplicationState.States
         public PlayerState(int volumentPercentage)
         {
             VolumentPercentage = volumentPercentage;
+            Channels = 2;
+            SampleRate = 44100;
             PlayingTrack = null;
             Playlist = ImmutableArray<AlbumModel>.Empty;
             PlayingTrackInd = 0;
@@ -16,7 +18,7 @@ namespace ApplicationState.States
             Avancement = TimeSpan.Zero;
         }
 
-        public PlayerState(int playingTrackInd, PlayingStateEnum playingState, TimeSpan avancement, int volumentPercentage, ImmutableArray<AlbumModel> playlist, TrackModel playingTrack)
+        public PlayerState(int playingTrackInd, PlayingStateEnum playingState, TimeSpan avancement, int volumentPercentage, ImmutableArray<AlbumModel> playlist, TrackModel playingTrack, int channels, int sampleRate)
         {
             PlayingTrackInd = playingTrackInd;
             PlayingState = playingState;
@@ -24,6 +26,8 @@ namespace ApplicationState.States
             VolumentPercentage = volumentPercentage;
             Playlist = playlist;
             PlayingTrack = playingTrack;
+            Channels = channels;
+            SampleRate = sampleRate;
         }
 
         public ImmutableArray<AlbumModel> Playlist { get; }
@@ -32,6 +36,8 @@ namespace ApplicationState.States
         public PlayingStateEnum PlayingState { get; }
         public TimeSpan Avancement { get; }
         public int VolumentPercentage { get; }
+        public int Channels { get; }
+        public int SampleRate { get; }
 
         public struct Builder
         {
@@ -43,6 +49,8 @@ namespace ApplicationState.States
             public int VolumentPercentage;
             public ImmutableArray<AlbumModel> Playlist;
             public TrackModel PlayingTrack;
+            public int Channels;
+            public int SampleRate;
 
             public Builder(PlayerState state)
             {
@@ -54,6 +62,8 @@ namespace ApplicationState.States
                 VolumentPercentage = state.VolumentPercentage;
                 Playlist = state.Playlist;
                 PlayingTrack = state.PlayingTrack;
+                Channels = state.Channels;
+                SampleRate = state.SampleRate;
             }
 
             public bool Equal(PlayerState other)
@@ -63,14 +73,16 @@ namespace ApplicationState.States
                        VolumentPercentage == other.VolumentPercentage &&
                        Playlist == other.Playlist &&
                        ReferenceEquals(PlayingTrack, other.PlayingTrack) &&
-                       Avancement.Equals(other.Avancement);
+                       Avancement.Equals(other.Avancement) &&
+                       Channels == other.Channels &&
+                       SampleRate == other.SampleRate;
             }
 
             public PlayerState Build()
             {
                 if (Equal(_state)) return _state;
 
-                return new PlayerState(PlayingTrackInd, PlayingState, Avancement, VolumentPercentage, Playlist, PlayingTrack);
+                return new PlayerState(PlayingTrackInd, PlayingState, Avancement, VolumentPercentage, Playlist, PlayingTrack, Channels, SampleRate);
             }
         }
     }

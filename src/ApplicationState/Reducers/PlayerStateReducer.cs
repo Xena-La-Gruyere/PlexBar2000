@@ -108,6 +108,10 @@ namespace ApplicationState.Reducers
                 case DownVolumeAction down:
                     builder.VolumentPercentage -= down.Amount;
                     break;
+                case ChangeWaveFormatAction format:
+                    builder.Channels = format.Channels;
+                    builder.SampleRate = format.SampleRate;
+                    break;
             }
 
             if (builder.VolumentPercentage > 100)

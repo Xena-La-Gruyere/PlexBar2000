@@ -188,6 +188,11 @@ namespace ApplicationState
             _store.Dispatch(new RefreshAvancementAction(avancement));
         }
 
+        public void ActualFormat(int channels, int sampleRate)
+        {
+            _store.Dispatch(new ChangeWaveFormatAction(channels, sampleRate));
+        }
+
         public void Next()
         {
             _store.Dispatch(new PlayNextAction());

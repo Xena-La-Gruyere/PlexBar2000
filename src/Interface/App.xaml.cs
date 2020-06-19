@@ -15,6 +15,7 @@ using Player;
 using PlexClient;
 using ReactiveUI;
 using Splat;
+using Visualisation;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Interface
@@ -78,7 +79,8 @@ namespace Interface
                 .AddApplicationStateService()
                 .AddPlexLibrary("http://server:32400", "zNk53Ki7BqR4EraZevvP")
                 .AddCSCorePlayer()
-                .AddMediaSession();
+                .AddMediaSession()
+                .AddVisualisation();
         }
     }
 

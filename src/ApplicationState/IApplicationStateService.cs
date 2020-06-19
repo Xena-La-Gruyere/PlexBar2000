@@ -33,6 +33,7 @@ namespace ApplicationState
         void LoadArtists();
         void PauseResume();
         void ActualAvancement(TimeSpan avancement);
+        void ActualFormat(int channels, int sampleRate);
         void Stop();
         void Next();
         void Previous();
