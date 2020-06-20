@@ -55,11 +55,12 @@ namespace PlexClient.Library
         {
             var album = await _plexService.GetAlbum(albumModel.Key);
 
+            var cdNumber = album.MediaContainer.Tracks.Select(t => t.ParentIndex).Max();
+
             var builder = new AlbumModel.Builder(albumModel)
             {
                 Tracks = album.MediaContainer.Tracks
-                    .OrderBy(t => t.Index)
-                    .Select(t => t.ToModel(albumModel, _plexService.GetResourceUri(t.Media[0].Part[0].Key)))
+                    .Select(t => t.ToModel(albumModel, _plexService.GetResourceUri(t.Media[0].Part[0].Key), cdNumber))
                     .ToImmutableArray()
             };
 

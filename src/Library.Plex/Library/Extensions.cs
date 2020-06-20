@@ -24,10 +24,10 @@ namespace PlexClient.Library
                 ImmutableArray<AlbumModel>.Empty);
 
 
-        public static TrackModel ToModel(this Track track, AlbumModel albumModel, Uri resource)
+        public static TrackModel ToModel(this Track track, AlbumModel albumModel, Uri resource, long cdNumber)
             => new TrackModel(
                 track.Title,
-                track.Index,
+                cdNumber > 1 ? track.ParentIndex * 100 + track.Index : track.Index,
                 track.Duration,
                 track.Media[0].AudioCodec,
                 track.Media[0].Bitrate,
