@@ -113,7 +113,7 @@
             Grid.Row="3"
             Grid.Column="1"
             Grid.ColumnSpan="4"
-            Height="8"
+            Height="5"
             Fill="Black"
             Opacity="0.5" />
         <Rectangle
@@ -122,7 +122,7 @@
             Grid.Column="1"
             Grid.ColumnSpan="4"
             Width="0"
-            Height="8"
+            Height="5"
             HorizontalAlignment="Left"
             Fill="{StaticResource ForegroundColor1}" />
 
