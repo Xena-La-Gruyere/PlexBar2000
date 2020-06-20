@@ -14,12 +14,19 @@
 
     <DockPanel>
 
+        <ProgressBar
+            x:Name="ProgressBar"
+            DockPanel.Dock="Top"
+            IsIndeterminate="True" />
+
         <Border
+            x:Name="SearchBorder"
             Padding="7"
             Background="Transparent"
             Cursor="SizeAll"
             DockPanel.Dock="Top"
-            MouseMove="MainWindow_OnMouseMove">
+            MouseMove="MainWindow_OnMouseMove"
+            Visibility="Hidden">
             <StackPanel Orientation="Horizontal">
                 <materialDesign:PackIcon
                     Margin="0,0,5,0"
@@ -29,7 +36,10 @@
             </StackPanel>
         </Border>
 
-        <ItemsControl x:Name="LetterList" DockPanel.Dock="Right">
+        <ItemsControl
+            x:Name="LetterList"
+            DockPanel.Dock="Right"
+            Visibility="Hidden">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="1" />
@@ -51,7 +61,8 @@
         <ItemsControl
             x:Name="ArtistList"
             ScrollViewer.CanContentScroll="True"
-            VirtualizingStackPanel.IsVirtualizing="True">
+            VirtualizingStackPanel.IsVirtualizing="True"
+            Visibility="Hidden">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Button

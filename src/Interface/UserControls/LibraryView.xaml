@@ -19,13 +19,13 @@
             DockPanel.Dock="Bottom"
             Rows="1">
             <Button x:Name="ButtonPrevious">
-                <materialDesign:PackIcon Kind="ChevronLeft" />
+                <materialDesign:PackIcon Foreground="{StaticResource ForegroundColor1}" Kind="ChevronLeft" />
             </Button>
             <Button x:Name="HomeButton">
-                <materialDesign:PackIcon Kind="Home" />
+                <materialDesign:PackIcon Foreground="{StaticResource ForegroundColor1}" Kind="Home" />
             </Button>
             <Button x:Name="PlaylistButton">
-                <materialDesign:PackIcon Kind="PlaylistMusic" />
+                <materialDesign:PackIcon Foreground="{StaticResource ForegroundColor1}" Kind="PlaylistMusic" />
             </Button>
         </UniformGrid>
 

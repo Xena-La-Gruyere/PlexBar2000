@@ -28,7 +28,14 @@ namespace Interface.UserControls
             {
                 ViewModel.Artists
                     .ObserveOnDispatcher()
-                    .Subscribe(artists => ArtistList.ItemsSource = artists)
+                    .Subscribe(artists =>
+                    {
+                        ArtistList.ItemsSource = artists;
+                        ArtistList.Visibility = Visibility.Visible;
+                        SearchBorder.Visibility = Visibility.Visible;
+                        LetterList.Visibility = Visibility.Visible;
+                        ProgressBar.Visibility = Visibility.Collapsed;
+                    })
                     .DisposeWith(dispose);
 
                 ViewModel.Letters
