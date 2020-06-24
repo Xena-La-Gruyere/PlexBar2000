@@ -16,7 +16,7 @@
                     Storyboard.TargetProperty="Opacity"
                     From="1"
                     To="0"
-                    Duration="0:0:1" />
+                    Duration="0:0:2" />
             </Storyboard>
         </Grid.Resources>
 
@@ -65,16 +65,35 @@
             </Viewbox>
         </Border>
 
-        <Border
+        <Viewbox
             x:Name="Volume"
             Grid.Row="0"
             Grid.RowSpan="4"
-            Grid.Column="0"
-            Width="10"
-            Height="0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
-            Background="{StaticResource ForegroundColor1}" />
+            Grid.Column="0">
+
+            <Border>
+                <Border.Background>
+                    <SolidColorBrush Opacity="0.6" Color="Black" />
+                </Border.Background>
+                <Grid Margin="5">
+                    <TextBlock
+                        x:Name="VolumeText"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="8" />
+                    <ProgressBar
+                        x:Name="VolumeProgressBar"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        IsIndeterminate="False"
+                        Maximum="100"
+                        Minimum="0"
+                        Style="{StaticResource MaterialDesignCircularProgressBar}" />
+                </Grid>
+            </Border>
+        </Viewbox>
+
+
 
         <Button
             x:Name="ResumePauseButton"

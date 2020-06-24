@@ -153,10 +153,11 @@ namespace Interface.UserControls
                     .ObserveOnDispatcher()
                     .Subscribe(e =>
                     {
-                        Volume.Height = e;
+                        VolumeProgressBar.Value = e;
+                        VolumeText.Text = e.ToString();
 
                         var animation = Grid.FindResource("VolumeAnimation") as Storyboard;
-                        Volume.BeginStoryboard(animation);
+                        VolumeProgressBar.BeginStoryboard(animation);
                     })
                     .DisposeWith(dispose);
             });
