@@ -35,6 +35,8 @@ namespace Interface.UserControls
                         SearchBorder.Visibility = Visibility.Visible;
                         LetterList.Visibility = Visibility.Visible;
                         ProgressBar.Visibility = Visibility.Collapsed;
+                        ProgressBar.IsIndeterminate = false;
+                        ProgressBar.IsEnabled = false;
                     })
                     .DisposeWith(dispose);
 
