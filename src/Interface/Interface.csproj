@@ -20,6 +20,7 @@
     <ProjectReference Include="..\Library.Plex\Library.Plex.csproj" />
     <ProjectReference Include="..\MediaSession\MediaSession.csproj" />
     <ProjectReference Include="..\Player\Player.csproj" />
+    <ProjectReference Include="..\ThemeColorManager\ThemeColorManager.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -15,6 +15,7 @@ using Player;
 using PlexClient;
 using ReactiveUI;
 using Splat;
+using ThemeColorManager;
 using Visualisation;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
@@ -81,6 +82,7 @@ namespace Interface
                 .AddPlexLibrary("http://server:32400", "zNk53Ki7BqR4EraZevvP")
                 .AddCSCorePlayer()
                 .AddMediaSession()
+                .AddImageTheme()
                 .AddVisualisation();
         }
     }

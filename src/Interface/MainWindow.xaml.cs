@@ -25,27 +25,10 @@ namespace Interface
 
             this.WhenActivated(dispose =>
                 {
-                    //this.Events().KeyDown
-                    //    .Where(key => key.Key == Key.MediaPlayPause)
-                    //    .Throttle(TimeSpan.FromMilliseconds(100))
-                    //    .ObserveOnDispatcher()
-                    //    .Subscribe(_ => ViewModel.PauseResume())
-                    //    .DisposeWith(dispose);
-                    //this.Events().KeyDown
-                    //    .Where(key => key.Key == Key.MediaNextTrack)
-                    //    .ObserveOnDispatcher()
-                    //    .Subscribe(_ => ViewModel.PlayNext())
-                    //    .DisposeWith(dispose);
-                    //this.Events().KeyDown
-                    //    .Where(key => key.Key == Key.MediaPreviousTrack)
-                    //    .ObserveOnDispatcher()
-                    //    .Subscribe(_ => ViewModel.PlayPrevious())
-                    //    .DisposeWith(dispose);
-                    //this.Events().KeyDown
-                    //    .Where(key => key.Key == Key.MediaStop)
-                    //    .ObserveOnDispatcher()
-                    //    .Subscribe(_ => ViewModel.ClearPlaylist())
-                    //    .DisposeWith(dispose);
+                    ViewModel.Background
+                        .ObserveOnDispatcher()
+                        .Subscribe(b => GridBackground.Background = b)
+                        .DisposeWith(dispose);
 
                     this.Events().MouseDown
                         .Where(e => e.MiddleButton == MouseButtonState.Pressed)

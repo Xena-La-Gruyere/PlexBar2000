@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediaSession", "src\MediaSe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Abstractions", "src\Library.Abstractions\Library.Abstractions.csproj", "{3D322B73-AE3C-4487-8A51-710102E489F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visualisation", "src\Visualisation\Visualisation.csproj", "{B3D71B17-3EAD-4363-8FDC-FA92BED318BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Visualisation", "src\Visualisation\Visualisation.csproj", "{B3D71B17-3EAD-4363-8FDC-FA92BED318BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThemeColorManager", "src\ThemeColorManager\ThemeColorManager.csproj", "{60E2D827-4A51-4991-B94C-8F300EAC058B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -107,6 +109,14 @@ Global
 		{B3D71B17-3EAD-4363-8FDC-FA92BED318BD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B3D71B17-3EAD-4363-8FDC-FA92BED318BD}.Release|x64.ActiveCfg = Release|Any CPU
 		{B3D71B17-3EAD-4363-8FDC-FA92BED318BD}.Release|x64.Build.0 = Release|Any CPU
+		{60E2D827-4A51-4991-B94C-8F300EAC058B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60E2D827-4A51-4991-B94C-8F300EAC058B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60E2D827-4A51-4991-B94C-8F300EAC058B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{60E2D827-4A51-4991-B94C-8F300EAC058B}.Debug|x64.Build.0 = Debug|Any CPU
+		{60E2D827-4A51-4991-B94C-8F300EAC058B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60E2D827-4A51-4991-B94C-8F300EAC058B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60E2D827-4A51-4991-B94C-8F300EAC058B}.Release|x64.ActiveCfg = Release|Any CPU
+		{60E2D827-4A51-4991-B94C-8F300EAC058B}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

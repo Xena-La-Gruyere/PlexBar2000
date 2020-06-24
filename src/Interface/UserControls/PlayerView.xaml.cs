@@ -56,11 +56,14 @@ namespace Interface.UserControls
 
             this.WhenActivated(dispose =>
             {
-                ViewModel.PlayingTrack
-                    .Select(p => p?.ThumbnailUrl)
-                    .DistinctUntilChanged()
+                ViewModel.Thumbnail
                     .ObserveOnDispatcher()
-                    .Subscribe(url => PlayingAlbumThumbnail.Source = url is null ? null : new BitmapImage(url))
+                    .Subscribe(thumb => PlayingAlbumThumbnail.Source = thumb)
+                    .DisposeWith(dispose);
+
+                ViewModel.Primary
+                    .ObserveOnDispatcher()
+                    .Subscribe(color => TimeLineElapsed.Fill = color)
                     .DisposeWith(dispose);
 
                 ViewModel.PlayingTrack

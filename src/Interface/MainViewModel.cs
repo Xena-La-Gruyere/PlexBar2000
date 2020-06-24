@@ -2,11 +2,14 @@
 using System.Collections.Immutable;
 using System.Reactive.Linq;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using ApplicationState;
 using ApplicationState.Enumerations;
 using ApplicationState.States;
 using Library.Abstractions.Models;
 using ReactiveUI;
+using ThemeColorManager;
 
 namespace Interface
 {
@@ -23,8 +26,11 @@ namespace Interface
         public readonly IObservable<int> MenuIndex;
         public readonly IObservable<PlayerState> Player;
         public readonly IObservable<TrackModel> PlayingTrack;
+        public readonly IObservable<Brush> Background;
+        public readonly IObservable<BitmapSource> Thumbnail;
+        public readonly IObservable<Brush> Primary;
 
-        public MainViewModel(IApplicationStateService applicationStateService)
+        public MainViewModel(IApplicationStateService applicationStateService, IImageTheme imageTheme)
         {
             _applicationStateService = applicationStateService;
             AppState = applicationStateService.AppState;
@@ -37,6 +43,9 @@ namespace Interface
             PlaylistAlbum = applicationStateService.Playlist;
             Player = applicationStateService.PlayerState;
             PlayingTrack = applicationStateService.PlayingTrack;
+            Background = imageTheme.Background;
+            Thumbnail = imageTheme.Image;
+            Primary = imageTheme.Primary;
 
             // Initialize library
             applicationStateService.LoadArtists();
