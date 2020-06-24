@@ -25,21 +25,31 @@ namespace Interface.UserControls
     {
         public PlayerView()
         {
-            InitializeComponent(); 
+            InitializeComponent();
 
             ViewModel = Locator.Current.GetService<MainViewModel>();
             var provider = Locator.Current.GetService<SpectrumProvider>();
             var style = new Style(typeof(SpectrumAnalyzer));
 
             var barStyle = new Style(typeof(Rectangle));
-            barStyle.Setters.Add(new Setter(Shape.FillProperty, new SolidColorBrush(Colors.WhiteSmoke) { Opacity = 0.1f}));
+            barStyle.Setters.Add(new Setter(Shape.FillProperty, new SolidColorBrush(Colors.WhiteSmoke) { Opacity = 0.1f }));
             style.Setters.Add(new Setter(SpectrumAnalyzer.BarStyleProperty, barStyle));
 
             var peakStyle = new Style(typeof(Rectangle));
             peakStyle.Setters.Add(new Setter(Shape.FillProperty, new SolidColorBrush(Colors.Transparent)));
             style.Setters.Add(new Setter(SpectrumAnalyzer.PeakStyleProperty, peakStyle));
 
-            var analyzer = new SpectrumAnalyzer { BarCount = 16, Style = style, RefreshInterval = 20, BarSpacing = 2, AveragePeaks = false};
+            var analyzer = new SpectrumAnalyzer
+            {
+                BarCount = 16, 
+                Style = style, 
+                RefreshInterval = 20, 
+                BarSpacing = 2, 
+                AveragePeaks = false,
+                FFTComplexity = FFTDataSize.FFT4096, 
+                Focusable = false,
+                IsFrequencyScaleLinear = false
+            };
             analyzer.RegisterSoundPlayer(provider);
 
             VisualiserControl.Content = analyzer;
@@ -78,7 +88,7 @@ namespace Interface.UserControls
                     .Select(p => p.PlayingState)
                     .DistinctUntilChanged()
                     .ObserveOnDispatcher()
-                    .Subscribe(s => PausedBorder.Visibility = s == PlayingStateEnum.Playing ? 
+                    .Subscribe(s => PausedBorder.Visibility = s == PlayingStateEnum.Playing ?
                         Visibility.Collapsed : Visibility.Visible)
                     .DisposeWith(dispose);
 

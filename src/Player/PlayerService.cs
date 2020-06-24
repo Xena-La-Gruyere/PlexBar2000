@@ -117,7 +117,7 @@ namespace Player
 
             _soundOut = new WasapiOut
             {
-                Latency = 100,
+                Latency = 20,
                 UseChannelMixingMatrices = true,
                 StreamRoutingOptions = StreamRoutingOptions.OnDefaultDeviceChange
             };

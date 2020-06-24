@@ -67,7 +67,7 @@ namespace Interface
             loggingBuilder.SetMinimumLevel(LogLevel.Debug);
 #endif
 #if RELEASE
-            loggingBuilder.SetMinimumLevel(Interface.Properties.Settings.Default.Debug ? LogLevel.Debug : LogLevel.Information);
+            loggingBuilder.SetMinimumLevel(LogLevel.Information);
 #endif
         }
 

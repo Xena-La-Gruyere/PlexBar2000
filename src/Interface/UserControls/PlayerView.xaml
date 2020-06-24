@@ -48,7 +48,8 @@
             Grid.RowSpan="3"
             Grid.Column="1"
             Grid.ColumnSpan="4"
-            Height="100" />
+            Height="95"
+            Focusable="False" />
 
         <Border
             x:Name="PausedBorder"

@@ -11,7 +11,6 @@ namespace Visualisation
         private int _channels;
         private readonly Complex[] _storedSamples;
         private int _sampleOffset;
-        private float[,] _peaks;
 
         public SampleAnalyser(int storageSize)
         {
@@ -25,7 +24,6 @@ namespace Visualisation
             if (_isInitialized)
                 throw new InvalidOperationException("Can't reuse SampleAnalyser.");
 
-            _peaks = new float[_channels, 2];
             _isInitialized = true;
         }
 
@@ -37,7 +35,8 @@ namespace Visualisation
 
         public void Add(float[] samples)
         {
-            CheckForInitialzed();
+            if (!_isInitialized) return;
+
             if (samples.Length % _channels != 0)
                 throw new ArgumentException("Length of samples to add has to be multiple of the channelCount.");
 
@@ -49,8 +48,6 @@ namespace Visualisation
                 _storedSamples[_sampleOffset].Imaginary = 0f;
 
                 _sampleOffset += 1;
-
-                UpdatePeaks(samples, i, _channels);
 
                 if (_sampleOffset >= _storedSamples.Length)
                 {
@@ -74,51 +71,14 @@ namespace Visualisation
             }
         }
 
-        private void CheckForInitialzed()
-        {
-            if (!_isInitialized)
-                throw new InvalidOperationException("SampleAnalyser is not initialized.");
-        }
-
-        private void UpdatePeaks(float[] samples, int index, int channelCount)
-        {
-            int i = index;
-            _peaks[0, 1] = Math.Max(_peaks[0, 1], samples[i]);
-            _peaks[0, 0] = Math.Min(_peaks[0, 0], samples[i]);
-            if (channelCount == 2)
-            {
-                _peaks[1, 1] = Math.Max(_peaks[1, 1], samples[i + 1]);
-                _peaks[1, 0] = Math.Min(_peaks[1, 0], samples[i + 1]);
-            }
-            if (channelCount > 2)
-            {
-                for (int j = 2; j <= channelCount - 1; j++)
-                {
-                    _peaks[i, 1] = Math.Max(_peaks[i, 1], samples[i + j]);
-                    _peaks[i, 0] = Math.Min(_peaks[i, 0], samples[i + j]);
-                }
-            }
-        }
-
         private float MergeSamples(float[] samples, int index, int channelCount)
         {
-            if (channelCount == 1)
+            var z = 0f;
+            for (int i = 0; i < channelCount; i++)
             {
-                return samples[index];
+                z += samples[index + i];
             }
-            if (channelCount == 2)
-            {
-                return (samples[index] + samples[index + 1]) / 2f;
-            }
-            else
-            {
-                float z = 0f;
-                for (int i = 0; i <= channelCount - 1; i++)
-                {
-                    z += samples[index + i];
-                }
-                return z / 2f;
-            }
+            return z / channelCount;
         }
     }
 }
