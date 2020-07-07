@@ -66,10 +66,23 @@ namespace Interface.UserControls
                     .Subscribe(color =>
                     {
                         TimeLineElapsed.Fill = color;
+                    })
+                    .DisposeWith(dispose);
+
+                ViewModel.Text
+                    .ObserveOnDispatcher()
+                    .Subscribe(color =>
+                    {
                         ArtistName.Foreground = color;
-                        AlbumName.Foreground = color;
                         TrackName.Foreground = color;
                         TrackDuration.Foreground = color;
+                    })
+                    .DisposeWith(dispose);
+                ViewModel.TextInformation
+                    .ObserveOnDispatcher()
+                    .Subscribe(color =>
+                    {
+                        AlbumName.Foreground = color;
                         TrackAvancement.Foreground = color;
                     })
                     .DisposeWith(dispose);

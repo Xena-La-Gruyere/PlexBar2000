@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Immutable;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -29,13 +30,15 @@ namespace Interface
         public readonly IObservable<Brush> Background;
         public readonly IObservable<BitmapSource> Thumbnail;
         public readonly IObservable<Brush> Primary;
+        public readonly IObservable<Brush> Text;
+        public readonly IObservable<Brush> TextInformation;
 
         public MainViewModel(IApplicationStateService applicationStateService, IImageTheme imageTheme)
         {
             _applicationStateService = applicationStateService;
             AppState = applicationStateService.AppState;
 
-            Artists = applicationStateService.Artists;
+            Artists = applicationStateService.Artists.Where(a => a.Any());
             Letters = applicationStateService.SearchLetters;
             MenuIndex = applicationStateService.MenuIndex.Select(e => (int)e);
             Artist = applicationStateService.Artist;
@@ -46,6 +49,8 @@ namespace Interface
             Background = imageTheme.Background;
             Thumbnail = imageTheme.Image;
             Primary = imageTheme.Primary;
+            Text = imageTheme.Text;
+            TextInformation = imageTheme.TextInformation;
 
             // Initialize library
             applicationStateService.LoadArtists();

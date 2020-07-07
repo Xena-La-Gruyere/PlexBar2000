@@ -117,8 +117,7 @@
             Grid.Row="1"
             Grid.Column="2"
             Grid.ColumnSpan="3"
-            Margin="4,0"
-            Opacity="0.6" />
+            Margin="4,0" />
 
         <TextBlock
             x:Name="TrackName"
@@ -152,8 +151,7 @@
             Grid.Column="3"
             Margin="0,4"
             VerticalAlignment="Bottom"
-            FontSize="10"
-            Opacity="0.6" />
+            FontSize="10" />
 
         <TextBlock
             x:Name="TrackDuration"
