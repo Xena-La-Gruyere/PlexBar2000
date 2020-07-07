@@ -63,7 +63,15 @@ namespace Interface.UserControls
 
                 ViewModel.Primary
                     .ObserveOnDispatcher()
-                    .Subscribe(color => TimeLineElapsed.Fill = color)
+                    .Subscribe(color =>
+                    {
+                        TimeLineElapsed.Fill = color;
+                        ArtistName.Foreground = color;
+                        AlbumName.Foreground = color;
+                        TrackName.Foreground = color;
+                        TrackDuration.Foreground = color;
+                        TrackAvancement.Foreground = color;
+                    })
                     .DisposeWith(dispose);
 
                 ViewModel.PlayingTrack
